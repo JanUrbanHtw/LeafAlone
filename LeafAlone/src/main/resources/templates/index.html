@@ -5,9 +5,13 @@
     <title>Hello</title>
 </head>
 <body>
+<div id="welcomeText">
     <h1>Hello</h1>
-    <p>
-        <a href="/aboutus" th:href="@{/aboutus}">About Us</a>
-    </p>
+</div>
+<div>
+    <form action="/about">
+        <button id="aboutButton" type="submit" th:href="@{/aboutus}">About Us</button>
+    </form>
+</div>
 </body>
 </html>

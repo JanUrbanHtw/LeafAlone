@@ -11,11 +11,11 @@ public class AboutUsController {
     @RequestMapping("/")
     public ModelAndView hello () {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("hello.html");
+        modelAndView.setViewName("index.html");
         return modelAndView;
     }
 
-    @RequestMapping("/aboutus")
+    @RequestMapping("/about")
     public ModelAndView aboutUs(@ModelAttribute Clock clock) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("aboutUs.html");
