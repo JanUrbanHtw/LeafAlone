@@ -2,6 +2,7 @@ package group11.leafalone;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 
 public class Clock {
     String date;
@@ -9,7 +10,7 @@ public class Clock {
 
     public Clock() {
         this.date = "Date: "+LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE);
-        this.time = "Time: "+LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME);
+        this.time = "Time: "+LocalDateTime.now().format(DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM));
     }
 
     public String getDate() {
