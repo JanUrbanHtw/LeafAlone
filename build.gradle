@@ -1,0 +1,40 @@
+plugins {
+    id 'org.springframework.boot' version '2.2.0.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+    id 'java'
+}
+
+group = 'group11'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+	// Fluentlenium
+    // https://mvnrepository.com/artifact/org.fluentlenium/fluentlenium-core
+    compile group: 'org.fluentlenium', name: 'fluentlenium-core', version: '4.3.1'
+	// https://mvnrepository.com/artifact/org.fluentlenium/fluentlenium-assertj
+    testCompile group: 'org.fluentlenium', name: 'fluentlenium-assertj', version: '4.3.1'
+    // https://mvnrepository.com/artifact/org.fluentlenium/fluentlenium-junit-jupiter
+    compile group: 'org.fluentlenium', name: 'fluentlenium-junit-jupiter', version: '4.3.1'
+
+    // selenium Browser
+	// https://mvnrepository.com/artifact/org.seleniumhq.selenium/htmlunit-driver
+	compile group: 'org.seleniumhq.selenium', name: 'htmlunit-driver', version: '2.36.0'
+
+	// https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
+	testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.5.2'
+
+}
+
+test {
+    useJUnitPlatform()
+}
