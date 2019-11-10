@@ -9,6 +9,9 @@ public class PlantDescription {
     // scientific name
     private String scientific;
 
+    //picture of plant
+    private String plantPicture; //TODO discuss data format
+
     // desired amount of light
     private SunSituation sunSituation;
 
@@ -28,6 +31,11 @@ public class PlantDescription {
     // reference to the contributor
     // TODO link to Contributor Model, needs database
     private String id;
+
+    //probably needed for contributePlantController
+    public PlantDescription(){
+
+    }
 
     public PlantDescription(String type, String scientific, SunSituation sunSituation, int waterCycle, int waterAmount, String soilAdvice, String description, String id) {
         this.type = type;
