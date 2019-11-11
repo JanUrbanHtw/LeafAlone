@@ -37,17 +37,6 @@ public class PlantDescription {
 
     }
 
-    public PlantDescription(String type, String scientific, SunSituation sunSituation, int waterCycle, int waterAmount, String soilAdvice, String description, String id) {
-        this.type = type;
-        this.scientific = scientific;
-        this.sunSituation = sunSituation;
-        this.waterCycle = waterCycle;
-        this.waterAmount = waterAmount;
-        this.soilAdvice = soilAdvice;
-        this.description = description;
-        this.id = id;
-    }
-
     public String getType() {
         return type;
     }
