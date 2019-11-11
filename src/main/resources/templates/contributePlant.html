@@ -1,26 +1,30 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="formStyle.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <title>Contribute your plant knowledge!</title>
 </head>
 <body>
-<form action="#" th:action="@{/contributePlant}" th:object="${PlantDescription}" method="post" enctype="multipart/form-data">
+<div class="container">
+<form action="#" th:action="@{/contributePlant}" th:object="${plantdescription}" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label for="type">Colloquial plant name:</label>
-        <input type="text" th:field="*{type}" class="form-control" id="type">
+        <input type="text" th:field="*{type}" class="form-control inputField" id="type">
     </div>
     <div class="form-group">
         <label for="scientific">Scientific plant name:</label>
-        <input type="text" th:field="*{scientific}" class="form-control" id="scientific">
+        <input type="text" th:field="*{scientific}" class="form-control inputField" id="scientific">
     </div>
     <div class="form-group">
         <label for="plantpicture">Upload a picture of the species!</label>
         <input type="file" th:field="*{plantPicture}" class="form-control" id="plantpicture">
     </div>
     <div class="form-group">
-        <!-- should probably be filled by data model-->
-        <select th:field="*{sunSituation}">
+        <label for="sunSituation">How much sun does the plant prefer?</label>
+        <select th:field="*{sunSituation}" id="sunSituation">
             <option value="sunny">sunny</option>
             <option value="dark">dark</option>
             <option value="shadow">shadow</option>
@@ -28,7 +32,7 @@
     </div>
     <div class="form-group">
         <label for="waterCycle">How often does the plant need water? (days)</label>
-        <input type="number" th:field="*{waterCycle}" class="form-control" id="waterCycle">
+        <input type="number" th:field="*{waterCycle}" class="form-control inputField" id="waterCycle">
     </div>
     <div class="form-group">
         <label for="waterAmount">How much water does the plant need with each watering?</label>
@@ -36,14 +40,17 @@
     </div>
     <div class="form-group">
         <label for="soilAdvice">What kind of soil is ideal for this plant?</label>
+        <br />
         <textarea th:field="*{soilAdvice}" id="soilAdvice"></textarea>
     </div>
     <div class="form-group">
         <label for="description">general description, additional information</label>
+        <br />
         <textarea th:field="*{description}" id="description"></textarea>
     </div>
-    <input type="submit" name="submit for review"></input>
+    <input type="submit" value="submit for review"></input>
 </form>
+</div>
 
 <!--how to pass that? server-side bc server knows whos logged in?-->
 <!--// reference to the contributor-->
