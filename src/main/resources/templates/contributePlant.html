@@ -48,13 +48,21 @@
         <br />
         <textarea th:field="*{description}" id="description"></textarea>
     </div>
-    <input type="submit" value="submit for review"></input>
+    <button class="btn btn-success" th:type="submit">Submit for review</button>
 </form>
 </div>
 
-<!--how to pass that? server-side bc server knows whos logged in?-->
-<!--// reference to the contributor-->
-<!--// TODO link to Contributor Model, needs database-->
-<!--private String id;-->
+<nav class="navbar navbar-expand-lg fixed-bottom navbar-light" style="background-color: #64cc35">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="/about">About Us</a></li>
+            <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+            <li class="nav-item"><a class="nav-link" href="/addPlant">Add a new plant</a></li>
+            <li class="nav-item active"><a class="nav-link" href="#">Contribute a plant<span class="sr-only">(current)</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+        </ul>
+    </div>
+</nav>
 </body>
 </html>

@@ -19,6 +19,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/", "/about").permitAll()
+                .antMatchers("/contributePlant").hasRole("CONTRIBUTOR")
+                .antMatchers("/addPlant").hasRole("USER")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -42,7 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 User.withDefaultPasswordEncoder()
                         .username("contributor")
                         .password("admin")
-                        .roles("Contributor")
+                        .roles("CONTRIBUTOR", "USER")
                         .build();
 
         return new InMemoryUserDetailsManager(user, contributor);
