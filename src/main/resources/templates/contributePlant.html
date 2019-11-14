@@ -22,7 +22,7 @@
     </div>
     <div class="form-group">
         <label for="plantpicture">Upload a picture of the species!</label>
-        <input type="file" th:field="*{plantPicture}" class="form-control" id="plantpicture">
+        <input type="file" name="file" class="form-control" id="plantpicture"><!-- th:field="*{plantPicture}" -->
     </div>
     <div class="form-group">
         <label for="sunSituation">How much sun does the plant prefer?</label>
@@ -32,7 +32,7 @@
             <option value="shadow">shadow</option>
         </select>
     </div>
-    <div class="form-group">
+    <!--<div class="form-group">
         <label for="waterCycle">How often does the plant need water? (days)</label>
         <input type="number" th:field="*{waterCycle}" class="form-control inputField" id="waterCycle">
     </div>
@@ -49,7 +49,7 @@
         <label for="description">general description, additional information</label>
         <br />
         <textarea th:field="*{description}" id="description"></textarea>
-    </div>
+    </div>-->
     <button class="btn btn-success" th:type="submit">Submit for review</button>
 </form>
 </div>
