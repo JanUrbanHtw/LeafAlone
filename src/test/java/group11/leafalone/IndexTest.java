@@ -22,8 +22,8 @@ class IndexTest extends FluentTest {
 
     @Test
     void index_about() {
-        assertThat($("#aboutButton").present()).isTrue();
-        $("#aboutButton").click();
+        assertThat($("#aboutLink").present()).isTrue();
+        $("#aboutLink").click();
         assertThat(window().title()).isEqualTo("About Us");
     }
 

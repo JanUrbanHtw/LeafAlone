@@ -7,7 +7,9 @@
 </head>
 <body>
 
+<div th:replace="fragments/navbar :: navbar"></div>
 <div class="container">
+    <!--/*@thymesVar id="plant" type="group11.leafalone.Plant"*/-->
 <form action="#" th:action="@{/addPlant}" th:object="${plant}" method="post">
     <div class="form-group">
         <label th:for="name">Plant-Name:</label>
@@ -56,19 +58,6 @@
     <button class="btn btn-success" th:type="submit">Submit new plant</button>
 </form>
 </div>
-
-<nav class="navbar navbar-expand-lg fixed-bottom navbar-light" style="background-color: #64cc35">
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="/about">About Us</a></li>
-            <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
-            <li class="nav-item active"><a class="nav-link" href="#">Add a new plant<span class="sr-only">(current)</span></a></li>
-            <li class="nav-item"><a class="nav-link" href="/contributePlant">Contribute a plant</a></li>
-            <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
-        </ul>
-    </div>
-</nav>
 
 </body>
 </html>

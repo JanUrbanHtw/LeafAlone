@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="https://thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,6 +7,8 @@
     <title>About Us</title>
 </head>
 <body>
+<div th:replace="fragments/navbar :: navbar"></div>
+
 <div class="container" id="groupMembers">
     <h1>Group Members</h1>
     <p>Corinna Bockhop s0563861</p>
@@ -16,6 +18,7 @@
 <br/>
 <div class="container" id="time">
     <h1>Current Time</h1>
+    <!--/*@thymesVar id="clock" type="group11.leafalone.Clock"*/-->
     <p th:text="${clock.date}"></p>
     <p th:text="${clock.time}"></p>
 </div>
@@ -89,19 +92,5 @@
     </div>
     <br/>
 </div>
-
-<nav class="navbar navbar-expand-lg fixed-bottom navbar-light" style="background-color: #64cc35">
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-            <li class="nav-item active"><a class="nav-link" href="#">About Us<span class="sr-only">(current)</span></a></li>
-            <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
-            <li class="nav-item"><a class="nav-link" href="/addPlant">Add a new plant</a></li>
-            <li class="nav-item"><a class="nav-link" href="/contributePlant">Contribute a plant</a></li>
-            <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
-        </ul>
-    </div>
-</nav>
-
 </body>
 </html>

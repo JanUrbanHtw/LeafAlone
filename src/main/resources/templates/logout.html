@@ -6,21 +6,9 @@
     <title>Logout</title>
 </head>
 <body>
+<div th:replace="fragments/navbar :: navbar"></div>
 <form th:action="@{/logout}" method="post">
         <button class="btn btn-success" type="submit">Logout</button>
     </form>
-
-<nav class="navbar navbar-expand-lg fixed-bottom navbar-light" style="background-color: #64cc35">
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item"><a class="nav-link" href="/index">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="/about">About Us</a></li>
-            <li class="nav-item active"><a class="nav-link" href="#">Login<span class="sr-only">(current)</span></a></li>
-            <li class="nav-item"><a class="nav-link" href="/addPlant">Add a new plant</a>
-            <li class="nav-item"><a class="nav-link" href="/contributePlant">Contribute a plant</a></li>
-            <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
-        </ul>
-    </div>
-</nav>
 </body>
 </html>
