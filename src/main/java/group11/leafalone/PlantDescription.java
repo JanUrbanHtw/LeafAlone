@@ -37,6 +37,18 @@ public class PlantDescription {
 
     }
 
+    public PlantDescription(String type, String scientific, String plantPicture, SunSituation sunSituation, int waterCycle, int waterAmount, String soilAdvice, String description, String id) {
+        this.type = type;
+        this.scientific = scientific;
+        this.plantPicture = plantPicture;
+        this.sunSituation = sunSituation;
+        this.waterCycle = waterCycle;
+        this.waterAmount = waterAmount;
+        this.soilAdvice = soilAdvice;
+        this.description = description;
+        this.id = id;
+    }
+  
     public String getType() {
         return type;
     }
@@ -67,5 +79,13 @@ public class PlantDescription {
 
     public String getId() {
         return id;
+    }
+
+    public String getPlantPicture() {
+        return plantPicture;
+    }
+
+    public void setPlantPicture(String plantPicture) {
+        this.plantPicture = plantPicture;
     }
 }

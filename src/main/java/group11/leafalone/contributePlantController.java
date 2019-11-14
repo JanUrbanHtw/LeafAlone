@@ -9,15 +9,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class contributePlantController {
-
-//    @GetMapping("/contributePlant")
-//    public ModelAndView contributePlantForm() {
-//        ModelAndView modelAndView = new ModelAndView();
-//        modelAndView.setViewName("contributePlant.html");
-//        modelAndView.addObject("plantdescription", new PlantDescription());
-//        return modelAndView;
-//    }
-
     @GetMapping("/contributePlant")
     public String contributePlantForm(Model model) {
         model.addAttribute("plantdescription", new PlantDescription());
@@ -28,5 +19,4 @@ public class contributePlantController {
     public String contributePlantSubmit(@ModelAttribute PlantDescription plantdescription) {
         return "aboutUs";
     }
-
 }
