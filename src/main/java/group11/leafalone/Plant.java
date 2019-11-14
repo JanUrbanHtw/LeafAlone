@@ -18,11 +18,6 @@ public class Plant {
 
     private String id;
 
-    public Plant(String name, String id) {
-        this.name = name;
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }

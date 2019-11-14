@@ -48,7 +48,7 @@ public class PlantDescription {
         this.description = description;
         this.id = id;
     }
-
+  
     public String getType() {
         return type;
     }

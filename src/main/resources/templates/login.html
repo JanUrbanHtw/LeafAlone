@@ -1,21 +1,46 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
-
-    <title>Spring Security Example </title>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-<div th:if="${param.error}">
-    Invalid username and password.
+
+<div class="container">
+    <form th:action="@{/login}" method="post">
+        <div class="form-group">
+            <label>User Name:</label>
+            <input type="text" class="form-control" name="username">
+        </div>
+        <div class="form-group">
+            <label>Password: </label>
+            <input type="text" class="form-control" name="password">
+        </div>
+        <button class="btn btn-success" type="submit">Login</button>
+    </form>
 </div>
-<div th:if="${param.logout}">
-    You have been logged out.
+<div class="container">
+    <br>
+    <div class="font-weight-bold" th:if="${param.error}">
+        Invalid username and password.
+    </div>
 </div>
-<form th:action="@{/login}" method="post">
-    <div><label> User Name : <input type="text" name="username"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
-    <div><input type="submit" value="Sign In"/></div>
-</form>
+<div class="container">
+    <div class="font-weight-bold" th:if="${param.logout}">
+        You have been logged out.
+    </div>
+</div>
+
+<nav class="navbar navbar-expand-lg fixed-bottom navbar-light" style="background-color: #64cc35">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item"><a class="nav-link" href="/index">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="/about">About Us</a></li>
+            <li class="nav-item active"><a class="nav-link" href="#">Login<span class="sr-only">(current)</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="/addPlant">Add a new plant</a></li>
+        </ul>
+    </div>
+</nav>
 </body>
 </html>
