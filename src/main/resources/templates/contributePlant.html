@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Contribute your plant knowledge!</title>
+</head>
+<body>
+<form action="#" th:action="@{/contributePlant}" th:object="${PlantDescription}" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="type">Colloquial plant name:</label>
+        <input type="text" th:field="*{type}" class="form-control" id="type">
+    </div>
+    <div class="form-group">
+        <label for="scientific">Scientific plant name:</label>
+        <input type="text" th:field="*{scientific}" class="form-control" id="scientific">
+    </div>
+    <div class="form-group">
+        <label for="plantpicture">Upload a picture of the species!</label>
+        <input type="file" th:field="*{plantPicture}" class="form-control" id="plantpicture">
+    </div>
+    <div class="form-group">
+        <!-- should probably be filled by data model-->
+        <select th:field="*{sunSituation}">
+            <option value="sunny">sunny</option>
+            <option value="dark">dark</option>
+            <option value="shadow">shadow</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="waterCycle">How often does the plant need water? (days)</label>
+        <input type="number" th:field="*{waterCycle}" class="form-control" id="waterCycle">
+    </div>
+    <div class="form-group">
+        <label for="waterAmount">How much water does the plant need with each watering?</label>
+        <input type="number" th:field="*{waterAmount}" class="form-control" id="waterAmount">
+    </div>
+    <div class="form-group">
+        <label for="soilAdvice">What kind of soil is ideal for this plant?</label>
+        <textarea th:field="*{soilAdvice}" id="soilAdvice"></textarea>
+    </div>
+    <div class="form-group">
+        <label for="description">general description, additional information</label>
+        <textarea th:field="*{description}" id="description"></textarea>
+    </div>
+    <input type="submit" name="submit for review"></input>
+</form>
+
+<!--how to pass that? server-side bc server knows whos logged in?-->
+<!--// reference to the contributor-->
+<!--// TODO link to Contributor Model, needs database-->
+<!--private String id;-->
+</body>
+</html>
