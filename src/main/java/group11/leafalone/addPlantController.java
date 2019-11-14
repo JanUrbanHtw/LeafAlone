@@ -1,5 +1,7 @@
 package group11.leafalone;
 
+import com.gargoylesoftware.htmlunit.html.Html;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,10 +19,7 @@ public class addPlantController {
     }
 
     @RequestMapping(value = "/addPlant", method = RequestMethod.POST)
-    public ModelAndView addPlantSubmit() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("aboutUs.html");
-        modelAndView.addObject("clock", new Clock());
-        return modelAndView;
+    public String addPlantSubmit() {
+        return "redirect:about";
     }
 }
