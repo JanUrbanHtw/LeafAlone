@@ -1,12 +1,12 @@
-package group11.leafalone;
+package group11.leafalone.Plant;
 
 import java.util.Date;
 
-public class Plant {
+public class UserPlant {
 
     private String name;
 
-    private PlantDescription type;
+    private PlantCare plantCare;
 
     private SunSituation sun;
 
@@ -26,12 +26,12 @@ public class Plant {
         this.name = name;
     }
 
-    public PlantDescription getType() {
-        return type;
+    public PlantCare getPlantCare() {
+        return plantCare;
     }
 
-    public void setType(PlantDescription type) {
-        this.type = type;
+    public void setPlantCare(PlantCare plantCare) {
+        this.plantCare = plantCare;
     }
 
     public SunSituation getSun() {

@@ -1,16 +1,13 @@
-package group11.leafalone;
+package group11.leafalone.Plant;
 
-public class PlantDescription {
+public class PlantCare {
 
 
     // colloquial name
-    private String type;
+    private String colloquial;
 
     // scientific name
     private String scientific;
-
-    //picture of plant
-    private String plantPicture; //TODO discuss data format
 
     // desired amount of light
     private SunSituation sunSituation;
@@ -33,14 +30,13 @@ public class PlantDescription {
     private String id;
 
     //probably needed for contributePlantController
-    public PlantDescription(){
+    public PlantCare(){
 
     }
 
-    public PlantDescription(String type, String scientific, String plantPicture, SunSituation sunSituation, int waterCycle, int waterAmount, String soilAdvice, String description, String id) {
-        this.type = type;
+    public PlantCare(String colloquial, String scientific, String plantPicture, SunSituation sunSituation, int waterCycle, int waterAmount, String soilAdvice, String description, String id) {
+        this.colloquial = colloquial;
         this.scientific = scientific;
-        this.plantPicture = plantPicture;
         this.sunSituation = sunSituation;
         this.waterCycle = waterCycle;
         this.waterAmount = waterAmount;
@@ -49,8 +45,8 @@ public class PlantDescription {
         this.id = id;
     }
   
-    public String getType() {
-        return type;
+    public String getColloquial() {
+        return colloquial;
     }
 
     public String getScientific() {
@@ -81,11 +77,4 @@ public class PlantDescription {
         return id;
     }
 
-    public String getPlantPicture() {
-        return plantPicture;
-    }
-
-    public void setPlantPicture(String plantPicture) {
-        this.plantPicture = plantPicture;
-    }
 }

@@ -1,4 +1,4 @@
-package group11.leafalone;
+package group11.leafalone.Auth;
 
 
 import org.springframework.context.annotation.Bean;
@@ -19,8 +19,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/", "/about").permitAll()
-                .antMatchers("/contributePlant").hasRole("CONTRIBUTOR")
-                .antMatchers("/addPlant").hasRole("USER")
+                .antMatchers("/plants/contribute").hasRole("CONTRIBUTOR")
+                .antMatchers("/plants/add").hasRole("USER")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -28,6 +28,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .logout()
+                .logoutUrl("/j_spring_security_logout")
+                .logoutSuccessUrl("/login?logout")
                 .permitAll();
     }
 

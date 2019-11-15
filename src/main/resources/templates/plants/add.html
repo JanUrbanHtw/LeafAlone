@@ -9,8 +9,8 @@
 
 <div th:replace="fragments/navbar :: navbar"></div>
 <div class="container">
-    <!--/*@thymesVar id="plant" type="group11.leafalone.Plant"*/-->
-<form action="#" th:action="@{/addPlant}" th:object="${plant}" method="post">
+    <!--/*@thymesVar id="plant" type="group11.leafalone.Plant.UserPlant"*/-->
+<form action="#" th:action="@{/plants/add}" th:object="${plant}" method="post">
     <div class="form-group">
         <label th:for="name">Plant-Name:</label>
         <input class="form-control" id="type" th:field="*{name}" th:type="text">
@@ -19,10 +19,11 @@
     <div class="form-group">
         <label th:for="type">Type of plant:</label>
         <!-- TODO: should probably be filled by data model-->
-        <select class="custom-select" th:field="*{type}">
-            <option th:value="${type}">Dummy One</option>
-            <option th:value="${type}">Dummy Two</option>
-            <option th:value="${type}">None of those above</option>
+        <select class="custom-select" th:field="*{plantCare}">
+            <!--/*@thymesVar id="colloquial" type="group11.leafalone.Plant.PlantCare"*/-->
+            <option th:value="${colloquial}">Dummy One</option>
+            <option th:value="${colloquial}">Dummy Two</option>
+            <option th:value="${colloquial}">None of those above</option>
         </select>
     </div>
 

@@ -3,7 +3,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="stylesheets/formStyle.css">
+    <link rel="stylesheet" type="text/css" href="../stylesheets/formStyle.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <title>Contribute your plant knowledge!</title>
 </head>
@@ -11,18 +11,14 @@
 
 <div th:replace="fragments/navbar :: navbar"></div>
 <div class="container">
-<form action="#" th:action="@{/contributePlant}" th:object="${plantdescription}" method="post" enctype="multipart/form-data">
+<form action="#" th:action="@{/plants/contribute}" th:object="${plantdescription}" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label for="type">Colloquial plant name:</label>
-        <input type="text" th:field="*{type}" class="form-control inputField" id="type">
+        <input type="text" th:field="*{colloquial}" class="form-control inputField" id="type">
     </div>
     <div class="form-group">
         <label for="scientific">Scientific plant name:</label>
         <input type="text" th:field="*{scientific}" class="form-control inputField" id="scientific">
-    </div>
-    <div class="form-group">
-        <label for="plantpicture">Upload a picture of the species!</label>
-        <input type="file" name="file" class="form-control" id="plantpicture"><!-- th:field="*{plantPicture}" -->
     </div>
     <div class="form-group">
         <label for="sunSituation">How much sun does the plant prefer?</label>
@@ -32,7 +28,7 @@
             <option value="shadow">shadow</option>
         </select>
     </div>
-    <!--<div class="form-group">
+    <div class="form-group">
         <label for="waterCycle">How often does the plant need water? (days)</label>
         <input type="number" th:field="*{waterCycle}" class="form-control inputField" id="waterCycle">
     </div>
@@ -49,7 +45,7 @@
         <label for="description">general description, additional information</label>
         <br />
         <textarea th:field="*{description}" id="description"></textarea>
-    </div>-->
+    </div>
     <button class="btn btn-success" th:type="submit">Submit for review</button>
 </form>
 </div>
