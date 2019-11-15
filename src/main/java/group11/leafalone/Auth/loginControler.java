@@ -1,4 +1,4 @@
-package group11.leafalone;
+package group11.leafalone.Auth;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,4 +13,11 @@ public class loginControler {
         modelAndView.setViewName("login.html");
         return modelAndView;
     }
+
+//    @RequestMapping("/logout")
+//    public ModelAndView logout() {
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.setViewName("logout.html");
+//        return modelAndView;
+//    }
 }
