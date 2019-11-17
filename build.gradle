@@ -18,6 +18,10 @@ dependencies {
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
+
+    // https://mvnrepository.com/artifact/org.thymeleaf.extras/thymeleaf-extras-springsecurity5
+    compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity5', version: '3.0.4.RELEASE'
+
 	// Fluentlenium
     // https://mvnrepository.com/artifact/org.fluentlenium/fluentlenium-core
     compile group: 'org.fluentlenium', name: 'fluentlenium-core', version: '4.3.1'
