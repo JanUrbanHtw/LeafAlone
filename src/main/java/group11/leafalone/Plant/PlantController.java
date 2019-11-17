@@ -1,5 +1,6 @@
 package group11.leafalone.Plant;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -7,6 +8,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class PlantController {
+
+//    @Autowired
+//    PlantService plantservice;
 
     @RequestMapping(value = "/plants/add", method = RequestMethod.GET)
     public ModelAndView addPlantForm() {
@@ -30,6 +34,7 @@ public class PlantController {
 
     @PostMapping("/plants/contribute")
     public String contributePlantSubmit(@ModelAttribute PlantCare plantdescription) {
+        //plantservice.addPlantCare();
         return "redirect:../about";
     }
 

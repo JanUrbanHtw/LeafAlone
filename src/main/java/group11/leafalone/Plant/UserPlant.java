@@ -1,12 +1,24 @@
 package group11.leafalone.Plant;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
+@Entity
 public class UserPlant {
 
+    @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    private Long id;
+
+    @NotNull(message = "is required")
     private String name;
 
-    private PlantCare plantCare;
+    @NotNull(message = "is required")
+    private String plantCare; //TODO change to PlantCares scientific attribute - foreign key business
 
     private SunSituation sun;
 
@@ -16,7 +28,11 @@ public class UserPlant {
 
     private String notes;
 
-    private String id;
+    private String userid;
+
+    public Long getId() {
+        return id;
+    }
 
     public String getName() {
         return name;
@@ -26,11 +42,11 @@ public class UserPlant {
         this.name = name;
     }
 
-    public PlantCare getPlantCare() {
+    public String getPlantCare() {
         return plantCare;
     }
 
-    public void setPlantCare(PlantCare plantCare) {
+    public void setPlantCare(String plantCare) {
         this.plantCare = plantCare;
     }
 
@@ -66,7 +82,11 @@ public class UserPlant {
         this.notes = notes;
     }
 
-    public String getId() {
-        return id;
+    public String getUserid() {
+        return userid;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
     }
 }
