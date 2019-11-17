@@ -1,8 +1,9 @@
 package group11.leafalone;
 
+import group11.leafalone.Pages.AboutPage;
 import org.fluentlenium.adapter.junit.jupiter.FluentTest;
+import org.fluentlenium.core.annotation.Page;
 import org.fluentlenium.core.hook.wait.Wait;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -10,31 +11,33 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Wait
 class AboutUsTest extends FluentTest {
 
-    @BeforeEach
-    void goToAboutUs() {
-        goTo("http://localhost:8080/about");
+    @Page
+    AboutPage aboutPage;
+
+    @Test
+    void groupMembersPresent() {
+        goTo(aboutPage)
+                .assertIsPresent(AboutPage.GROUP_MEMBERS)
+                .assertIsContainedInGroupMembers("Jan")
+                .assertIsContainedInGroupMembers("Corinna")
+                .assertIsContainedInGroupMembers("Marie");
     }
 
     @Test
-    void aboutUs_title() {
-        assertThat(window().title()).isEqualTo("About Us");
+    void ClockPresent() {
+        goTo(aboutPage)
+                .assertIsPresent(AboutPage.TIME);
     }
 
     @Test
-    void aboutUs_groupMembers() {
-        assertThat($("#groupMembers").present()).isTrue();
-        assertThat($("#groupMembers").texts().toString().replaceAll("\\s+", "")).containsSequence("Jan", "Urban", "s0563416");
-        assertThat($("#groupMembers").texts().toString().replaceAll("\\s+", "")).containsSequence("Corinna", "Bockhop", "s0563861");
-        assertThat($("#groupMembers").texts().toString().replaceAll("\\s+", "")).containsSequence("Marie", "Bittiehn", "s0563863");
+    void DescriptionPresent() {
+        goTo(aboutPage)
+                .assertIsPresent(AboutPage.PROJECT_DESCRIPTION);
     }
 
     @Test
-    void aboutUs_time() {
-        assertThat($("#time").present()).isTrue();
-    }
-
-    @Test
-    void aboutUs_description() {
-        assertThat($("#projectdescription").present()).isTrue();
+    void IsTitleCorrect() {
+        goTo(aboutPage);
+        assertThat(window().title()).isEqualTo(AboutPage.TITLE);
     }
 }

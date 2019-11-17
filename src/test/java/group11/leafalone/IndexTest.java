@@ -1,8 +1,11 @@
 package group11.leafalone;
 
+import group11.leafalone.Pages.IndexPage;
+import group11.leafalone.Pages.LoginPage;
+import group11.leafalone.Pages.NavbarHelper;
 import org.fluentlenium.adapter.junit.jupiter.FluentTest;
+import org.fluentlenium.core.annotation.Page;
 import org.fluentlenium.core.hook.wait.Wait;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -10,26 +13,75 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Wait
 class IndexTest extends FluentTest {
 
-    @BeforeEach
-    void goToIndex() {
-        goTo("http://localhost:8080/");
+    @Page
+    IndexPage indexPage;
+
+    @Page
+    LoginPage loginPage;
+
+    @Test
+    void IsTitleCorrect() {
+        goTo(indexPage);
+        assertThat(window().title()).isEqualTo(IndexPage.TITLE);
     }
 
     @Test
-    void index_title() {
-        assertThat(window().title()).isEqualTo("Hello");
+    void WelcomeTextPresent() {
+        goTo(indexPage)
+                .assertIsPresent(IndexPage.WELCOME);
+    }
+
+    // -----------------------------------------------------------------------
+    // ----------------------- Tests for Navbar ------------------------------
+    // -----------------------------------------------------------------------
+
+
+    @Test
+    void LinksBeforeLogin() {
+        goTo(indexPage)
+                .assertIsPresent(NavbarHelper.HOME_LINK)
+                .assertIsPresent(NavbarHelper.ABOUT_LINK)
+                .assertIsPresent(NavbarHelper.LOGIN_LINK)
+                .assertNotPresent(NavbarHelper.PLANT_LINK)
+                .assertNotPresent(NavbarHelper.CONTRIBUTE_LINK)
+                .assertNotPresent(NavbarHelper.LOGOUT_LINK);
     }
 
     @Test
-    void index_about() {
-        assertThat($("#aboutLink").present()).isTrue();
-        $("#aboutLink").click();
-        assertThat(window().title()).isEqualTo("About Us");
+    void LinksAsUser() {
+        String username = "user";
+        String password = "password";
+
+        goTo(loginPage)
+                .inputName(username)
+                .inputPassword(password)
+                .submitLoginForm();
+
+        goTo(indexPage)
+                .assertIsPresent(NavbarHelper.HOME_LINK)
+                .assertIsPresent(NavbarHelper.ABOUT_LINK)
+                .assertIsPresent(NavbarHelper.PLANT_LINK)
+                .assertIsPresent(NavbarHelper.LOGOUT_LINK)
+                .assertNotPresent(NavbarHelper.CONTRIBUTE_LINK)
+                .assertNotPresent(NavbarHelper.LOGIN_LINK);
     }
 
     @Test
-    void index_welcomeText() {
-        assertThat($("#welcomeText").present()).isTrue();
-    }
+    void LinksAsContributor() {
+        String username = "contributor";
+        String password = "admin";
 
+        goTo(loginPage)
+                .inputName(username)
+                .inputPassword(password)
+                .submitLoginForm();
+
+        goTo(indexPage)
+                .assertIsPresent(NavbarHelper.HOME_LINK)
+                .assertIsPresent(NavbarHelper.ABOUT_LINK)
+                .assertIsPresent(NavbarHelper.PLANT_LINK)
+                .assertIsPresent(NavbarHelper.CONTRIBUTE_LINK)
+                .assertIsPresent(NavbarHelper.LOGOUT_LINK)
+                .assertNotPresent(NavbarHelper.LOGIN_LINK);
+    }
 }
