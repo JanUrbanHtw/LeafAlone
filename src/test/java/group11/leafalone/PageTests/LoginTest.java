@@ -1,4 +1,4 @@
-package group11.leafalone;
+package group11.leafalone.PageTests;
 
 import group11.leafalone.Pages.*;
 import org.fluentlenium.adapter.junit.jupiter.FluentTest;

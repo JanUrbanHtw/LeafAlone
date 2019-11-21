@@ -1,4 +1,4 @@
-package group11.leafalone;
+package group11.leafalone.PageTests;
 
 import group11.leafalone.Pages.IndexPage;
 import group11.leafalone.Pages.LoginPage;
