@@ -1,18 +1,33 @@
 package group11.leafalone.Auth;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 @Entity
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="id")
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(name="username", nullable = false, unique = true)
     private String username;
 
+    @NotEmpty
+    @Column(name="password")
     private String password;
+
+    private String role;
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     public Long getId() {
         return id;
