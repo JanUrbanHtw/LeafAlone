@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Controller
-public class loginControler {
+public class LoginController {
 
     @RequestMapping("/login")
     public ModelAndView login() {
