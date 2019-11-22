@@ -11,41 +11,42 @@
 
 <div th:replace="fragments/navbar :: navbar"></div>
 <div class="container">
-<form action="#" th:action="@{/plants/contribute}" th:object="${plantdescription}" method="post" enctype="multipart/form-data">
+<form action="#" th:action="@{/plants/contribute}" th:object="${plantCare}" method="post">
     <div class="form-group">
-        <label for="type">Colloquial plant name:</label>
-        <input type="text" th:field="*{colloquial}" class="form-control inputField" id="type">
+        <label th:for="colloquial">Colloquial plant name:</label>
+        <input th:type="text" th:field="*{colloquial}" path="colloquial" class="form-control" id="colloquial">
+        <p class="font-weight-bold" th:if="${#fields.hasErrors('colloquial')}" th:errors="*{colloquial}">Colloquial-Name Error</p>
     </div>
     <div class="form-group">
-        <label for="scientific">Scientific plant name:</label>
-        <input type="text" th:field="*{scientific}" class="form-control inputField" id="scientific">
+        <label th:for="scientific">Scientific plant name:</label>
+        <input th:type="text" th:field="*{scientific}" path="scientific" class="form-control" id="scientific">
+        <p class="font-weight-bold" th:if="${#fields.hasErrors('scientific')}" th:errors="*{scientific}">Scientific-Name Error</p>
     </div>
     <div class="form-group">
         <label for="sunSituation">How much sun does the plant prefer?</label>
-        <!-- TODO: should probably be filled by data model-->
-        <select th:field="*{sunSituation}" id="sunSituation">
-            <option value="sunny">sunny</option>
-            <option value="dark">dark</option>
-            <option value="shadow">shadow</option>
+        <select th:field="*{sunSituation}" path="sunSituation" id="sunSituation">
+            <option th:each="sunSituation : ${sunSituations}" th:value="${sunSituation}" th:text="${sunSituation.name}"></option>
         </select>
     </div>
     <div class="form-group">
-        <label for="waterCycle">How often does the plant need water? (days)</label>
-        <input type="number" th:field="*{waterCycle}" class="form-control inputField" id="waterCycle">
+        <label th:for="waterCycle">How often does the plant need water? (days)</label>
+        <input th:type="number" th:field="*{waterCycle}" path="waterCycle" class="form-control inputField" id="waterCycle">
+        <p class="font-weight-bold" th:if="${#fields.hasErrors('waterCycle')}" th:errors="*{waterCycle}">Water-Cycle Error</p>
     </div>
     <div class="form-group">
-        <label for="waterAmount">How much water does the plant need with each watering?</label>
-        <input type="number" th:field="*{waterAmount}" class="form-control" id="waterAmount">
+        <label th:for="waterAmount">How much water does the plant need with each watering?</label>
+        <input th:type="number" th:field="*{waterAmount}" path="waterAmount" class="form-control" id="waterAmount">
+        <p class="font-weight-bold" th:if="${#fields.hasErrors('waterAmount')}" th:errors="*{waterAmount}">Water-Amount Error</p>
     </div>
     <div class="form-group">
-        <label for="soilAdvice">What kind of soil is ideal for this plant?</label>
+        <label th:for="soilAdvice">What kind of soil is ideal for this plant?</label>
         <br />
-        <textarea th:field="*{soilAdvice}" id="soilAdvice"></textarea>
+        <textarea th:field="*{soilAdvice}" path="soilAdvice" id="soilAdvice"></textarea>
     </div>
     <div class="form-group">
         <label for="description">general description, additional information</label>
         <br />
-        <textarea th:field="*{description}" id="description"></textarea>
+        <textarea th:field="*{description}" path="description" id="description"></textarea>
     </div>
     <button class="btn btn-success" th:type="submit">Submit for review</button>
 </form>
