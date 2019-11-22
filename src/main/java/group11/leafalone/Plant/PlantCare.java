@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -14,23 +16,23 @@ public class PlantCare {
     private Long id;
 
     // colloquial name
-    @NotNull(message = "is required")
+    @NotEmpty(message = "Colloquial name is required")
     private String colloquial;
 
     // scientific
-    @NotNull(message = "is required")
+    @NotEmpty(message = "Scientific name is required")
     private String scientific;
 
     // desired amount of light
     private SunSituation sunSituation;
 
     // how often the plant needs to be watered
-    @NotNull(message = "is required")
+    @Min(1)
     private int waterCycle;
 
     // amount of water needed
     //in ml?
-    @NotNull(message = "is required")
+    @Min(1)
     private int waterAmount;
 
     // advice on the soil
@@ -43,22 +45,6 @@ public class PlantCare {
     // TODO link to Contributor Model, needs database
     private String conid;
 
-    //probably needed for contributePlantController
-    public PlantCare(){
-
-    }
-
-    public PlantCare(String colloquial, String scientific, String plantPicture, SunSituation sunSituation, int waterCycle, int waterAmount, String soilAdvice, String description, String id) {
-        this.colloquial = colloquial;
-        this.scientific = scientific;
-        this.sunSituation = sunSituation;
-        this.waterCycle = waterCycle;
-        this.waterAmount = waterAmount;
-        this.soilAdvice = soilAdvice;
-        this.description = description;
-        this.conid = id;
-    }
-  
     public String getColloquial() {
         return colloquial;
     }
@@ -93,4 +79,39 @@ public class PlantCare {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setColloquial(String colloquial) {
+        this.colloquial = colloquial;
+    }
+
+    public void setScientific(String scientific) {
+        this.scientific = scientific;
+    }
+
+    public void setSunSituation(SunSituation sunSituation) {
+        this.sunSituation = sunSituation;
+    }
+
+    public void setWaterCycle(int waterCycle) {
+        this.waterCycle = waterCycle;
+    }
+
+    public void setWaterAmount(int waterAmount) {
+        this.waterAmount = waterAmount;
+    }
+
+    public void setSoilAdvice(String soilAdvice) {
+        this.soilAdvice = soilAdvice;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setConid(String conid) {
+        this.conid = conid;
+    }
 }
