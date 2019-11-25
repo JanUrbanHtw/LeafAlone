@@ -8,10 +8,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class AddTest extends FluentTest {
+class AddTest extends FluentTest {
 
     private static final String DUMMY_DATA = "DummyData";
-    private static final String DUMMY_SUN_SITUATION = "sunny";
+    private static final String DUMMY_SUN_SITUATION = "Sunny";
     private static final String DUMMY_INT = "5";
     private static final String DUMMY_TYPE = "Dummy One";
     private static final String DUMMY_DATE = "14.11.2019";

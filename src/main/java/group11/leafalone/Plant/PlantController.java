@@ -33,4 +33,11 @@ public class PlantController {
         return "redirect:../about";
     }
 
+    @GetMapping("plants/list")
+    public ModelAndView getPlantList() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("plants/list.html");
+        return modelAndView;
+    }
+
 }

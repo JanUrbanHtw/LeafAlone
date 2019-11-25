@@ -57,4 +57,12 @@ class PlantControllerTest {
         String redirect = plantController.contributePlantSubmit(plantCare);
         assertEquals("redirect:../about", redirect);
     }
+
+    //listPlants
+
+    @Test
+    void ListPlant_Get_shouldRenderList() {
+        ModelAndView view = plantController.getPlantList();
+        assertEquals("plants/list.html", view.getViewName());
+    }
 }

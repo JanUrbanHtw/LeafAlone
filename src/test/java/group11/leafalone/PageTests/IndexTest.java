@@ -42,6 +42,7 @@ class IndexTest extends FluentTest {
                 .assertIsPresent(NavbarHelper.HOME_LINK)
                 .assertIsPresent(NavbarHelper.ABOUT_LINK)
                 .assertIsPresent(NavbarHelper.LOGIN_LINK)
+                .assertNotPresent(NavbarHelper.LIST_LINK)
                 .assertNotPresent(NavbarHelper.PLANT_LINK)
                 .assertNotPresent(NavbarHelper.CONTRIBUTE_LINK)
                 .assertNotPresent(NavbarHelper.LOGOUT_LINK);
@@ -61,6 +62,7 @@ class IndexTest extends FluentTest {
                 .assertIsPresent(NavbarHelper.HOME_LINK)
                 .assertIsPresent(NavbarHelper.ABOUT_LINK)
                 .assertIsPresent(NavbarHelper.PLANT_LINK)
+                .assertIsPresent(NavbarHelper.LIST_LINK)
                 .assertIsPresent(NavbarHelper.LOGOUT_LINK)
                 .assertNotPresent(NavbarHelper.CONTRIBUTE_LINK)
                 .assertNotPresent(NavbarHelper.LOGIN_LINK);
@@ -82,6 +84,7 @@ class IndexTest extends FluentTest {
                 .assertIsPresent(NavbarHelper.PLANT_LINK)
                 .assertIsPresent(NavbarHelper.CONTRIBUTE_LINK)
                 .assertIsPresent(NavbarHelper.LOGOUT_LINK)
+                .assertIsPresent(NavbarHelper.LIST_LINK)
                 .assertNotPresent(NavbarHelper.LOGIN_LINK);
     }
 }

@@ -14,28 +14,28 @@ public class ContributePage extends FluentPage {
     //TODO the addPlant Page needs to display an errorMessage if form is not filled correctly
     private static final String ERROR_MESSAGE = "#errorMessage";
 
-    @FindBy(css = "type")
+    @FindBy(id = "type")
     private FluentWebElement colloquialInput;
 
-    @FindBy(css = "scientific")
+    @FindBy(id = "scientific")
     private FluentWebElement scientificInput;
 
-    @FindBy(css = "sunSituation")
+    @FindBy(id = "sunSituation")
     private FluentWebElement sunSituationInput;
 
-    @FindBy(css = "waterCycle")
+    @FindBy(id = "waterCycle")
     private FluentWebElement waterCycleInput;
 
-    @FindBy(css = "waterAmount")
+    @FindBy(id = "waterAmount")
     private FluentWebElement waterAmountInput;
 
-    @FindBy(css = "soilAdvice")
+    @FindBy(id = "soilAdvice")
     private FluentWebElement soilAdviceInput;
 
-    @FindBy(css = "description")
+    @FindBy(id = "description")
     private FluentWebElement descriptionInput;
 
-    @FindBy(css = "submitButton")
+    @FindBy(id = "submitButton")
     private FluentWebElement submitButton;
 
     public ContributePage inputColloquial(String colloquial) {

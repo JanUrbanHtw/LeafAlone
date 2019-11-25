@@ -17,28 +17,28 @@ public class AddPage extends FluentPage {
     public static final String TITLE = "Add a personal plant!";
     private static final String ERROR_MESSAGE = "#errorMessage";
 
-    @FindBy(css = "type")
+    @FindBy(id = "type")
     private FluentWebElement plantNameInput;
 
-    @FindBy(css = "plantType")
+    @FindBy(id = "plantType")
     private FluentWebElement plantTypeInput;
 
-    @FindBy(css = "sun")
+    @FindBy(id = "sun")
     private FluentWebElement sunSituationInput;
 
-    @FindBy(css = "acquisition")
+    @FindBy(id = "acquisition")
     private FluentWebElement acquisitionDateInput;
 
-    @FindBy(css = "watered")
+    @FindBy(id = "watered")
     private FluentWebElement wateringDateInput;
 
-    @FindBy(css = "notes")
+    @FindBy(id = "notes")
     private FluentWebElement additionalNotesInput;
 
-    @FindBy(css = "id")
+    @FindBy(id = "id")
     private FluentWebElement idInput;
 
-    @FindBy(css = "submitButton")
+    @FindBy(id = "submitButton")
     private FluentWebElement submitButton;
 
     public AddPage inputPlantName(String plantName) {

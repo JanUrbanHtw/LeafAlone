@@ -17,10 +17,10 @@ public class LoginPage extends FluentPage {
     private static final String ERROR_MESSAGE = "#errorMessage";
     private static final String LOGOUT_MESSAGE = "#logoutMessage";
 
-    @FindBy(name = "username")
+    @FindBy(id = "username")
     private FluentWebElement nameInput;
 
-    @FindBy(name = "password")
+    @FindBy(id = "password")
     private FluentWebElement passwordInput;
 
     @FindBy(id = "submitButton")
