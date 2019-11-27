@@ -8,27 +8,29 @@
 </head>
 <body>
 <div th:replace="fragments/navbar :: navbar"></div>
-<div class="container">
-    <table class="table table-hover" id="plantList">
-        <thead>
-        <th scope="col">name</th>
-        <th scope="col">type</th>
-        <th scope="col">sunSituation</th>
-        <th scope="col">acquisitionDate</th>
-        <th scope="col">wateringDate</th>
-        <th scope="col">additionalNotes</th>
+<div class="container table-responsive">
+    <table class="table table-hover table-striped" id="plantList">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">name</th>
+            <th scope="col">type</th>
+            <th scope="col">sunSituation</th>
+            <th scope="col">acquisitionDate</th>
+            <th scope="col">wateringDate</th>
+            <th scope="col">additionalNotes</th>
+        </tr>
         </thead>
         <tbody>
-        <!-- dummy Data -->
-        <tr>
-            <th scope="row">Carlos</th>
-            <td>plant</td>
-            <td>sunny</td>
-            <td>19.05.1998</td>
-            <td>23.06.1998</td>
-            <td>yes!</td>
+        <!--/*@thymesVar id="plants" type="java.util.List"*/-->
+        <tr th:each="plant : ${plants}">
+            <!--/*@thymesVar id="plant" type="group11.leafalone.Plant.UserPlant"*/-->
+            <th scope="row" th:text="${plant.getName()}"></th>
+            <td th:text="${plant.getPlantCare().getColloquial()}"></td>
+            <td th:text="${plant.getSun().name()}"></td>
+            <td th:text="${plant.getAcquisition().toLocaleString()}"></td>
+            <td th:text="${plant.getWatered().toLocaleString()}"></td>
+            <td th:text="${plant.getNotes()}"></td>
         </tr>
-        <!-- dummy end -->
         </tbody>
     </table>
 </div>

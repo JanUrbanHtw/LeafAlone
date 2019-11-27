@@ -5,6 +5,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 public class PlantController {
 
@@ -36,6 +39,18 @@ public class PlantController {
     @GetMapping("plants/list")
     public ModelAndView getPlantList() {
         ModelAndView modelAndView = new ModelAndView();
+        List<UserPlant> plantList = new ArrayList<UserPlant>();
+        //TODO read data from the database
+
+//        UserPlant dummyPlant = new UserPlant();
+//        dummyPlant.setName("dummyPlant");
+//        dummyPlant.setPlantCare(new PlantCare("typeDummy", null, null, null,
+//                0, 0, null,null, null));
+//        dummyPlant.setSun(SunSituation.DARK);
+//        dummyPlant.setAcquisition(new Date());
+//        dummyPlant.setWatered(new Date());
+//        plantList.add(dummyPlant);
+        modelAndView.addObject("plants", plantList);
         modelAndView.setViewName("plants/list.html");
         return modelAndView;
     }
