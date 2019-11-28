@@ -11,7 +11,7 @@
 <div th:replace="fragments/navbar :: navbar"></div>
 <div class="container">
     <!--/*@thymesVar id="plant" type="group11.leafalone.Plant.UserPlant"*/-->
-<form action="#" th:action="@{/plants/add}" th:object="${plant}" method="post">
+    <form action="#" th:action="@{/plants/add}" th:object="${plant}" id="addPlantForm" method="post">
     <div class="form-group">
         <label th:for="name">Plant-Name:</label>
         <input th:type="text" th:field="*{name}" path="name" class="form-control" id="name">
@@ -21,13 +21,13 @@
     <div class="form-group">
         <label th:for="plantCare">Type of plant:</label>
         <!-- TODO: should probably be filled by data model-->
-        <!--<select class="custom-select" th:field="*{plantCare}" path="plantCare">
+        <!--<select class="custom-select" id="plantType" th:field="*{plantCare}" path="plantCare">
             <option th:value="${plantCare}">Dummy One</option>
             <option th:value="${plantCare}">Dummy Two</option>
             <option th:value="${plantCare}">None of those above</option>
         </select> -->
 
-        <select class="custom-select" th:field="*{plantCare}" path="plantCare">
+        <select class="custom-select" id="plantType" th:field="*{plantCare}" path="plantCare">
             <option value="Dummy One">Dummy One</option>
             <option value="Dummy Two">Dummy Two</option>
             <option value="Dummy Three">Dummy Three</option>
@@ -38,7 +38,7 @@
 
     <div class="form-group">
         <label th:for="sun">Sun-Situation of the plant:</label>
-        <select th:field="*{sun}" path="sunSituation" id="sunSituation">
+        <select id="sun" th:field="*{sun}" path="sunSituation" id="sunSituation">
             <option th:each="sun : ${sunSituations}" th:value="${sun}" th:text="${sun.name}"></option>
         </select>
     </div>
@@ -57,7 +57,7 @@
         <label th:for="notes">Additional Notes:</label>
         <textarea th:type="text" th:field="*{notes}" path="notes" class="form-control" id="notes"/>
     </div>
-    <button class="btn btn-success" th:type="submit">Submit new plant</button>
+        <button class="btn btn-success" id="submitButton" th:type="submit">Submit new plant</button>
 </form>
 </div>
 

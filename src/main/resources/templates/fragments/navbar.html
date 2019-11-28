@@ -3,13 +3,14 @@
 <body>
 <div class="sticky-top" th:fragment="navbar">
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #64cc35">
-        <a class="navbar-brand h1" href="/">LeafAlone</a>
+        <a class="navbar-brand h1" id="homeLink" href="/">LeafAlone</a>
         <ul class="navbar-nav mr-auto">
             <div sec:authorize="hasAnyRole('USER', 'CONTRIBUTOR')">
                 <li class="nav-item"><a class="nav-link" href="/plants/add" id="plantLink">Add a new plant</a></li>
             </div>
             <div sec:authorize="hasRole('CONTRIBUTOR')">
-                <li class="nav-item"><a class="nav-link" href="/plants/contribute" id="contributeLink">Contribute a plant</a></li>
+                <li class="nav-item"><a class="nav-link" href="/plants/contribute" id="contributeLink">Contribute a
+                plant</a></li>
             </div>
         </ul>
         <ul class="navbar-nav">

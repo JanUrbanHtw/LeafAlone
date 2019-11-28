@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../stylesheets/formStyle.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <title>Contribute your plant knowledge!</title>
 </head>
 <body>
 
 <div th:replace="fragments/navbar :: navbar"></div>
 <div class="container">
-<form action="#" th:action="@{/plants/contribute}" th:object="${plantCare}" method="post">
+<form action="#" th:action="@{/plants/contribute}" th:object="${plantCare}" method="post" id="contributeForm">
     <div class="form-group">
         <label th:for="colloquial">Colloquial plant name:</label>
         <input th:type="text" th:field="*{colloquial}" path="colloquial" class="form-control" id="colloquial">
@@ -48,7 +47,7 @@
         <br />
         <textarea th:field="*{description}" path="description" id="description"></textarea>
     </div>
-    <button class="btn btn-success" th:type="submit">Submit for review</button>
+    <button class="btn btn-success" th:type="submit" id="submitButton">Submit for review</button>
 </form>
 </div>
 </body>
