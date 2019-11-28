@@ -18,7 +18,7 @@ public class PlantCare {
     private String colloquial;
 
     // scientific
-    @Column(name = "scientific")
+    @Column(name = "scientific", unique = true)
     @NotEmpty(message = "Scientific name is required")
     private String scientific;
 
@@ -28,21 +28,23 @@ public class PlantCare {
 
     // how often the plant needs to be watered
     @Column(name = "waterCycle")
-    @Min(1)
+    @Min(value = 1, message = "must be greater than 0")
     private int waterCycle;
 
     // amount of water needed
     //in ml?
     @Column(name = "waterAmount")
-    @Min(1)
+    @Min(value = 1, message = "must be greater than 0")
     private int waterAmount;
 
     // advice on the soil
     @Column(name = "soilAdvice")
+    @NotEmpty(message = "soil advice is required")
     private String soilAdvice;
 
     // plain text description
     @Column(name = "description")
+    @NotEmpty(message = "description is required")
     private String description;
 
     // reference to the contributor

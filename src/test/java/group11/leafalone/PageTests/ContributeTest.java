@@ -1,5 +1,6 @@
 package group11.leafalone.PageTests;
 
+import group11.leafalone.Pages.AboutPage;
 import group11.leafalone.Pages.ContributePage;
 import group11.leafalone.Pages.LoginPage;
 import org.fluentlenium.adapter.junit.jupiter.FluentTest;
@@ -67,10 +68,7 @@ public class ContributeTest extends FluentTest {
                 .inputDescription(DUMMY_DATA)
                 .submitContributePlantForm();
 
-        //TODO implementation of Confirmation Element
-        // changing the element name is permitted
-
-        assertThat($("#confirmation").present()).isTrue();
+        assertThat(window().title()).isEqualTo(AboutPage.TITLE);
     }
 
     @Test
@@ -93,20 +91,6 @@ public class ContributeTest extends FluentTest {
         goTo(contributePage)
                 .inputColloquial(DUMMY_DATA)
                 .inputSunSituation(DUMMY_SUN_SITUATION)
-                .inputWaterCycle(DUMMY_INT)
-                .inputWaterAmount(DUMMY_INT)
-                .inputSoilAdvice(DUMMY_DATA)
-                .inputDescription(DUMMY_DATA)
-                .submitContributePlantForm()
-                .assertErrorPresent();
-    }
-
-    @Test
-    void noSunSituation() {
-        loginAsContributor();
-        goTo(contributePage)
-                .inputColloquial(DUMMY_DATA)
-                .inputScientific(DUMMY_DATA)
                 .inputWaterCycle(DUMMY_INT)
                 .inputWaterAmount(DUMMY_INT)
                 .inputSoilAdvice(DUMMY_DATA)

@@ -46,6 +46,7 @@ public class PlantController {
     @PostMapping("/plants/contribute")
     public String contributePlantSubmit(@Valid PlantCare plantCare, BindingResult bindingResult, Model model) {
         if(bindingResult.hasErrors()){
+            model.addAttribute("sunSituations", SunSituation.values());
             return "plants/contribute";
         }
         plantCareRepository.save(plantCare);
