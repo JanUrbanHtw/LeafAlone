@@ -2,38 +2,55 @@ package group11.leafalone.Plant;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
 @Entity
+@Table(name = "userPlant")
 public class UserPlant {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
+    @Column(name = "name")
     @NotEmpty(message = "Name is required")
     private String name;
 
+    @Column(name = "plantCare")
     @NotEmpty(message = "Plant-Type is required")
     private String plantCare;
     //private PlantCare plantCare; //TODO change to PlantCares scientific attribute - foreign key business
 
+    @Column(name = "sun")
     private SunSituation sun;
 
+    @Column(name = "acquisition")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date acquisition;
 
+    @Column(name = "watered")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date watered;
 
+    @Column(name = "notes")
     private String notes;
 
+    @Column(name = "userid")
     private String userid;
+
+    protected UserPlant() {}
+
+    public UserPlant(@NotEmpty(message = "Name is required") String name, @NotEmpty(message = "Plant-Type is required") String plantCare, SunSituation sun, Date acquisition, Date watered, String notes, String userid) {
+        this.name = name;
+        this.plantCare = plantCare;
+        this.sun = sun;
+        this.acquisition = acquisition;
+        this.watered = watered;
+        this.notes = notes;
+        this.userid = userid;
+    }
 
     public Long getId() {
         return id;

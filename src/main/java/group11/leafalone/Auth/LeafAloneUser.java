@@ -2,10 +2,10 @@ package group11.leafalone.Auth;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import java.util.List;
 
 @Entity
-public class User {
+@Table(name = "leafAloneUser")
+public class LeafAloneUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,6 +19,7 @@ public class User {
     @Column(name="password")
     private String password;
 
+    @Column(name = "role")
     private String role;
 
     public String getRole() {

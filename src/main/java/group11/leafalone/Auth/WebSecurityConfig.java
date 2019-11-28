@@ -22,7 +22,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/about", "/h2/**").permitAll()
+                .antMatchers("/").permitAll()
                 .antMatchers("/plants/contribute").hasRole("CONTRIBUTOR")
                 .antMatchers("/plants/add").hasAnyRole("USER", "CONTRIBUTOR")
                 .anyRequest().authenticated()
@@ -30,8 +30,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login")
                 .permitAll()
-                .and()
-                .csrf().ignoringAntMatchers("/h2/**")
                 .and()
                 .headers()
                 .frameOptions()

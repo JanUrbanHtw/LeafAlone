@@ -19,16 +19,16 @@ public class LeafAloneUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        User user = userRepository.findByUsername(username);
-        if (user == null) {
+        LeafAloneUser leafAloneUser = userRepository.findByUsername(username);
+        if (leafAloneUser == null) {
             throw new UsernameNotFoundException(username);
         }else{
-                GrantedAuthority authority = new SimpleGrantedAuthority(user.getRole());
+                GrantedAuthority authority = new SimpleGrantedAuthority(leafAloneUser.getRole());
                 List<GrantedAuthority> authorityList = new LinkedList<>();
                 authorityList.add(authority);
 
-                return new org.springframework.security.core.userdetails.User(username, user.getPassword(), true, true, true, true, authorityList);
+                return new org.springframework.security.core.userdetails.User(username, leafAloneUser.getPassword(), true, true, true, true, authorityList);
         }
-        //return new LeafAloneUserPrincipal(user);
+        //return new LeafAloneUserPrincipal(leafAloneUser);
     }
 }

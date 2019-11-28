@@ -6,10 +6,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 
 public class LeafAloneUserPrincipal implements UserDetails {
-    private User user;
+    private LeafAloneUser leafAloneUser;
 
-    public LeafAloneUserPrincipal(User user) {
-        this.user = user;
+    public LeafAloneUserPrincipal(LeafAloneUser leafAloneUser) {
+        this.leafAloneUser = leafAloneUser;
     }
 
     @Override
@@ -19,12 +19,12 @@ public class LeafAloneUserPrincipal implements UserDetails {
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return leafAloneUser.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return user.getUsername();
+        return leafAloneUser.getUsername();
     }
 
     @Override
