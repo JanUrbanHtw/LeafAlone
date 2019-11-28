@@ -2,8 +2,8 @@ package group11.leafalone.Auth;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<LeafAloneUser, Long> {
 
-    User findByUsername(String username);
+    LeafAloneUser findByUsername(String username);
 
 }

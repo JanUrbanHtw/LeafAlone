@@ -1,14 +1,11 @@
 package group11.leafalone.Plant;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 @Entity
+@Table(name = "plantCare")
 public class PlantCare {
 
     @Id
@@ -16,34 +13,55 @@ public class PlantCare {
     private Long id;
 
     // colloquial name
+    @Column(name = "colloquial")
     @NotEmpty(message = "Colloquial name is required")
     private String colloquial;
 
     // scientific
+    @Column(name = "scientific")
     @NotEmpty(message = "Scientific name is required")
     private String scientific;
 
     // desired amount of light
+    @Column(name = "sunSituation")
     private SunSituation sunSituation;
 
     // how often the plant needs to be watered
+    @Column(name = "waterCycle")
     @Min(1)
     private int waterCycle;
 
     // amount of water needed
     //in ml?
+    @Column(name = "waterAmount")
     @Min(1)
     private int waterAmount;
 
     // advice on the soil
+    @Column(name = "soilAdvice")
     private String soilAdvice;
 
     // plain text description
+    @Column(name = "description")
     private String description;
 
     // reference to the contributor
     // TODO link to Contributor Model, needs database
+    @Column(name = "conid")
     private String conid;
+
+    protected PlantCare(){}
+
+    public PlantCare(@NotEmpty(message = "Colloquial name is required") String colloquial, @NotEmpty(message = "Scientific name is required") String scientific, SunSituation sunSituation, @Min(1) int waterCycle, @Min(1) int waterAmount, String soilAdvice, String description, String conid) {
+        this.colloquial = colloquial;
+        this.scientific = scientific;
+        this.sunSituation = sunSituation;
+        this.waterCycle = waterCycle;
+        this.waterAmount = waterAmount;
+        this.soilAdvice = soilAdvice;
+        this.description = description;
+        this.conid = conid;
+    }
 
     public String getColloquial() {
         return colloquial;
