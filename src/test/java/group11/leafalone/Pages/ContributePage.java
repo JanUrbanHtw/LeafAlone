@@ -11,31 +11,32 @@ import static org.fluentlenium.core.filter.FilterConstructor.withText;
 @PageUrl("http://localhost:8080/plants/contribute")
 public class ContributePage extends FluentPage {
     public static final String TITLE = "Contribute your plant knowledge!";
-    //TODO the addPlant Page needs to display an errorMessage if form is not filled correctly
-    private static final String ERROR_MESSAGE = "#errorMessage";
 
-    @FindBy(css = "type")
+    @FindBy(className = "errorMessage")
+    private FluentWebElement errorMessage;
+
+    @FindBy(id = "colloquial")
     private FluentWebElement colloquialInput;
 
-    @FindBy(css = "scientific")
+    @FindBy(id = "scientific")
     private FluentWebElement scientificInput;
 
-    @FindBy(css = "sunSituation")
+    @FindBy(id = "sunSituation")
     private FluentWebElement sunSituationInput;
 
-    @FindBy(css = "waterCycle")
+    @FindBy(id = "waterCycle")
     private FluentWebElement waterCycleInput;
 
-    @FindBy(css = "waterAmount")
+    @FindBy(id = "waterAmount")
     private FluentWebElement waterAmountInput;
 
-    @FindBy(css = "soilAdvice")
+    @FindBy(id = "soilAdvice")
     private FluentWebElement soilAdviceInput;
 
-    @FindBy(css = "description")
+    @FindBy(id = "description")
     private FluentWebElement descriptionInput;
 
-    @FindBy(css = "submitButton")
+    @FindBy(id = "submitButton")
     private FluentWebElement submitButton;
 
     public ContributePage inputColloquial(String colloquial) {
@@ -85,7 +86,7 @@ public class ContributePage extends FluentPage {
     }
 
     public ContributePage assertErrorPresent() {
-        assertThat(el(ERROR_MESSAGE).present()).isTrue();
+        assertThat(errorMessage.present()).isTrue();
         return this;
     }
 }

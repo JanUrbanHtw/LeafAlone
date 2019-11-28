@@ -14,7 +14,7 @@ public class UserPlant {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", unique = true)
     @NotEmpty(message = "Name is required")
     private String name;
 
