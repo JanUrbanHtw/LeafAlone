@@ -15,9 +15,20 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    //database
+    implementation 'org.hibernate:hibernate-core:5.4.9.Final'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    //runtimeOnly 'com.h2database:h2'
+    runtimeOnly 'org.postgresql:postgresql'
+
+
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
+
+    // https://mvnrepository.com/artifact/org.thymeleaf.extras/thymeleaf-extras-springsecurity5
+    compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity5', version: '3.0.4.RELEASE'
+
 	// Fluentlenium
     // https://mvnrepository.com/artifact/org.fluentlenium/fluentlenium-core
     compile group: 'org.fluentlenium', name: 'fluentlenium-core', version: '4.3.1'
@@ -35,6 +46,12 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.2.1.RELEASE'
+
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jdbc
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc', version: '2.2.1.RELEASE'
+
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.2.1.RELEASE'
 
 }
 

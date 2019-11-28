@@ -1,63 +1,64 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/html">
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
     <title>Add a personal plant!</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>-->
 </head>
 <body>
 
 <div th:replace="fragments/navbar :: navbar"></div>
 <div class="container">
-    <!--/*@thymesVar id="plant" type="group11.leafalone.Plant.UserPlant"*/-->
-<form action="#" th:action="@{/plants/add}" th:object="${plant}" method="post">
-    <div class="form-group">
-        <label th:for="name">Plant-Name:</label>
-        <input class="form-control" id="type" th:field="*{name}" th:type="text">
-    </div>
+    <form action="#" th:action="@{/plants/add}" th:object="${plant}" id="addPlantForm" method="post">
+        <div class="form-group">
+            <label th:for="name">Plant-Name:</label>
+            <input th:type="text" th:field="*{name}" path="name" class="form-control" id="nameInput">
+            <p class="font-weight-bold" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</p>
+        </div>
 
-    <div class="form-group">
-        <label th:for="type">Type of plant:</label>
-        <!-- TODO: should probably be filled by data model-->
-        <select class="custom-select" th:field="*{plantCare}">
-            <!--/*@thymesVar id="colloquial" type="group11.leafalone.Plant.PlantCare"*/-->
-            <option th:value="${colloquial}">Dummy One</option>
-            <option th:value="${colloquial}">Dummy Two</option>
-            <option th:value="${colloquial}">None of those above</option>
-        </select>
-    </div>
+        <div class="form-group">
+            <label th:for="plantCare">Type of plant:</label>
+            <!-- TODO: should probably be filled by data model-->
+            <!--<select class="custom-select" id="plantType" th:field="*{plantCare}" path="plantCare">
+                <option th:value="${plantCare}">Dummy One</option>
+                <option th:value="${plantCare}">Dummy Two</option>
+                <option th:value="${plantCare}">None of those above</option>
+            </select> -->
 
-    <div class="form-group">
-        <label th:for="sun">Sun-Situation of the plant:</label>
-        <!-- TODO: should probably be filled by data model-->
-        <select class="custom-select" th:field="*{sun}">
-            <option th:value="${sun}">Sunny</option>
-            <option th:value="${sun}">Dark</option>
-            <option th:value="${sun}">Shadow</option>
-        </select>
-    </div>
+            <select class="custom-select" id="plantType" th:field="*{plantCare}" path="plantCare">
+                <option value="Dummy One">Dummy One</option>
+                <option value="Dummy Two">Dummy Two</option>
+                <option value="Dummy Three">Dummy Three</option>
+            </select>
 
-    <div class="form-group">
-        <label th:for="acquisition">Date of acquisition:</label>
-        <input th:type="date" th:field="*{acquisition}" class="form-control" id="acquisition">
-    </div>
+            <p class="font-weight-bold" th:if="${#fields.hasErrors('plantCare')}" th:errors="*{plantCare}">Plant-Typ
+                Error</p>
+        </div>
 
-    <div class="form-group">
-        <label th:for="watered">Date of last watering:</label>
-        <input th:type="date" th:field="*{watered}" class="form-control" id="watered">
-    </div>
+        <div class="form-group">
+            <label th:for="sun">Sun-Situation of the plant:</label>
+            <select th:field="*{sun}" path="sunSituation" id="sunSituation">
+                <option th:each="sun : ${sunSituations}" th:value="${sun}" th:text="${sun.name}"></option>
+            </select>
+        </div>
 
-    <div class="form-group">
-        <label th:for="notes">Additional Notes:</label>
-        <input th:type="text" th:field="*{notes}" class="form-control" id="notes">
-    </div>
+        <div class="form-group">
+            <label th:for="acquisition">Date of acquisition:</label>
+            <input th:type="date" path="acquisition" th:field="*{acquisition}" class="form-control" id="acquisition">
+        </div>
 
-    <div class="form-group">
-        <label th:for="id">ID of plant:</label>
-        <input th:type="text" th:field="*{id}" class="form-control" id="id">
-    </div>
-    <button class="btn btn-success" th:type="submit">Submit new plant</button>
-</form>
+        <div class="form-group">
+            <label th:for="watered">Date of last watering:</label>
+            <input th:type="date" path="watered" th:field="*{watered}" class="form-control" id="watered">
+        </div>
+
+        <div class="form-group">
+            <label th:for="notes">Additional Notes:</label>
+            <textarea th:type="text" th:field="*{notes}" path="notes" class="form-control" id="notes"/>
+        </div>
+        <button class="btn btn-success" id="submitButton" th:type="submit">Submit new plant</button>
+    </form>
 </div>
 
 </body>

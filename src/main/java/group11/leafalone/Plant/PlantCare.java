@@ -1,40 +1,60 @@
 package group11.leafalone.Plant;
 
+import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+
+@Entity
+@Table(name = "plantCare")
 public class PlantCare {
 
+    @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    private Long id;
 
     // colloquial name
+    @Column(name = "colloquial")
+    @NotEmpty(message = "Colloquial name is required")
     private String colloquial;
 
-    // scientific name
+    // scientific
+    @Column(name = "scientific", unique = true)
+    @NotEmpty(message = "Scientific name is required")
     private String scientific;
 
     // desired amount of light
+    @Column(name = "sunSituation")
     private SunSituation sunSituation;
 
     // how often the plant needs to be watered
+    @Column(name = "waterCycle")
+    @Min(value = 1, message = "must be greater than 0")
     private int waterCycle;
 
     // amount of water needed
     //in ml?
+    @Column(name = "waterAmount")
+    @Min(value = 1, message = "must be greater than 0")
     private int waterAmount;
 
     // advice on the soil
+    @Column(name = "soilAdvice")
+    @NotEmpty(message = "soil advice is required")
     private String soilAdvice;
 
     // plain text description
+    @Column(name = "description")
+    @NotEmpty(message = "description is required")
     private String description;
 
     // reference to the contributor
     // TODO link to Contributor Model, needs database
-    private String id;
+    @Column(name = "conid")
+    private String conid;
 
-    //probably needed for contributePlantController
-    public PlantCare(){
+    protected PlantCare(){}
 
-    }
-
-    public PlantCare(String colloquial, String scientific, String plantPicture, SunSituation sunSituation, int waterCycle, int waterAmount, String soilAdvice, String description, String id) {
+    public PlantCare(@NotEmpty(message = "Colloquial name is required") String colloquial, @NotEmpty(message = "Scientific name is required") String scientific, SunSituation sunSituation, @Min(1) int waterCycle, @Min(1) int waterAmount, String soilAdvice, String description, String conid) {
         this.colloquial = colloquial;
         this.scientific = scientific;
         this.sunSituation = sunSituation;
@@ -42,9 +62,9 @@ public class PlantCare {
         this.waterAmount = waterAmount;
         this.soilAdvice = soilAdvice;
         this.description = description;
-        this.id = id;
+        this.conid = conid;
     }
-  
+
     public String getColloquial() {
         return colloquial;
     }
@@ -73,8 +93,45 @@ public class PlantCare {
         return description;
     }
 
-    public String getId() {
+    public String getConid(){return conid;
+    }
+    public Long getId() {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setColloquial(String colloquial) {
+        this.colloquial = colloquial;
+    }
+
+    public void setScientific(String scientific) {
+        this.scientific = scientific;
+    }
+
+    public void setSunSituation(SunSituation sunSituation) {
+        this.sunSituation = sunSituation;
+    }
+
+    public void setWaterCycle(int waterCycle) {
+        this.waterCycle = waterCycle;
+    }
+
+    public void setWaterAmount(int waterAmount) {
+        this.waterAmount = waterAmount;
+    }
+
+    public void setSoilAdvice(String soilAdvice) {
+        this.soilAdvice = soilAdvice;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setConid(String conid) {
+        this.conid = conid;
+    }
 }
