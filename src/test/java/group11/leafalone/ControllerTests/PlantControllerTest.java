@@ -3,7 +3,6 @@ package group11.leafalone.ControllerTests;
 import group11.leafalone.LeafaloneApplication;
 import group11.leafalone.Plant.*;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -53,7 +52,8 @@ class PlantControllerTest {
         BindingResult mockResult = Mockito.mock(BindingResult.class);
         when(mockResult.hasErrors()).thenReturn(false);
         Model mockmodel = Mockito.mock(Model.class);
-        String redirect = plantController.addPlantSubmit(new UserPlant("Dummy", "Dummy",
+        String redirect = plantController.addPlantSubmit(new Plant("Dummy", new PlantCare("Dummy", "Duminitus Testitus",
+                SunSituation.SUNNY, 5, 5, "soil", "Test", "Paul"),
                 SunSituation.DARK, new Date(), new Date(), null, null), mockResult, mockmodel);
         assertEquals("redirect:../about", redirect);
     }

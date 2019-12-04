@@ -19,14 +19,14 @@ public class PlantController {
 
     @GetMapping("/plants/add")
     public String addPlantForm(Model model) {
-        model.addAttribute("plant", new UserPlant());
+        model.addAttribute("plant", new Plant());
         model.addAttribute("sunSituations", SunSituation.values());
         return "plants/add";
     }
 
     @PostMapping("/plants/add")
-    public String addPlantSubmit(@Valid UserPlant plant, BindingResult bindingResult, Model model) {
-        if(bindingResult.hasErrors()){
+    public String addPlantSubmit(@Valid Plant plant, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
             model.addAttribute("plant", plant);
             model.addAttribute("sunSituations", SunSituation.values());
             return "plants/add";
@@ -45,12 +45,13 @@ public class PlantController {
 
     @PostMapping("/plants/contribute")
     public String contributePlantSubmit(@Valid PlantCare plantCare, BindingResult bindingResult, Model model) {
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             model.addAttribute("sunSituations", SunSituation.values());
             return "plants/contribute";
         }
         plantCareRepository.save(plantCare);
         return "redirect:../about";
     }
+
 
 }

@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class AboutUsController {
 
     @RequestMapping("/")
-    public ModelAndView hello () {
+    public ModelAndView hello() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("index.html");
         return modelAndView;

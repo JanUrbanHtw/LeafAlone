@@ -1,5 +1,7 @@
 package group11.leafalone.Plant;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -8,20 +10,21 @@ import java.util.Date;
 
 @Entity
 @Table(name = "userPlant")
-public class UserPlant {
+public class Plant {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "name", unique = true)
     @NotEmpty(message = "Name is required")
     private String name;
 
-    @Column(name = "plantCare")
     @NotEmpty(message = "Plant-Type is required")
-    private String plantCare;
-    //private PlantCare plantCare; //TODO change to PlantCares scientific attribute - foreign key business
+    @ManyToOne(fetch = FetchType.LAZY, optional = false) //TODO
+    @JoinColumn(name = "plantcare_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private PlantCare plantCare;
 
     @Column(name = "sun")
     private SunSituation sun;
@@ -40,9 +43,10 @@ public class UserPlant {
     @Column(name = "userid")
     private String userid;
 
-    protected UserPlant() {}
+    protected Plant() {
+    }
 
-    public UserPlant(@NotEmpty(message = "Name is required") String name, @NotEmpty(message = "Plant-Type is required") String plantCare, SunSituation sun, Date acquisition, Date watered, String notes, String userid) {
+    public Plant(@NotEmpty(message = "Name is required") String name, PlantCare plantCare, SunSituation sun, Date acquisition, Date watered, String notes, String userid) {
         this.name = name;
         this.plantCare = plantCare;
         this.sun = sun;
@@ -60,7 +64,7 @@ public class UserPlant {
         return name;
     }
 
-    public String getPlantCare() {
+    public PlantCare getPlantCare() {
         return plantCare;
     }
 
@@ -92,7 +96,7 @@ public class UserPlant {
         this.name = name;
     }
 
-    public void setPlantCare(String plantCare) {
+    public void setPlantCare(PlantCare plantCare) {
         this.plantCare = plantCare;
     }
 
