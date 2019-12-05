@@ -3,6 +3,7 @@ package group11.leafalone.Auth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
@@ -37,10 +38,11 @@ public class LoginController {
         return modelAndView;
     }
 
-    @RequestMapping(value="/logout", method= RequestMethod.GET)
-    public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (!(authentication instanceof AnonymousAuthenticationToken)) new SecurityContextLogoutHandler().logout(request, response, authentication);
+        if (!(authentication instanceof AnonymousAuthenticationToken))
+            new SecurityContextLogoutHandler().logout(request, response, authentication);
         return "redirect:/login?logout";
     }
 
@@ -52,13 +54,13 @@ public class LoginController {
 
     @PostMapping("/register")
     public String registerSubmit(@Valid LeafAloneUser user, BindingResult bindingResult, Model model, HttpServletRequest request) {
-        if(!(user.getPassword().equals(user.getConfirmPassword()))) {
+        if (!(user.getPassword().equals(user.getConfirmPassword()))) {
             FieldError error = new FieldError("user", "confirmPassword", "Required to be identical to password");
             bindingResult.addError(error);
         }
         LeafAloneUser repoUser = userRepository.findByUsername(user.getUsername());
         System.out.println(repoUser != null);
-        if(repoUser != null) {
+        if (repoUser != null) {
             FieldError error = new FieldError("user", "username", "Username already taken");
             bindingResult.addError(error);
         }
@@ -77,5 +79,24 @@ public class LoginController {
         model.addAttribute("newUser", true);
         model.addAttribute("autoLoginFailed", false);
         return "redirect:/";
+
+    }
+
+    //only useful if getting code out of navbar makes sense
+    public boolean isUser() {
+        return SecurityContextHolder.getContext().getAuthentication().getAuthorities().equals(new SimpleGrantedAuthority("USER"));
+    }
+
+    public boolean isContributor() {
+        return SecurityContextHolder.getContext().getAuthentication().getAuthorities().equals(new SimpleGrantedAuthority("CONTRIBUTOR"));
+    }
+
+    public boolean canAddPlant() {
+        if (isUser() || isContributor()) return true;
+        return false;
+    }
+
+    public boolean canAddPlantCare() {
+        return isUser();
     }
 }

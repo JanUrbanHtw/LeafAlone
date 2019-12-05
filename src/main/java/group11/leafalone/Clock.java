@@ -9,8 +9,8 @@ public class Clock {
     String time;
 
     public Clock() {
-        this.date = "Date: "+LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE);
-        this.time = "Time: "+LocalDateTime.now().format(DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM));
+        this.date = "Date: " + LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE);
+        this.time = "Time: " + LocalDateTime.now().format(DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM));
     }
 
     public String getDate() {

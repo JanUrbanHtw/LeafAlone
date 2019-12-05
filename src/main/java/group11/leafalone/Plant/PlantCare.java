@@ -9,7 +9,7 @@ import javax.validation.constraints.NotEmpty;
 public class PlantCare {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     // colloquial name
@@ -52,7 +52,8 @@ public class PlantCare {
     @Column(name = "conid")
     private String conid;
 
-    protected PlantCare(){}
+    protected PlantCare() {
+    }
 
     public PlantCare(@NotEmpty(message = "Colloquial name is required") String colloquial, @NotEmpty(message = "Scientific name is required") String scientific, SunSituation sunSituation, @Min(1) int waterCycle, @Min(1) int waterAmount, String soilAdvice, String description, String conid) {
         this.colloquial = colloquial;
@@ -93,8 +94,10 @@ public class PlantCare {
         return description;
     }
 
-    public String getConid(){return conid;
+    public String getConid() {
+        return conid;
     }
+
     public Long getId() {
         return id;
     }

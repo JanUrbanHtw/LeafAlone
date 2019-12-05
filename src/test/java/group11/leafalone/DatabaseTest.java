@@ -86,9 +86,10 @@ class DatabaseTest {
 
     @Test
     void submittingPlantFormShouldCreateDatabaseEntry() {
-        UserPlant savedPlant = plantRepository.save(new UserPlant("Dummy", "Dummy", SunSituation.SUNNY,
+        Plant savedPlant = plantRepository.save(new Plant("Dummy", new PlantCare("Dummy", "Duminitus Testitus",
+                SunSituation.SUNNY, 5, 5, "soil", "Test", "Paul"), SunSituation.SUNNY,
                 null, null, null, null));
-        Optional<UserPlant> retrievedPlant = plantRepository.findById(savedPlant.getId());
+        Optional<Plant> retrievedPlant = plantRepository.findById(savedPlant.getId());
 
         assertTrue(retrievedPlant.isPresent());
         assertEquals(savedPlant.getId(), retrievedPlant.get().getId());
@@ -101,16 +102,18 @@ class DatabaseTest {
 
     @Test
     void submittedPlantShouldHaveUniqueName() {
-        UserPlant plant = new UserPlant("Dummy", "Dummy", SunSituation.SUNNY,
+        Plant plant = new Plant("Dummy", new PlantCare("Dummy", "Duminitus Testitus",
+                SunSituation.SUNNY, 5, 5, "soil", "Test", "Paul"), SunSituation.SUNNY,
                 null, null, null, null);
 
-        UserPlant plant2 = new UserPlant("Dummy", "Dummy", SunSituation.SUNNY,
+        Plant plant2 = new Plant("Dummy", new PlantCare("Dummy", "Duminitus Testitus",
+                SunSituation.SUNNY, 5, 5, "soil", "Test", "Paul"), SunSituation.SUNNY,
                 null, null, null, null);
         plantRepository.save(plant);
         assertThrows(DataIntegrityViolationException.class, () -> plantRepository.save(plant2));
 
-        Optional<UserPlant> retrievedPlant = plantRepository.findById(plant.getId());
-        Optional<UserPlant> retrievedPlant2 = plantRepository.findById(plant2.getId());
+        Optional<Plant> retrievedPlant = plantRepository.findById(plant.getId());
+        Optional<Plant> retrievedPlant2 = plantRepository.findById(plant2.getId());
 
         assertTrue(retrievedPlant.isPresent());
         assertFalse(retrievedPlant2.isPresent());

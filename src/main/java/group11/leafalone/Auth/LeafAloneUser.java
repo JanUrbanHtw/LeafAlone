@@ -9,10 +9,10 @@ public class LeafAloneUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="id")
+    @Column(name = "id")
     private Long id;
 
-    @Column(name="username", unique = true)
+    @Column(name="username", nullable = false, unique = true)
     @NotEmpty(message = "Username is required")
     private String username;
 
