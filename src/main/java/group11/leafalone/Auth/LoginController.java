@@ -31,8 +31,9 @@ public class LoginController {
     public LoginController() {}
 
     //testing
-    protected LoginController(UserRepository userRepository){
+    protected LoginController(UserRepository userRepository, PasswordEncoder passwordEncoder){
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @RequestMapping("/login")

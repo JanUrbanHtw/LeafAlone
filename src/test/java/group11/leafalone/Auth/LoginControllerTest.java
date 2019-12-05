@@ -2,8 +2,9 @@ package group11.leafalone.Auth;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -21,7 +22,8 @@ class LoginControllerTest {
     @BeforeAll
     static void init() {
         userRepository = Mockito.mock(UserRepository.class);
-        loginController = new LoginController(userRepository);
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        loginController = new LoginController(userRepository, passwordEncoder);
     }
 
     // LOGIN
