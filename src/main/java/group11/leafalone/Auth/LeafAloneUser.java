@@ -12,15 +12,20 @@ public class LeafAloneUser {
     @Column(name="id")
     private Long id;
 
-    @Column(name="username", nullable = false, unique = true)
+    @Column(name="username", unique = true)
+    @NotEmpty(message = "Username is required")
     private String username;
 
-    @NotEmpty
+    @NotEmpty (message = "Password is required")
     @Column(name="password")
     private String password;
 
     @Column(name = "role")
     private String role;
+
+    @Transient
+    @NotEmpty (message = "Confirmation is required")
+    private String confirmPassword;
 
     public String getRole() {
         return role;
@@ -52,5 +57,22 @@ public class LeafAloneUser {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
+
+    protected LeafAloneUser(){}
+
+    public LeafAloneUser(@NotEmpty(message = "Username is required") String username, @NotEmpty(message = "Password is required") String password, String role, @NotEmpty(message = "Confirmation is required") String confirmPassword) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+        this.confirmPassword = confirmPassword;
     }
 }
