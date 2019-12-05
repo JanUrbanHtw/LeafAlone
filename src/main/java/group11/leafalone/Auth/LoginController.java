@@ -63,7 +63,6 @@ public class LoginController {
             bindingResult.addError(error);
         }
         LeafAloneUser repoUser = userRepository.findByUsername(user.getUsername());
-        System.out.println(repoUser != null);
         if (repoUser != null) {
             FieldError error = new FieldError("user", "username", "Username already taken");
             bindingResult.addError(error);
@@ -74,7 +73,7 @@ public class LoginController {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         try {
-            request.login(user.getUsername(), user.getPassword());
+            request.login(user.getUsername(), user.getConfirmPassword());
         } catch (ServletException e) {
             //TODO: Customized homepage-redirect with messages, tried to, didn't work
             model.addAttribute("newUser", true);
