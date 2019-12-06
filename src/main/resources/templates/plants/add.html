@@ -37,11 +37,13 @@
         <div class="form-group">
             <label th:for="acquisition">Date of acquisition:</label>
             <input th:type="date" path="acquisition" th:field="*{acquisition}" class="form-control" id="acquisition">
+            <p class="font-weight-bold" th:if="${#fields.hasErrors('acquisition')}" th:errors="*{acquisition}">Acquisition-Date Error</p>
         </div>
 
         <div class="form-group">
             <label th:for="watered">Date of last watering:</label>
             <input th:type="date" path="watered" th:field="*{watered}" class="form-control" id="watered">
+            <p class="font-weight-bold" th:if="${#fields.hasErrors('watered')}" th:errors="*{watered}">Last-Watered-Date Error</p>
         </div>
 
         <div class="form-group">

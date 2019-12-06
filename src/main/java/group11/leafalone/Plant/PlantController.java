@@ -7,9 +7,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 
 @Controller
 public class PlantController {
@@ -33,7 +37,30 @@ public class PlantController {
 
     @PostMapping("/plants/add")
     public String addPlantSubmit(@Valid Plant plant, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
+        Date today = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
+        try {
+            if (plant.getAcquisition().after(today)) {
+                FieldError error = new FieldError("plant", "acquisition", "Required to be before today or today");
+                bindingResult.addError(error);
+            }
+        } catch (NullPointerException e) {
+            plant.setAcquisition(today);
+        }
+
+        try {
+            if (plant.getWatered().after(today)) {
+                FieldError error = new FieldError("plant", "watered", "Required to be before today or today");
+                bindingResult.addError(error);
+            }
+        } catch (NullPointerException e) {
+            plant.setWatered(today);
+        }
+
+        if (plant.getWatered().before(plant.getAcquisition())) {
+            FieldError error = new FieldError("plant", "watered", "Required to be after acquisition-date or acquisition-date");
+            bindingResult.addError(error);
+        }
+        if (bindingResult.hasErrors() || bindingResult.hasFieldErrors()) {
             model.addAttribute("plant", plant);
             model.addAttribute("sunSituations", SunSituation.values());
             model.addAttribute("plantCares", plantCareRepository.findAll());
