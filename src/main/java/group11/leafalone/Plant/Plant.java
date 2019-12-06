@@ -21,7 +21,6 @@ public class Plant {
     @NotEmpty(message = "Name is required")
     private String name;
 
-    @NotEmpty(message = "Plant-Type is required")
     @ManyToOne(fetch = FetchType.LAZY, optional = false) //TODO
     @JoinColumn(name = "plantcare_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)

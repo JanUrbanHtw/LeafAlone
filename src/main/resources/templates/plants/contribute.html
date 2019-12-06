@@ -44,14 +44,14 @@
     <div class="form-group">
         <label th:for="soilAdvice">What kind of soil is ideal for this plant?</label>
         <br />
-        <textarea th:field="*{soilAdvice}" path="soilAdvice" id="soilAdvice"></textarea>
+        <textarea th:type="text" th:field="*{soilAdvice}" path="soilAdvice" class="form-control" id="soilAdvice"></textarea>
         <p class="font-weight-bold errorMessage" th:if="${#fields.hasErrors('soilAdvice')}" th:errors="*{soilAdvice}">
             Soil-Advice Error</p>
     </div>
     <div class="form-group">
         <label for="description">general description, additional information</label>
         <br />
-        <textarea th:field="*{description}" path="description" id="description"></textarea>
+        <textarea th:type="text" th:field="*{description}" path="description" class="form-control" id="description"></textarea>
         <p class="font-weight-bold errorMessage" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">
             Description Error</p>
     </div>

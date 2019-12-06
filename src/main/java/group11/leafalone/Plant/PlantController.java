@@ -10,7 +10,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.nio.file.attribute.UserPrincipal;
 
 @Controller
 public class PlantController {
@@ -28,6 +27,7 @@ public class PlantController {
     public String addPlantForm(Model model) {
         model.addAttribute("plant", new Plant());
         model.addAttribute("sunSituations", SunSituation.values());
+        model.addAttribute("plantCares", plantCareRepository.findAll());
         return "plants/add";
     }
 
@@ -36,6 +36,7 @@ public class PlantController {
         if (bindingResult.hasErrors()) {
             model.addAttribute("plant", plant);
             model.addAttribute("sunSituations", SunSituation.values());
+            model.addAttribute("plantCares", plantCareRepository.findAll());
             return "plants/add";
         }
         plant.setLeafAloneUser(getCurrentUser());
