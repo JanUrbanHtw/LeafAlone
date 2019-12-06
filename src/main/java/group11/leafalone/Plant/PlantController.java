@@ -38,6 +38,7 @@ public class PlantController {
             model.addAttribute("sunSituations", SunSituation.values());
             return "plants/add";
         }
+        plant.setLeafAloneUser(getCurrentUser());
         plantRepository.save(plant);
         return "redirect:../about";
     }
@@ -64,9 +65,7 @@ public class PlantController {
     public LeafAloneUser getCurrentUser() { //TODO probably belongs in another class!! (but how to call that class then)
         SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        //LeafAloneUserDetailsService leafAloneUserDetailsService = new LeafAloneUserDetailsService();
         return userRepository.findByUsername(userDetails.getUsername());
-        //return leafAloneUserDetailsService.loadLAUserbyUsername(userDetails.getUsername());
     }
 
 
