@@ -1,9 +1,6 @@
 package group11.leafalone.Plant;
 
-import group11.leafalone.Auth.LeafAloneUser;
-import group11.leafalone.Auth.LeafAloneUserDetailsService;
-import group11.leafalone.Auth.LeafAloneUserPrincipal;
-import group11.leafalone.Auth.WebSecurityConfig;
+import group11.leafalone.Auth.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +14,9 @@ import java.nio.file.attribute.UserPrincipal;
 
 @Controller
 public class PlantController {
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private PlantRepository plantRepository;
@@ -62,9 +62,11 @@ public class PlantController {
     }
 
     public LeafAloneUser getCurrentUser() { //TODO probably belongs in another class!! (but how to call that class then)
+        SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        LeafAloneUserDetailsService leafAloneUserDetailsService = new LeafAloneUserDetailsService();
-        return leafAloneUserDetailsService.loadLAUserbyUsername(userDetails.getUsername());
+        //LeafAloneUserDetailsService leafAloneUserDetailsService = new LeafAloneUserDetailsService();
+        return userRepository.findByUsername(userDetails.getUsername());
+        //return leafAloneUserDetailsService.loadLAUserbyUsername(userDetails.getUsername());
     }
 
 
