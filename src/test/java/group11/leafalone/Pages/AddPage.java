@@ -17,13 +17,13 @@ public class AddPage extends FluentPage {
     public static final String TITLE = "Add a personal plant!";
     private static final String ERROR_MESSAGE = "#errorMessage";
 
-    @FindBy(id = "type")
+    @FindBy(id = "nameInput")
     private FluentWebElement plantNameInput;
 
     @FindBy(id = "plantType")
     private FluentWebElement plantTypeInput;
 
-    @FindBy(id = "sun")
+    @FindBy(id = "sunSituation")
     private FluentWebElement sunSituationInput;
 
     @FindBy(id = "acquisition")
@@ -34,9 +34,6 @@ public class AddPage extends FluentPage {
 
     @FindBy(id = "notes")
     private FluentWebElement additionalNotesInput;
-
-    @FindBy(id = "id")
-    private FluentWebElement idInput;
 
     @FindBy(id = "submitButton")
     private FluentWebElement submitButton;
@@ -68,11 +65,6 @@ public class AddPage extends FluentPage {
 
     public AddPage inputNotes(String notes) {
         additionalNotesInput.write(notes);
-        return this;
-    }
-
-    public AddPage setID(String id) {
-        idInput.write(id);
         return this;
     }
 

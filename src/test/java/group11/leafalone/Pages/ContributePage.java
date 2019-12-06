@@ -11,10 +11,11 @@ import static org.fluentlenium.core.filter.FilterConstructor.withText;
 @PageUrl("http://localhost:8080/plants/contribute")
 public class ContributePage extends FluentPage {
     public static final String TITLE = "Contribute your plant knowledge!";
-    //TODO the addPlant Page needs to display an errorMessage if form is not filled correctly
-    private static final String ERROR_MESSAGE = "#errorMessage";
 
-    @FindBy(id = "type")
+    @FindBy(className = "errorMessage")
+    private FluentWebElement errorMessage;
+
+    @FindBy(id = "colloquial")
     private FluentWebElement colloquialInput;
 
     @FindBy(id = "scientific")
@@ -85,7 +86,7 @@ public class ContributePage extends FluentPage {
     }
 
     public ContributePage assertErrorPresent() {
-        assertThat(el(ERROR_MESSAGE).present()).isTrue();
+        assertThat(errorMessage.present()).isTrue();
         return this;
     }
 }

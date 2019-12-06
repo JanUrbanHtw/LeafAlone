@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <title>Register</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+
+<div th:replace="fragments/navbar :: navbar"></div>
+<div class="container">
+    <form action="#" th:action="@{/register}" th:object="${leafAloneUser}" id="registerForm" method="post">
+        <div class="form-group">
+            <label th:for="username">Username:</label>
+            <input th:type="text" th:field="*{username}" path="username" class="form-control" id="usernameInput">
+            <p class="font-weight-bold" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</p>
+        </div>
+
+        <div class="form-group">
+            <label th:for="role">Role:</label>
+            <select class="custom-select" id="roleInput" th:field="*{role}" path="role">
+                <option value="ROLE_USER">Standard User</option>
+                <option value="ROLE_CONTRIBUTOR">Contributor</option>
+            </select>
+            <p class="font-weight-bold" th:if="${#fields.hasErrors('role')}" th:errors="*{role}">Role Error</p>
+        </div>
+
+        <div class="form-group">
+            <label th:for="password">Password:</label>
+            <input th:type="password" path="password" th:field="*{password}" class="form-control" id="passwordInput">
+            <p class="font-weight-bold" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</p>
+        </div>
+
+        <div class="form-group">
+            <label th:for="confirmPassword">Confirm your Password:</label>
+            <input th:type="password" path="confirmPassword" th:field="*{confirmPassword}" class="form-control" id="confirmPasswordInput">
+            <p class="font-weight-bold" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}">Password Confirm Error</p>
+        </div>
+
+        <button class="btn btn-success" id="submitButton" th:type="submit">Register</button>
+    </form>
+</div>
+
+</body>
+</html>
