@@ -76,14 +76,9 @@ public class LoginController {
         try {
             request.login(user.getUsername(), user.getConfirmPassword());
         } catch (ServletException e) {
-            //TODO: Customized homepage-redirect with messages, tried to, didn't work
-            model.addAttribute("newUser", true);
-            model.addAttribute("autoLoginFailed", true);
-            return "redirect:/";
+            return "redirect:/?newUser&&autoLoginFailed";
         }
-        model.addAttribute("newUser", true);
-        model.addAttribute("autoLoginFailed", false);
-        return "redirect:/";
+        return "redirect:/?newUser";
 
     }
 
