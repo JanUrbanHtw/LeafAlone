@@ -31,4 +31,10 @@ public class LeafAloneUserDetailsService implements UserDetailsService {
         }
         //return new LeafAloneUserPrincipal(leafAloneUser);
     }
+
+    public LeafAloneUser loadLAUserbyUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+
 }

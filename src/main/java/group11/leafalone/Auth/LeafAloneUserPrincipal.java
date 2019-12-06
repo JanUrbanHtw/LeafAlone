@@ -22,6 +22,14 @@ public class LeafAloneUserPrincipal implements UserDetails {
         return leafAloneUser.getPassword();
     }
 
+    public Long getId() {
+        return leafAloneUser.getId();
+    }
+
+    public LeafAloneUser getUser() {
+        return leafAloneUser;
+    }
+
     @Override
     public String getUsername() {
         return leafAloneUser.getUsername();

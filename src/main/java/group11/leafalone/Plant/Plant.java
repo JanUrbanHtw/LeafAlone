@@ -1,5 +1,6 @@
 package group11.leafalone.Plant;
 
+import group11.leafalone.Auth.LeafAloneUser;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -40,20 +41,30 @@ public class Plant {
     @Column(name = "notes")
     private String notes;
 
-    @Column(name = "userid")
-    private String userid;
+    public LeafAloneUser getLeafAloneUser() {
+        return leafAloneUser;
+    }
+
+    public void setLeafAloneUser(LeafAloneUser leafAloneUser) {
+        this.leafAloneUser = leafAloneUser;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private LeafAloneUser leafAloneUser;
 
     protected Plant() {
     }
 
-    public Plant(@NotEmpty(message = "Name is required") String name, PlantCare plantCare, SunSituation sun, Date acquisition, Date watered, String notes, String userid) {
+    public Plant(@NotEmpty(message = "Name is required") String name, PlantCare plantCare, SunSituation sun, Date acquisition, Date watered, String notes, LeafAloneUser leafAloneUser) {
         this.name = name;
         this.plantCare = plantCare;
         this.sun = sun;
         this.acquisition = acquisition;
         this.watered = watered;
         this.notes = notes;
-        this.userid = userid;
+        this.leafAloneUser = leafAloneUser;
     }
 
     public Long getId() {
@@ -84,10 +95,6 @@ public class Plant {
         return notes;
     }
 
-    public String getUserid() {
-        return userid;
-    }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -114,9 +121,5 @@ public class Plant {
 
     public void setNotes(String notes) {
         this.notes = notes;
-    }
-
-    public void setUserid(String userid) {
-        this.userid = userid;
     }
 }

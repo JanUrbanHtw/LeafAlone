@@ -1,5 +1,9 @@
 package group11.leafalone.Plant;
 
+import group11.leafalone.Auth.LeafAloneUser;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
@@ -47,15 +51,15 @@ public class PlantCare {
     @NotEmpty(message = "description is required")
     private String description;
 
-    // reference to the contributor
-    // TODO link to Contributor Model, needs database
-    @Column(name = "conid")
-    private String conid;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "contributor_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private LeafAloneUser contributor;
 
     protected PlantCare() {
     }
 
-    public PlantCare(@NotEmpty(message = "Colloquial name is required") String colloquial, @NotEmpty(message = "Scientific name is required") String scientific, SunSituation sunSituation, @Min(1) int waterCycle, @Min(1) int waterAmount, String soilAdvice, String description, String conid) {
+    public PlantCare(@NotEmpty(message = "Colloquial name is required") String colloquial, @NotEmpty(message = "Scientific name is required") String scientific, SunSituation sunSituation, @Min(1) int waterCycle, @Min(1) int waterAmount, String soilAdvice, String description, LeafAloneUser contributor) {
         this.colloquial = colloquial;
         this.scientific = scientific;
         this.sunSituation = sunSituation;
@@ -63,7 +67,7 @@ public class PlantCare {
         this.waterAmount = waterAmount;
         this.soilAdvice = soilAdvice;
         this.description = description;
-        this.conid = conid;
+        this.contributor = contributor;
     }
 
     public String getColloquial() {
@@ -72,6 +76,14 @@ public class PlantCare {
 
     public String getScientific() {
         return scientific;
+    }
+
+    public LeafAloneUser getContributor() {
+        return contributor;
+    }
+
+    public void setContributor(LeafAloneUser contributor) {
+        this.contributor = contributor;
     }
 
     public SunSituation getSunSituation() {
@@ -92,10 +104,6 @@ public class PlantCare {
 
     public String getDescription() {
         return description;
-    }
-
-    public String getConid() {
-        return conid;
     }
 
     public Long getId() {
@@ -132,9 +140,5 @@ public class PlantCare {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public void setConid(String conid) {
-        this.conid = conid;
     }
 }

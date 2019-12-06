@@ -1,12 +1,19 @@
 package group11.leafalone.Plant;
 
+import group11.leafalone.Auth.LeafAloneUser;
+import group11.leafalone.Auth.LeafAloneUserDetailsService;
+import group11.leafalone.Auth.LeafAloneUserPrincipal;
+import group11.leafalone.Auth.WebSecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.nio.file.attribute.UserPrincipal;
 
 @Controller
 public class PlantController {
@@ -49,8 +56,15 @@ public class PlantController {
             model.addAttribute("sunSituations", SunSituation.values());
             return "plants/contribute";
         }
+        plantCare.setContributor(getCurrentUser());
         plantCareRepository.save(plantCare);
         return "redirect:../about";
+    }
+
+    public LeafAloneUser getCurrentUser() { //TODO probably belongs in another class!! (but how to call that class then)
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        LeafAloneUserDetailsService leafAloneUserDetailsService = new LeafAloneUserDetailsService();
+        return leafAloneUserDetailsService.loadLAUserbyUsername(userDetails.getUsername());
     }
 
 
