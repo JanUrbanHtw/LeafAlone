@@ -23,7 +23,7 @@
         <tbody>
         <!--/*@thymesVar id="plants" type="java.util.List"*/-->
         <tr th:each="plant : ${plants}">
-            <!--/*@thymesVar id="plant" type="group11.leafalone.Plant.UserPlant"*/-->
+            <!--/*@thymesVar id="plant" type="group11.leafalone.Plant.Plant"*/-->
             <th scope="row" th:text="${plant.getName()}"></th>
             <td th:text="${plant.getPlantCare().getColloquial()}"></td>
             <td th:text="${plant.getSun().name()}"></td>

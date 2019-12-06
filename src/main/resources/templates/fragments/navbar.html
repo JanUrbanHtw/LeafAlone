@@ -8,7 +8,7 @@
             <div sec:authorize="hasAnyRole('USER', 'CONTRIBUTOR')">
                 <li class="nav-item"><a class="nav-link" href="/plants/add" id="plantLink">Add a new plant</a></li>
             </div>
-            <div sec:authorize="hasRole('USER')">
+            <div sec:authorize="hasAnyRole('USER', 'CONTRIBUTOR')">
                 <li class="nav-item"><a class="nav-link" href="/plants/list" id="listLink">Your Plants</a></li>
             </div>
             <div sec:authorize="hasRole('CONTRIBUTOR')">

@@ -1,6 +1,7 @@
 package group11.leafalone.Plant;
 
-import group11.leafalone.Auth.*;
+import group11.leafalone.Auth.LeafAloneUser;
+import group11.leafalone.Auth.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,14 +9,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -71,7 +71,7 @@ public class PlantController {
         }
         plant.setLeafAloneUser(getCurrentUser());
         plantRepository.save(plant);
-        return "redirect:../about";
+        return "redirect:list";
     }
 
 
@@ -93,6 +93,14 @@ public class PlantController {
         return "redirect:../about";
     }
 
+    @GetMapping("plants/list")
+    public String getPlantList(Model model) {
+        List<Plant> plantList = plantRepository.findByLeafAloneUser(getCurrentUser());
+        model.addAttribute("plants", plantList);
+        return "plants/list";
+
+    }
+
     public LeafAloneUser getCurrentUser() {
         SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -101,25 +109,6 @@ public class PlantController {
 
     public Long getCurrentUserID() {
         return getCurrentUser().getId();
-    }
-
-    @GetMapping("plants/list")
-    public ModelAndView getPlantList() {
-        ModelAndView modelAndView = new ModelAndView();
-        List<UserPlant> plantList = new ArrayList<UserPlant>();
-        //TODO read data from the database
-
-//        UserPlant dummyPlant = new UserPlant();
-//        dummyPlant.setName("dummyPlant");
-//        dummyPlant.setPlantCare(new PlantCare("typeDummy", null, null, null,
-//                0, 0, null,null, null));
-//        dummyPlant.setSun(SunSituation.DARK);
-//        dummyPlant.setAcquisition(new Date());
-//        dummyPlant.setWatered(new Date());
-//        plantList.add(dummyPlant);
-        modelAndView.addObject("plants", plantList);
-        modelAndView.setViewName("plants/list.html");
-        return modelAndView;
     }
 
 }
