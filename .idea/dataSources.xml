@@ -13,5 +13,11 @@
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://localhost:5432/LeafAloneDB</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="PostgreSQL - LeafAloneDB@localhost" uuid="ca94a26f-6b2b-4d08-85d1-33450227a874">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/LeafAloneDB</jdbc-url>
+    </data-source>
   </component>
 </project>

@@ -63,11 +63,14 @@ public class PlantController {
         return "redirect:../about";
     }
 
-    public LeafAloneUser getCurrentUser() { //TODO probably belongs in another class!! (but how to call that class then)
+    public LeafAloneUser getCurrentUser() {
         SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return userRepository.findByUsername(userDetails.getUsername());
     }
 
+    public Long getCurrentUserID() {
+        return getCurrentUser().getId();
+    }
 
 }
