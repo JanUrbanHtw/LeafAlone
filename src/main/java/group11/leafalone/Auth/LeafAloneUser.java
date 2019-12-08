@@ -27,6 +27,58 @@ public class LeafAloneUser {
     @NotEmpty (message = "Confirmation is required")
     private String confirmPassword;
 
+    protected LeafAloneUser() {}
+
+    public LeafAloneUser(@NotEmpty(message = "Username is required") String username, @NotEmpty(message = "Password is required") String password, String role, @NotEmpty(message = "Confirmation is required") String confirmPassword) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+        this.confirmPassword = confirmPassword;
+    }
+
+    public static class Builder {
+        private Long id;
+        private String username;
+        private String password;
+        private String role;
+        private String confirmPassword;
+
+        public Builder withId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder withUsername(String username) {
+            this.username = username;
+            return this;
+        }
+
+        public Builder withPassword(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public Builder withRole(String role) {
+            this.role = role;
+            return this;
+        }
+
+        public Builder withConfirmPassword(String confirmPassword) {
+            this.confirmPassword = confirmPassword;
+            return this;
+        }
+
+        public LeafAloneUser build() {
+            LeafAloneUser leafAloneUser = new LeafAloneUser();
+            leafAloneUser.setId(this.id);
+            leafAloneUser.setUsername(this.username);
+            leafAloneUser.setPassword(this.password);
+            leafAloneUser.setRole(this.role);
+            leafAloneUser.setConfirmPassword(this.confirmPassword);
+            return leafAloneUser;
+        }
+    }
+
     public String getRole() {
         return role;
     }
@@ -64,15 +116,6 @@ public class LeafAloneUser {
     }
 
     public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
-    }
-
-    protected LeafAloneUser(){}
-
-    public LeafAloneUser(@NotEmpty(message = "Username is required") String username, @NotEmpty(message = "Password is required") String password, String role, @NotEmpty(message = "Confirmation is required") String confirmPassword) {
-        this.username = username;
-        this.password = password;
-        this.role = role;
         this.confirmPassword = confirmPassword;
     }
 }

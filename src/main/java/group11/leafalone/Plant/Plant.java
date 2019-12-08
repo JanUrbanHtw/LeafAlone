@@ -40,14 +40,6 @@ public class Plant {
     @Column(name = "notes")
     private String notes;
 
-    public LeafAloneUser getLeafAloneUser() {
-        return leafAloneUser;
-    }
-
-    public void setLeafAloneUser(LeafAloneUser leafAloneUser) {
-        this.leafAloneUser = leafAloneUser;
-    }
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -64,6 +56,70 @@ public class Plant {
         this.watered = watered;
         this.notes = notes;
         this.leafAloneUser = leafAloneUser;
+    }
+
+    public static class Builder {
+        private Long id;
+        private String name;
+        private PlantCare plantCare;
+        private SunSituation sun;
+        private Date acquisition;
+        private Date watered;
+        private String notes;
+        private LeafAloneUser leafAloneUser;
+
+        public Builder withId(long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder withName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder withPlantCare(PlantCare plantCare) {
+            this.plantCare = plantCare;
+            return this;
+        }
+
+        public Builder WithSun(SunSituation sun) {
+            this.sun = sun;
+            return this;
+        }
+
+        public Builder withAcquisition(Date acquisition) {
+            this.acquisition = acquisition;
+            return this;
+        }
+
+        public Builder withWatered(Date watered) {
+            this.watered = watered;
+            return this;
+        }
+
+        public Builder withNotes(String notes) {
+            this.notes = notes;
+            return this;
+        }
+
+        public Builder withLeafAloneUser(LeafAloneUser leafAloneUser) {
+            this.leafAloneUser = leafAloneUser;
+            return this;
+        }
+
+        public Plant build() {
+            Plant plant = new Plant();
+            plant.setId(this.id);
+            plant.setName(this.name);
+            plant.setPlantCare(this.plantCare);
+            plant.setSun(this.sun);
+            plant.setAcquisition(this.acquisition);
+            plant.setWatered(this.watered);
+            plant.setNotes(this.notes);
+            plant.setLeafAloneUser(this.leafAloneUser);
+            return plant;
+        }
     }
 
     public Long getId() {
@@ -94,6 +150,10 @@ public class Plant {
         return notes;
     }
 
+    public LeafAloneUser getLeafAloneUser() {
+        return leafAloneUser;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -120,5 +180,9 @@ public class Plant {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public void setLeafAloneUser(LeafAloneUser leafAloneUser) {
+        this.leafAloneUser = leafAloneUser;
     }
 }

@@ -70,6 +70,71 @@ public class PlantCare {
         this.contributor = contributor;
     }
 
+    public static class Builder {
+        private String colloquial;
+        private String scientific;
+        private SunSituation sunSituation;
+        private int waterCycle;
+        private int waterAmount;
+        private String soilAdvice;
+        private String description;
+        private LeafAloneUser contributor;
+
+
+        public Builder withColloquial(String colloquial) {
+            this.colloquial = colloquial;
+            return this;
+        }
+
+        public Builder withScientific(String scientific) {
+            this.scientific = scientific;
+            return this;
+        }
+
+        public Builder withSunSituation(SunSituation sunSituation) {
+            this.sunSituation = sunSituation;
+            return this;
+        }
+
+        public Builder withWaterCycle(int waterCycle) {
+            this.waterCycle = waterCycle;
+            return this;
+        }
+
+        public Builder withWaterAmount(int waterAmount) {
+            this.waterAmount = waterAmount;
+            return this;
+        }
+
+        public Builder withSoilAdvice(String soilAdvice) {
+            this.soilAdvice = soilAdvice;
+            return this;
+        }
+
+        public Builder withDescription(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public Builder withContributor(LeafAloneUser contributor) {
+            this.contributor = contributor;
+            return this;
+        }
+
+        public PlantCare build() {
+            PlantCare plantCare = new PlantCare();
+            plantCare.setColloquial(this.colloquial);
+            plantCare.setScientific(this.scientific);
+            plantCare.setSunSituation(this.sunSituation);
+            plantCare.setWaterCycle(this.waterCycle);
+            plantCare.setWaterAmount(this.waterAmount);
+            plantCare.setSoilAdvice(this.soilAdvice);
+            plantCare.setDescription(this.description);
+            plantCare.setContributor(this.contributor);
+            return plantCare;
+        }
+    }
+
     public String getColloquial() {
         return colloquial;
     }
