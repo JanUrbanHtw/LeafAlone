@@ -105,6 +105,12 @@ public class PlantController {
             bindingResult.addError(error);
         }
 
+        PlantCare repoPlantCare = plantCareRepository.findByScientific(plantCare.getScientific());
+        if(repoPlantCare != null) {
+            FieldError error = new FieldError("plant", "scientific", "Plant-Regimen already stored in database");
+            bindingResult.addError(error);
+        }
+
         if(plantCare.getSoilAdvice().length() > 255) {
             FieldError error = new FieldError("plant", "soilAdvice", "Required to be shorter than 256 characters");
             bindingResult.addError(error);

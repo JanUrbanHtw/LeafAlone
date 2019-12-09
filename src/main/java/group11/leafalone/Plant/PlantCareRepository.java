@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PlantCareRepository extends CrudRepository<PlantCare, Long> {
-
+    PlantCare findByScientific(String scientific);
 }
