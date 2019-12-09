@@ -40,6 +40,11 @@ public class PlantController {
 
     @PostMapping("/plants/add")
     public String addPlantSubmit(@Valid Plant plant, BindingResult bindingResult, Model model) {
+        if(plant.getName().length() > 255) {
+            FieldError error = new FieldError("plant", "name", "Required to be shorter than 256 characters");
+            bindingResult.addError(error);
+        }
+
         Date today = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
         try {
             if (plant.getAcquisition().after(today)) {
@@ -63,6 +68,12 @@ public class PlantController {
             FieldError error = new FieldError("plant", "watered", "Required to be after acquisition-date or acquisition-date");
             bindingResult.addError(error);
         }
+
+        if(plant.getNotes().length() > 255) {
+            FieldError error = new FieldError("plant", "notes", "Required to be shorter than 256 characters");
+            bindingResult.addError(error);
+        }
+
         if (bindingResult.hasErrors() || bindingResult.hasFieldErrors()) {
             model.addAttribute("plant", plant);
             model.addAttribute("sunSituations", SunSituation.values());
@@ -84,6 +95,26 @@ public class PlantController {
 
     @PostMapping("/plants/contribute")
     public String contributePlantSubmit(@Valid PlantCare plantCare, BindingResult bindingResult, Model model) {
+        if(plantCare.getColloquial().length() > 255) {
+            FieldError error = new FieldError("plant", "colloquial", "Required to be shorter than 256 characters");
+            bindingResult.addError(error);
+        }
+
+        if(plantCare.getScientific().length() > 255) {
+            FieldError error = new FieldError("plant", "scientific", "Required to be shorter than 256 characters");
+            bindingResult.addError(error);
+        }
+
+        if(plantCare.getSoilAdvice().length() > 255) {
+            FieldError error = new FieldError("plant", "soilAdvice", "Required to be shorter than 256 characters");
+            bindingResult.addError(error);
+        }
+
+        if(plantCare.getDescription().length() > 255) {
+            FieldError error = new FieldError("plant", "description", "Required to be shorter than 256 characters");
+            bindingResult.addError(error);
+        }
+
         if (bindingResult.hasErrors()) {
             model.addAttribute("sunSituations", SunSituation.values());
             return "plants/contribute";

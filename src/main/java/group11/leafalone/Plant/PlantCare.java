@@ -32,23 +32,23 @@ public class PlantCare {
 
     // how often the plant needs to be watered
     @Column(name = "waterCycle")
-    @Min(value = 1, message = "must be greater than 0")
+    @Min(value = 1, message = "Required to be greater than 0")
     private int waterCycle;
 
     // amount of water needed
     //in ml?
     @Column(name = "waterAmount")
-    @Min(value = 1, message = "must be greater than 0")
+    @Min(value = 1, message = "Required to be greater than 0")
     private int waterAmount;
 
     // advice on the soil
     @Column(name = "soilAdvice")
-    @NotEmpty(message = "soil advice is required")
+    @NotEmpty(message = "Soil advice is required")
     private String soilAdvice;
 
     // plain text description
     @Column(name = "description")
-    @NotEmpty(message = "description is required")
+    @NotEmpty(message = "Description is required")
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -59,7 +59,7 @@ public class PlantCare {
     protected PlantCare() {
     }
 
-    public PlantCare(@NotEmpty(message = "Colloquial name is required") String colloquial, @NotEmpty(message = "Scientific name is required") String scientific, SunSituation sunSituation, @Min(1) int waterCycle, @Min(1) int waterAmount, String soilAdvice, String description, LeafAloneUser contributor) {
+    public PlantCare(@NotEmpty(message = "Colloquial name is required") String colloquial, @NotEmpty(message = "Scientific name is required") String scientific, SunSituation sunSituation, @Min(value = 1, message = "Required to be greater than 0") int waterCycle, @Min(value = 1, message = "Required to be greater than 0") int waterAmount, @NotEmpty(message = "Soil advice is required") String soilAdvice, @NotEmpty(message = "Description is required") String description, LeafAloneUser contributor) {
         this.colloquial = colloquial;
         this.scientific = scientific;
         this.sunSituation = sunSituation;

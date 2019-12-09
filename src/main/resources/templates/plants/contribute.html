@@ -28,6 +28,8 @@
         <select th:field="*{sunSituation}" path="sunSituation" id="sunSituation">
             <option th:each="sunSituation : ${sunSituations}" th:value="${sunSituation}" th:text="${sunSituation.name}"></option>
         </select>
+        <p class="font-weight-bold errorMessage" th:if="${#fields.hasErrors('sunSituation')}" th:errors="*{sunSituation}">
+            Sun-Situation Error</p>
     </div>
     <div class="form-group">
         <label th:for="waterCycle">How often does the plant need water? (days)</label>
