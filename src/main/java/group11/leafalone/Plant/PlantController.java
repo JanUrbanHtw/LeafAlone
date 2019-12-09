@@ -127,7 +127,7 @@ public class PlantController {
         }
         plantCare.setContributor(getCurrentUser());
         plantCareRepository.save(plantCare);
-        return "redirect:../about";
+        return "redirect:/?thanksContributor";
     }
 
     @GetMapping("plants/list")
