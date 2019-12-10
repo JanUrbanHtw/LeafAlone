@@ -4,7 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
-@Table(name = "leafAloneUser")
+@Table(name = "leaf_alone_user")
 public class LeafAloneUser {
 
     @Id

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/html">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
     <title>Add a personal plant!</title>
@@ -14,16 +14,19 @@
         <div class="form-group">
             <label th:for="name">Plant-Name:</label>
             <input th:type="text" th:field="*{name}" path="name" class="form-control" id="nameInput">
-            <p class="font-weight-bold" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</p>
+            <p class="font-weight-bold errorMessage" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name
+                Error</p>
         </div>
 
         <div class="form-group">
             <label th:for="plantCare">Type of plant:</label>
             <!-- TODO: should probably be filled by data model-->
             <select class="custom-select" th:field="*{plantCare}" path="plantCare" id="plantCare">
-                <option th:each="plantCare : ${plantCares}" th:value="${plantCare.id}" th:text="${plantCare.colloquial}"></option>
+                <option th:each="plantCare : ${plantCares}" th:value="${plantCare.id}"
+                        th:text="${plantCare.colloquial}"></option>
             </select>
-            <p class="font-weight-bold" th:if="${#fields.hasErrors('plantCare')}" th:errors="*{plantCare}">Plant-Typ
+            <p class="font-weight-bold errorMessage" th:if="${#fields.hasErrors('plantCare')}" th:errors="*{plantCare}">
+                Plant-Typ
                 Error</p>
         </div>
 
@@ -38,13 +41,15 @@
         <div class="form-group">
             <label th:for="acquisition">Date of acquisition:</label>
             <input th:type="date" path="acquisition" th:field="*{acquisition}" class="form-control" id="acquisition">
-            <p class="font-weight-bold" th:if="${#fields.hasErrors('acquisition')}" th:errors="*{acquisition}">Acquisition-Date Error</p>
+            <p class="font-weight-bold errorMessage" th:if="${#fields.hasErrors('acquisition')}"
+               th:errors="*{acquisition}">Acquisition-Date Error</p>
         </div>
 
         <div class="form-group">
             <label th:for="watered">Date of last watering:</label>
             <input th:type="date" path="watered" th:field="*{watered}" class="form-control" id="watered">
-            <p class="font-weight-bold" th:if="${#fields.hasErrors('watered')}" th:errors="*{watered}">Last-Watered-Date Error</p>
+            <p class="font-weight-bold errorMessage" th:if="${#fields.hasErrors('watered')}" th:errors="*{watered}">
+                Last-Watered-Date Error</p>
         </div>
 
         <div class="form-group">

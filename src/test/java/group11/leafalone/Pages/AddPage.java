@@ -15,15 +15,17 @@ import static org.fluentlenium.core.filter.FilterConstructor.withText;
 @PageUrl("http://localhost:8080/plants/add")
 public class AddPage extends FluentPage {
     public static final String TITLE = "Add a personal plant!";
-    private static final String ERROR_MESSAGE = "#errorMessage";
+
+    @FindBy(className = "errorMessage")
+    private FluentWebElement errorMessage;
 
     @FindBy(id = "nameInput")
     private FluentWebElement plantNameInput;
 
-    @FindBy(id = "plantType")
+    @FindBy(id = "plantCare")
     private FluentWebElement plantTypeInput;
 
-    @FindBy(id = "sunSituation")
+    @FindBy(id = "sun")
     private FluentWebElement sunSituationInput;
 
     @FindBy(id = "acquisition")
@@ -53,11 +55,13 @@ public class AddPage extends FluentPage {
         return this;
     }
 
+    //2019-01-01T00:00:00.000Z
     public AddPage setAcquisitionDate(String acquisitionDate) {
         acquisitionDateInput.write(acquisitionDate);
         return this;
     }
 
+    //2019-01-01T00:00:00.000Z
     public AddPage setWateringDate(String wateringDate) {
         wateringDateInput.write(wateringDate);
         return this;
@@ -75,7 +79,7 @@ public class AddPage extends FluentPage {
     }
 
     public AddPage assertErrorMessagePresent() {
-        assertThat($(ERROR_MESSAGE).present()).isTrue();
+        assertThat(errorMessage.present()).isTrue();
         return this;
     }
 }

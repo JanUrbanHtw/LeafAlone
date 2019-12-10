@@ -1,6 +1,5 @@
 package group11.leafalone.Auth;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -11,7 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletException;
@@ -22,16 +24,11 @@ import javax.validation.Valid;
 @Controller
 public class LoginController {
 
-    @Autowired
-    UserRepository userRepository;
-
-    @Autowired
+    private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
 
-    public LoginController() {}
-
     //testing
-    protected LoginController(UserRepository userRepository, PasswordEncoder passwordEncoder){
+    public LoginController(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
@@ -54,7 +51,7 @@ public class LoginController {
     @GetMapping("/register")
     public String registerForm(Model model) {
         model.addAttribute("leafAloneUser", new LeafAloneUser());
-        return "register";
+        return "register.html";
     }
 
     @PostMapping("/register")

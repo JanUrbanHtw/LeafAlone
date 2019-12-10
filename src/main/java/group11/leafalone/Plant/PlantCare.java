@@ -9,7 +9,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
-@Table(name = "plantCare")
+@Table(name = "plant_care")
 public class PlantCare {
 
     @Id
@@ -27,22 +27,22 @@ public class PlantCare {
     private String scientific;
 
     // desired amount of light
-    @Column(name = "sunSituation")
+    @Column(name = "sun_situation")
     private SunSituation sunSituation;
 
     // how often the plant needs to be watered
-    @Column(name = "waterCycle")
+    @Column(name = "water_cycle")
     @Min(value = 1, message = "Required to be greater than 0")
     private int waterCycle;
 
     // amount of water needed
     //in ml?
-    @Column(name = "waterAmount")
+    @Column(name = "water_amount")
     @Min(value = 1, message = "Required to be greater than 0")
     private int waterAmount;
 
     // advice on the soil
-    @Column(name = "soilAdvice")
+    @Column(name = "soil_advice")
     @NotEmpty(message = "Soil advice is required")
     private String soilAdvice;
 

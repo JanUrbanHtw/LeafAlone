@@ -10,7 +10,7 @@ import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
 @Entity
-@Table(name = "userPlant")
+@Table(name = "user_plant")
 public class Plant {
 
     @Id
@@ -83,7 +83,7 @@ public class Plant {
             return this;
         }
 
-        public Builder WithSun(SunSituation sun) {
+        public Builder withSun(SunSituation sun) {
             this.sun = sun;
             return this;
         }

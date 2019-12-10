@@ -1,22 +1,26 @@
-package group11.leafalone.PageTests;
+package group11.leafalone.Plant;
 
+import group11.leafalone.LeafaloneApplication;
 import group11.leafalone.Pages.AddPage;
 import group11.leafalone.Pages.ListPage;
 import group11.leafalone.Pages.LoginPage;
 import org.fluentlenium.adapter.junit.jupiter.FluentTest;
 import org.fluentlenium.core.annotation.Page;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = LeafaloneApplication.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 class ListTest extends FluentTest {
 
     @Page
     ListPage listPage;
-
     @Page
     LoginPage loginPage;
-
     @Page
     AddPage addPage;
 
@@ -64,17 +68,14 @@ class ListTest extends FluentTest {
         loginAsUser();
         goTo(addPage)
                 .inputPlantName(name)
-                .choosePlantType("Dummy One")
-                .chooseSunSituation("Sunny")
-                .setAcquisitionDate("14.11.2019")
-                .setWateringDate("14.11.2019")
+                .choosePlantType("Jade Plant")
+                .chooseSunSituation("sunny")
+                .setAcquisitionDate("2019-01-01T00:00:00.000Z")
+                .setWateringDate("2019-01-01T00:00:00.000Z")
                 .inputNotes("notes")
-                .setID("5")
                 .submitAddPlantForm();
 
         goTo(listPage)
                 .isContainedInList(name);
-
-
     }
 }

@@ -77,3 +77,4 @@ gradle-app.setting
 
 # Cache of project
 .gradletasknamecache
+/.idea/jarRepositories.xml

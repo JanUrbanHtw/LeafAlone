@@ -2,7 +2,6 @@ package group11.leafalone.Plant;
 
 import group11.leafalone.Auth.LeafAloneUser;
 import group11.leafalone.Auth.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -21,14 +20,20 @@ import java.util.List;
 @Controller
 public class PlantController {
 
-    @Autowired
     private UserRepository userRepository;
-
-    @Autowired
     private PlantRepository plantRepository;
-
-    @Autowired
     private PlantCareRepository plantCareRepository;
+
+    public PlantController(UserRepository userRepository,
+                           PlantRepository plantRepository,
+                           PlantCareRepository plantCareRepository) {
+        this.userRepository = userRepository;
+        this.plantRepository = plantRepository;
+        this.plantCareRepository = plantCareRepository;
+
+    }
+
+    //AddPlant
 
     @GetMapping("/plants/add")
     public String addPlantForm(Model model) {
@@ -40,7 +45,7 @@ public class PlantController {
 
     @PostMapping("/plants/add")
     public String addPlantSubmit(@Valid Plant plant, BindingResult bindingResult, Model model) {
-        if(plant.getName().length() > 255) {
+        if (plant.getName().length() > 255) {
             FieldError error = new FieldError("plant", "name", "Required to be shorter than 256 characters");
             bindingResult.addError(error);
         }
@@ -69,7 +74,7 @@ public class PlantController {
             bindingResult.addError(error);
         }
 
-        if(plant.getNotes().length() > 255) {
+        if (plant.getNotes() != null) if (plant.getNotes().length() > 255) {
             FieldError error = new FieldError("plant", "notes", "Required to be shorter than 256 characters");
             bindingResult.addError(error);
         }
@@ -85,6 +90,7 @@ public class PlantController {
         return "redirect:list";
     }
 
+    //Contribute Plant
 
     @GetMapping("/plants/contribute")
     public String contributePlantForm(Model model) {
@@ -95,30 +101,32 @@ public class PlantController {
 
     @PostMapping("/plants/contribute")
     public String contributePlantSubmit(@Valid PlantCare plantCare, BindingResult bindingResult, Model model) {
-        if(plantCare.getColloquial().length() > 255) {
-            FieldError error = new FieldError("plant", "colloquial", "Required to be shorter than 256 characters");
-            bindingResult.addError(error);
-        }
+        if (plantCare != null) {
+            if (plantCare.getColloquial() != null) if (plantCare.getColloquial().length() > 255) {
+                FieldError error = new FieldError("plant", "colloquial", "Required to be shorter than 256 characters");
+                bindingResult.addError(error);
+            }
 
-        if(plantCare.getScientific().length() > 255) {
-            FieldError error = new FieldError("plant", "scientific", "Required to be shorter than 256 characters");
-            bindingResult.addError(error);
-        }
+            if (plantCare.getScientific() != null) if (plantCare.getScientific().length() > 255) {
+                FieldError error = new FieldError("plant", "scientific", "Required to be shorter than 256 characters");
+                bindingResult.addError(error);
+            }
 
-        PlantCare repoPlantCare = plantCareRepository.findByScientific(plantCare.getScientific());
-        if(repoPlantCare != null) {
-            FieldError error = new FieldError("plant", "scientific", "Plant-Regimen already stored in database");
-            bindingResult.addError(error);
-        }
+            PlantCare repoPlantCare = plantCareRepository.findByScientific(plantCare.getScientific());
+            if (repoPlantCare != null) {
+                FieldError error = new FieldError("plant", "scientific", "Plant-Regimen already stored in database");
+                bindingResult.addError(error);
+            }
 
-        if(plantCare.getSoilAdvice().length() > 255) {
-            FieldError error = new FieldError("plant", "soilAdvice", "Required to be shorter than 256 characters");
-            bindingResult.addError(error);
-        }
+            if (plantCare.getSoilAdvice() != null) if (plantCare.getSoilAdvice().length() > 255) {
+                FieldError error = new FieldError("plant", "soilAdvice", "Required to be shorter than 256 characters");
+                bindingResult.addError(error);
+            }
 
-        if(plantCare.getDescription().length() > 255) {
-            FieldError error = new FieldError("plant", "description", "Required to be shorter than 256 characters");
-            bindingResult.addError(error);
+            if (plantCare.getDescription() != null) if (plantCare.getDescription().length() > 255) {
+                FieldError error = new FieldError("plant", "description", "Required to be shorter than 256 characters");
+                bindingResult.addError(error);
+            }
         }
 
         if (bindingResult.hasErrors()) {
@@ -129,6 +137,8 @@ public class PlantController {
         plantCareRepository.save(plantCare);
         return "redirect:/?thanksContributor";
     }
+
+    //List Plant
 
     @GetMapping("plants/list")
     public String getPlantList(Model model) {

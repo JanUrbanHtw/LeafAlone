@@ -1,55 +1,55 @@
-package group11.leafalone.PageTests;
+package group11.leafalone;
 
 import group11.leafalone.Pages.IndexPage;
 import group11.leafalone.Pages.LoginPage;
 import group11.leafalone.Pages.NavbarHelper;
 import org.fluentlenium.adapter.junit.jupiter.FluentTest;
 import org.fluentlenium.core.annotation.Page;
-import org.fluentlenium.core.hook.wait.Wait;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Wait
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = LeafaloneApplication.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 class IndexTest extends FluentTest {
 
     @Page
     IndexPage indexPage;
-
     @Page
     LoginPage loginPage;
 
     @Test
-    void IsTitleCorrect() {
+    void everythingPresent() {
         goTo(indexPage);
+        assertThat($(IndexPage.WELCOME).present()).isTrue();
         assertThat(window().title()).isEqualTo(IndexPage.TITLE);
     }
 
-    @Test
-    void WelcomeTextPresent() {
-        goTo(indexPage)
-                .assertIsPresent(IndexPage.WELCOME);
-    }
 
     // -----------------------------------------------------------------------
     // ----------------------- Tests for Navbar ------------------------------
     // -----------------------------------------------------------------------
 
 
+    //TODO update every time the navbar changes
     @Test
-    void LinksBeforeLogin() {
+    void LinksCorrect() {
+        //before login
         goTo(indexPage)
                 .assertIsPresent(NavbarHelper.HOME_LINK)
                 .assertIsPresent(NavbarHelper.ABOUT_LINK)
+                .assertIsPresent(NavbarHelper.REGISTER_LINK)
                 .assertIsPresent(NavbarHelper.LOGIN_LINK)
                 .assertNotPresent(NavbarHelper.LIST_LINK)
                 .assertNotPresent(NavbarHelper.PLANT_LINK)
                 .assertNotPresent(NavbarHelper.CONTRIBUTE_LINK)
                 .assertNotPresent(NavbarHelper.LOGOUT_LINK);
-    }
 
-    @Test
-    void LinksAsUser() {
+        //login as user
+
         String username = "user";
         String password = "password";
 
@@ -65,13 +65,14 @@ class IndexTest extends FluentTest {
                 .assertIsPresent(NavbarHelper.LIST_LINK)
                 .assertIsPresent(NavbarHelper.LOGOUT_LINK)
                 .assertNotPresent(NavbarHelper.CONTRIBUTE_LINK)
+                .assertNotPresent(NavbarHelper.REGISTER_LINK)
                 .assertNotPresent(NavbarHelper.LOGIN_LINK);
-    }
+        $(NavbarHelper.LOGOUT_LINK).click();
 
-    @Test
-    void LinksAsContributor() {
-        String username = "contributor";
-        String password = "admin";
+        //login as contributor
+
+        username = "contributor";
+        password = "admin";
 
         goTo(loginPage)
                 .inputName(username)
@@ -84,6 +85,7 @@ class IndexTest extends FluentTest {
                 .assertIsPresent(NavbarHelper.PLANT_LINK)
                 .assertIsPresent(NavbarHelper.CONTRIBUTE_LINK)
                 .assertIsPresent(NavbarHelper.LOGOUT_LINK)
+                .assertNotPresent(NavbarHelper.REGISTER_LINK)
                 .assertIsPresent(NavbarHelper.LIST_LINK)
                 .assertNotPresent(NavbarHelper.LOGIN_LINK);
     }

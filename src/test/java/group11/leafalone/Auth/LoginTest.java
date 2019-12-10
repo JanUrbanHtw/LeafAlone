@@ -1,13 +1,19 @@
-package group11.leafalone.PageTests;
+package group11.leafalone.Auth;
 
+import group11.leafalone.LeafaloneApplication;
 import group11.leafalone.Pages.*;
 import org.fluentlenium.adapter.junit.jupiter.FluentTest;
 import org.fluentlenium.core.annotation.Page;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class LoginTest extends FluentTest {
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = LeafaloneApplication.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+class LoginTest extends FluentTest {
 
     @Page
     private LoginPage loginPage;
@@ -32,6 +38,7 @@ public class LoginTest extends FluentTest {
                 .assertTitleEquals(IndexPage.TITLE)
                 .clickOnElement(NavbarHelper.PLANT_LINK)
                 .assertTitleEquals(AddPage.TITLE);
+
     }
 
     @Test
@@ -51,36 +58,9 @@ public class LoginTest extends FluentTest {
     }
 
     @Test
-    void noUserName() {
-        String username = "";
-        String password = "password";
-
-        goTo(loginPage)
-                .inputName(username)
-                .inputPassword(password)
-                .submitLoginForm()
-                .assertErrorMessagePresent()
-                .assertLogoutMessageNotPresent();
-    }
-
-    @Test
-    void noPassword() {
-        String username = "user";
-        String password = "";
-
-        goTo(loginPage)
-                .inputName(username)
-                .inputPassword(password)
-                .submitLoginForm()
-                .assertErrorMessagePresent()
-                .assertLogoutMessageNotPresent();
-    }
-
-    @Test
-    void noUserNameNoPassword() {
+    void notFilledCorrectly() {
         String username = "";
         String password = "";
-
         goTo(loginPage)
                 .inputName(username)
                 .inputPassword(password)
