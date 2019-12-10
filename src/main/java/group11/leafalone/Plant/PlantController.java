@@ -24,6 +24,8 @@ public class PlantController {
     private PlantRepository plantRepository;
     private PlantCareRepository plantCareRepository;
 
+    private PlantCare plantCare;
+
     public PlantController(UserRepository userRepository,
                            PlantRepository plantRepository,
                            PlantCareRepository plantCareRepository) {
@@ -94,7 +96,12 @@ public class PlantController {
 
     @GetMapping("/plants/contribute")
     public String contributePlantForm(Model model) {
-        model.addAttribute("plantCare", new PlantCare());
+        PlantCare plantCare = new PlantCare();
+        if(this.plantCare != null) {
+            plantCare = this.plantCare;
+            this.plantCare = null;
+        }
+        model.addAttribute("plantCare",plantCare);
         model.addAttribute("sunSituations", SunSituation.values());
         return "plants/contribute";
     }
@@ -133,8 +140,21 @@ public class PlantController {
             model.addAttribute("sunSituations", SunSituation.values());
             return "plants/contribute";
         }
+        return "forward:/plants/confirm";
+    }
+
+    @PostMapping("/plants/confirm")
+    public String confirmPlantCare(@Valid PlantCare plantCare, Model model) {
+        this.plantCare = plantCare;
+        model.addAttribute("plantCare", plantCare);
+        return "plants/confirm";
+    }
+
+    @GetMapping("/plants/confirm/ok")
+    public String confirmPlantCareOk() {
         plantCare.setContributor(getCurrentUser());
         plantCareRepository.save(plantCare);
+        this.plantCare = null;
         return "redirect:/?thanksContributor";
     }
 

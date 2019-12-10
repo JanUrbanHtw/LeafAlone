@@ -10,6 +10,7 @@
 
 <div th:replace="fragments/navbar :: navbar"></div>
 <div class="container">
+<br>
 <form action="#" th:action="@{/plants/contribute}" th:object="${plantCare}" method="post" id="contributeForm">
     <div class="form-group">
         <label th:for="colloquial">Colloquial plant name:</label>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Confirm Inputs</title>
+</head>
+<body>
+<div class="container">
+    <br>
+    <h3 class="p-3 mb-2 bg-success text-white">Please check your input one more time. Is everything right?</h3>
+    <br>
+    <div class="row">
+        <div class="col">
+            <div class="p-3 mb-2 bg-light text-dark">
+                <br>
+                <label class="font-weight-bold">Colloquial Name:</label>
+                <p th:text="${plantCare.getColloquial()}"></p>
+            </div>
+            <div class="p-3 mb-2 bg-light text-dark">
+                <br>
+                <label class="font-weight-bold">Scientific Name:</label>
+                <p th:text="${plantCare.getScientific()}"></p>
+            </div>
+            <div class="p-3 mb-2 bg-light text-dark">
+                <br>
+                <label class="font-weight-bold">Sun Situation:</label>
+                <p th:text="${plantCare.getSunSituation().getName()}"></p>
+            </div>
+            <div class="p-3 mb-2 bg-light text-dark">
+                <br>
+                <label class="font-weight-bold">Water Cycle:</label>
+                <p th:text="${plantCare.getWaterCycle()}"></p>
+            </div>
+        </div>
+        <div class="col">
+            <div class="p-3 mb-2 bg-light text-dark">
+                <br>
+                <label class="font-weight-bold">Water Amount:</label>
+                <p th:text="${plantCare.getWaterAmount()}"></p>
+            </div>
+            <div class="p-3 mb-2 bg-light text-dark">
+                <br>
+                <label class="font-weight-bold">Soil Advice:</label>
+                <p th:text="${plantCare.getSoilAdvice()}"></p>
+            </div>
+            <div class="p-3 mb-2 bg-light text-dark">
+                <br>
+                <label class="font-weight-bold">Description:</label>
+                <p th:text="${plantCare.getDescription()}"></p>
+            </div>
+        </div>
+        <div class="w-100"></div>
+        <div class="col">
+            <br>
+            <div class="btn-toolbar" role="toolbar">
+                <div class="btn-group mr-2" role="group">
+                    <a href="/plants/contribute" class="btn btn-danger" role="button">No, go back!</a>
+                </div>
+                <div class="btn-group mr-2" role="group">
+                    <a href="/plants/confirm/ok" class="btn btn-success" role="button">Yep, everything is right.</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
