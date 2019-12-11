@@ -16,39 +16,39 @@
             <div class="p-3 mb-2 bg-light text-dark">
                 <br>
                 <label class="font-weight-bold">Colloquial Name:</label>
-                <p th:text="${plantCare.getColloquial()}"></p>
+                <p id="colloquial" th:text="${plantCare.getColloquial()}"></p>
             </div>
             <div class="p-3 mb-2 bg-light text-dark">
                 <br>
                 <label class="font-weight-bold">Scientific Name:</label>
-                <p th:text="${plantCare.getScientific()}"></p>
+                <p id="scientific" th:text="${plantCare.getScientific()}"></p>
             </div>
             <div class="p-3 mb-2 bg-light text-dark">
                 <br>
                 <label class="font-weight-bold">Sun Situation:</label>
-                <p th:text="${plantCare.getSunSituation().getName()}"></p>
+                <p id="sun" th:text="${plantCare.getSunSituation().getName()}"></p>
             </div>
             <div class="p-3 mb-2 bg-light text-dark">
                 <br>
                 <label class="font-weight-bold">Water Cycle:</label>
-                <p th:text="${plantCare.getWaterCycle()}"></p>
+                <p id="waterCycle" th:text="${plantCare.getWaterCycle()}"></p>
             </div>
         </div>
         <div class="col">
             <div class="p-3 mb-2 bg-light text-dark">
                 <br>
                 <label class="font-weight-bold">Water Amount:</label>
-                <p th:text="${plantCare.getWaterAmount()}"></p>
+                <p id="waterAmount" th:text="${plantCare.getWaterAmount()}"></p>
             </div>
             <div class="p-3 mb-2 bg-light text-dark">
                 <br>
                 <label class="font-weight-bold">Soil Advice:</label>
-                <p th:text="${plantCare.getSoilAdvice()}"></p>
+                <p id="soilAdvice" th:text="${plantCare.getSoilAdvice()}"></p>
             </div>
             <div class="p-3 mb-2 bg-light text-dark">
                 <br>
                 <label class="font-weight-bold">Description:</label>
-                <p th:text="${plantCare.getDescription()}"></p>
+                <p id="description" th:text="${plantCare.getDescription()}"></p>
             </div>
         </div>
         <div class="w-100"></div>
@@ -56,10 +56,11 @@
             <br>
             <div class="btn-toolbar" role="toolbar">
                 <div class="btn-group mr-2" role="group">
-                    <a href="/plants/contribute" class="btn btn-danger" role="button">No, go back!</a>
+                    <a id="revertButton" href="/plants/contribute" class="btn btn-danger" role="button">No, go back!</a>
                 </div>
                 <div class="btn-group mr-2" role="group">
-                    <a href="/plants/confirm/ok" class="btn btn-success" role="button">Yep, everything is right.</a>
+                    <a id="okButton" href="/plants/confirm/ok" class="btn btn-success" role="button">Yep, everything is
+                        right.</a>
                 </div>
             </div>
         </div>

@@ -113,7 +113,7 @@ class PlantControllerTest {
 
     @Test
     @WithMockUser
-    void ContributePlant_POST_correctShouldSaveToDB() throws Exception {
+    void ContributePlant_POST_correctShouldForwardToConfirm() throws Exception {
         mockMVC.perform(post("/plants/contribute")
                 .param("colloquial", "colloquial")
                 .param("scientific", "scientific")
@@ -121,9 +121,9 @@ class PlantControllerTest {
                 .param("waterAmount", "1")
                 .param("soilAdvice", "soilAdvice")
                 .param("description", "description"))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/?thanksContributor"));
-        verify(plantCareRepository, times(1)).save(any(PlantCare.class));
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(view().name("forward:/plants/confirm"))
+                .andExpect(model().attributeExists("plantCare"));
     }
 
     @Test

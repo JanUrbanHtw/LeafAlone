@@ -1,8 +1,8 @@
 package group11.leafalone.Plant;
 
 import group11.leafalone.LeafaloneApplication;
+import group11.leafalone.Pages.ConfirmPage;
 import group11.leafalone.Pages.ContributePage;
-import group11.leafalone.Pages.IndexPage;
 import group11.leafalone.Pages.LoginPage;
 import org.fluentlenium.adapter.junit.jupiter.FluentTest;
 import org.fluentlenium.core.annotation.Page;
@@ -50,7 +50,7 @@ class ContributeTest extends FluentTest {
     }
 
     @Test
-    void IsTitleCorrect() {
+    void isTitleCorrect() {
         loginAsContributor();
         goTo(contributePage);
         assertThat(window().title()).isEqualTo(ContributePage.TITLE);
@@ -61,7 +61,7 @@ class ContributeTest extends FluentTest {
         loginAsContributor();
         goTo(contributePage)
                 .inputColloquial("correctlyFilledForm")
-                .inputScientific("Scientific")
+                .inputScientific("correctlyFilledForm")
                 .inputSunSituation("sunny")
                 .inputWaterCycle("2")
                 .inputWaterAmount("2")
@@ -69,7 +69,7 @@ class ContributeTest extends FluentTest {
                 .inputDescription("Description")
                 .submitContributePlantForm();
 
-        assertThat(window().title()).isEqualTo(IndexPage.TITLE);
+        assertThat(window().title()).isEqualTo(ConfirmPage.TITLE);
     }
 
 
@@ -80,8 +80,8 @@ class ContributeTest extends FluentTest {
                 //No colloquial
                 .inputScientific("Scientific")
                 .inputSunSituation("sunny")
-                .inputWaterCycle("2")
-                .inputWaterAmount("2")
+                .inputWaterCycle("0")
+                .inputWaterAmount("0")
                 .inputSoilAdvice("SoilAdvice")
                 //No Description
                 .submitContributePlantForm()
