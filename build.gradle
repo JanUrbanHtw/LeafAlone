@@ -56,6 +56,10 @@ dependencies {
     // https://mvnrepository.com/artifact/org.springframework.security/spring-security-test
     testCompile group: 'org.springframework.security', name: 'spring-security-test', version: '5.2.1.RELEASE'
 
+    // https://mvnrepository.com/artifact/com.h2database/h2
+    testCompile group: 'com.h2database', name: 'h2', version: '1.4.200'
+
+
 
 }
 
