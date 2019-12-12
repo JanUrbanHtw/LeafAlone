@@ -8,26 +8,27 @@ import javax.validation.constraints.NotEmpty;
 public class LeafAloneUser {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true)
     private Long id;
 
-    @Column(name="username", nullable = false, unique = true)
+    @Column(name = "username", nullable = false, unique = true)
     @NotEmpty(message = "Username is required")
     private String username;
 
-    @NotEmpty (message = "Password is required")
-    @Column(name="password")
+    @NotEmpty(message = "Password is required")
+    @Column(name = "password")
     private String password;
 
     @Column(name = "role")
     private String role;
 
     @Transient
-    @NotEmpty (message = "Confirmation is required")
+    @NotEmpty(message = "Confirmation is required")
     private String confirmPassword;
 
-    protected LeafAloneUser() {}
+    protected LeafAloneUser() {
+    }
 
     public LeafAloneUser(@NotEmpty(message = "Username is required") String username, @NotEmpty(message = "Password is required") String password, String role, @NotEmpty(message = "Confirmation is required") String confirmPassword) {
         this.username = username;

@@ -13,7 +13,8 @@ import javax.validation.constraints.NotEmpty;
 public class PlantCare {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true)
     private Long id;
 
     // colloquial name
