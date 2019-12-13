@@ -15,7 +15,8 @@
         <div class="form-group">
             <label th:for="username">Username:</label>
             <input th:type="text" th:field="*{username}" path="username" class="form-control" id="usernameInput">
-            <p class="font-weight-bold errorMessage" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">
+            <p class="font-weight-bold errorMessage text-danger" th:if="${#fields.hasErrors('username')}"
+               th:errors="*{username}">
                 Username Error</p>
         </div>
 
@@ -25,14 +26,16 @@
                 <option value="ROLE_USER">Standard User</option>
                 <option value="ROLE_CONTRIBUTOR">Contributor</option>
             </select>
-            <p class="font-weight-bold errorMessage" th:if="${#fields.hasErrors('role')}" th:errors="*{role}">Role
+            <p class="font-weight-bold errorMessage text-danger" th:if="${#fields.hasErrors('role')}"
+               th:errors="*{role}">Role
                 Error</p>
         </div>
 
         <div class="form-group">
             <label th:for="password">Password:</label>
             <input th:type="password" path="password" th:field="*{password}" class="form-control" id="passwordInput">
-            <p class="font-weight-bold errorMessage" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
+            <p class="font-weight-bold errorMessage text-danger" th:if="${#fields.hasErrors('password')}"
+               th:errors="*{password}">
                 Password Error</p>
         </div>
 
@@ -40,7 +43,7 @@
             <label th:for="confirmPassword">Confirm your Password:</label>
             <input th:type="password" path="confirmPassword" th:field="*{confirmPassword}" class="form-control"
                    id="confirmPasswordInput">
-            <p class="font-weight-bold errorMessage" th:if="${#fields.hasErrors('confirmPassword')}"
+            <p class="font-weight-bold errorMessage text-danger" th:if="${#fields.hasErrors('confirmPassword')}"
                th:errors="*{confirmPassword}">Password Confirm Error</p>
         </div>
 
