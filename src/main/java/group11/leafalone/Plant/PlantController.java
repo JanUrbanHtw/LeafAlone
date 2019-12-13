@@ -52,6 +52,12 @@ public class PlantController {
             bindingResult.addError(error);
         }
 
+        List<String> savedPlants = plantRepository.findNamesByLeafAloneUser(getCurrentUser());
+        if(savedPlants.contains(plant.getName())) {
+            FieldError error = new FieldError("plant", "name", "Name already in use");
+            bindingResult.addError(error);
+        }
+
         Date today = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
         try {
             if (plant.getAcquisition().after(today)) {

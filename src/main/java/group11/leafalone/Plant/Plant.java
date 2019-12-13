@@ -18,11 +18,11 @@ public class Plant {
     @Column(name = "id", unique = true)
     private Long id;
 
-    @Column(name = "name", unique = true)
+    @Column(name = "name")
     @NotEmpty(message = "Name is required")
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false) //TODO
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "plantcare_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private PlantCare plantCare;

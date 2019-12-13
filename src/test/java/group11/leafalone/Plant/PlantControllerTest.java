@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -68,6 +69,7 @@ class PlantControllerTest {
     }
 
     @Test
+    @WithMockUser
     void AddPlant_POST_missingUserName() throws Exception {
         mockMVC.perform(post("/plants/add")
                 .param("name", ""))
@@ -78,6 +80,7 @@ class PlantControllerTest {
     }
 
     @Test
+    @WithMockUser
     void AddPlant_POST_acquisitionInTheFuture() throws Exception {
         String date = (Calendar.getInstance().get(Calendar.YEAR) + 1) + "-01-01T00:00:00.000Z";
         System.out.println(date);
@@ -91,6 +94,7 @@ class PlantControllerTest {
     }
 
     @Test
+    @WithMockUser
     void AddPlant_POST_wateredInTheFuture() throws Exception {
         String date = (Calendar.getInstance().get(Calendar.YEAR) + 1) + "-01-01T00:00:00.000Z";
         System.out.println(date);
@@ -101,6 +105,20 @@ class PlantControllerTest {
                 .andExpect(view().name("plants/add"))
                 .andExpect(model().attributeHasFieldErrors("plant", "watered"));
         verify(plantRepository, times(0)).save(any(Plant.class));
+    }
+
+    //TODO: no plants with same name in repository, works in reality but not in tests
+    @Test
+    @WithMockUser(username = "name")
+    void AddPlant_POST_PlantNameAlreadyInUse() throws Exception {
+        mockMVC.perform(post("/plants/add")
+                .param("name", "plantName"));
+        mockMVC.perform(post("/plants/add")
+                .param("name", "plantName"))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(view().name("plants/add"))
+                .andExpect(model().attributeHasFieldErrors("plant", "plantName"));
+        verify(plantRepository, times(1)).save(any(Plant.class));
     }
 
     //contributePlant
