@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -233,6 +235,43 @@ class PlantControllerTest {
                 .andExpect(view().name("plants/list"))
                 .andExpect(model().attribute("plants", list));
         verify(plantRepository).findByLeafAloneUser(user);
+    }
+
+    @Test
+    void confirmPostShouldRenderConfirmPage() throws Exception {
+        mockMVC.perform(post("/plants/confirm")
+                .param("colloquial", "colloquial")
+                .param("scientific", "scientific")
+                .param("waterCycle", "1")
+                .param("waterAmount", "1")
+                .param("soilAdvice", "soilAdvice")
+                .param("description", "description"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("plants/confirm"))
+                .andExpect(model().attributeExists("plantCare"));
+    }
+
+    @Test
+    @WithMockUser(username = "user")
+    void confirmOkGetShouldRenderIndexPage() throws Exception {
+        when(userRepository.findByUsername("user")).thenReturn(new LeafAloneUser("user", "password", "ROLE_CONTRIBUTOR", "password"));
+
+        mockMVC.perform(post("/plants/confirm")
+                .param("colloquial", "colloquial")
+                .param("scientific", "scientific")
+                .param("waterCycle", "1")
+                .param("waterAmount", "1")
+                .param("soilAdvice", "soilAdvice")
+                .param("description", "description"));
+
+        mockMVC.perform(get("/plants/confirm/ok"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/?thanksContributor"));
+
+        ArgumentCaptor<PlantCare> savedPlantCare= ArgumentCaptor.forClass(PlantCare.class);
+        Mockito.verify(plantCareRepository).save(savedPlantCare.capture());
+        assertThat(savedPlantCare.getValue().getScientific()).isEqualTo("scientific");
+        assertThat(savedPlantCare.getValue().getColloquial()).isEqualTo("colloquial");
     }
 }
 
