@@ -155,7 +155,7 @@ public class PlantController {
         plantCare.setContributor(getCurrentUser());
         plantCareRepository.save(plantCare);
         this.plantCare = null;
-        return "redirect:/?thanksContributor";
+        return "redirect:/?message=Thank you for your contribution.";
     }
 
     //List Plant

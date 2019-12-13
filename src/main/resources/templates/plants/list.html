@@ -27,7 +27,7 @@
             <!--/*@thymesVar id="plant" type="group11.leafalone.Plant.Plant"*/-->
             <th scope="row" th:text="${plant.getName()}"></th>
             <td th:text="${plant.getPlantCare().getColloquial()}"></td>
-            <td th:text="${plant.getSun().name()}"></td>
+            <td th:text="${plant.getSun().getName()}"></td>
             <td th:text="${plant.getAcquisition().toLocaleString()}"></td>
             <td th:text="${plant.getWatered().toLocaleString()}"></td>
             <td th:text="${plant.getNotes()}"></td>

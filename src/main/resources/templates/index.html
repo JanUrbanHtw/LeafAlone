@@ -17,14 +17,8 @@
 </div>
 <div class="container">
     <br>
-    <div class="font-weight-bold" th:if="${param.autoLoginFailed}">
-        <p id="autoLoginFailedText">Auto-Login failed, but either way:</p>
-    </div>
-    <div class="font-weight-bold" th:if="${param.newUser}">
-        <p id="newUserText">Welcome new User!</p>
-    </div>
-    <div class="font-weight-bold" th:if="${param.thanksContributor}">
-        <p id="thanksContributorText">Thank you for your contribution.</p>
+    <div class="font-weight-bold" th:if="${param.message}">
+        <p th:text="${param.message}"></p>
     </div>
 </div>
 </body>

@@ -73,9 +73,9 @@ public class LoginController {
         try {
             request.login(user.getUsername(), user.getConfirmPassword());
         } catch (ServletException e) {
-            return "redirect:/?newUser&&autoLoginFailed";
+            return "redirect:/?message=Auto-Login failed, but either way: Welcome "+user.getUsername()+"!";
         }
-        return "redirect:/?newUser";
+        return "redirect:/?message=Welcome "+user.getUsername()+"!";
 
     }
 

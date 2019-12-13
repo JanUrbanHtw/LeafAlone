@@ -74,7 +74,7 @@ class LoginControllerTest {
         HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
 
         String viewname = loginController.registerSubmit(user, bindingResult, model, request);
-        assertEquals("redirect:/?newUser", viewname);
+        assertEquals("redirect:/?message=Welcome Dummy!", viewname);
     }
 
 

@@ -266,7 +266,7 @@ class PlantControllerTest {
 
         mockMVC.perform(get("/plants/confirm/ok"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/?thanksContributor"));
+                .andExpect(redirectedUrl("/?message=Thank you for your contribution."));
 
         ArgumentCaptor<PlantCare> savedPlantCare= ArgumentCaptor.forClass(PlantCare.class);
         Mockito.verify(plantCareRepository).save(savedPlantCare.capture());
