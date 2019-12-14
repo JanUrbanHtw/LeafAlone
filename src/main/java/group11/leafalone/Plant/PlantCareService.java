@@ -22,28 +22,28 @@ public class PlantCareService {
     public BindingResult validatePlantCare(PlantCare plantCare, BindingResult bindingResult){
         try {
             if (plantCare.getColloquial() != null && plantCare.getColloquial().length() > 255) {
-                FieldError error = new FieldError("plant", "colloquial", "Required to be shorter than 256 characters");
+                FieldError error = new FieldError("plantCare", "colloquial", "Required to be shorter than 256 characters");
                 bindingResult.addError(error);
             }
 
             if (plantCare.getScientific() != null && plantCare.getScientific().length() > 255) {
-                FieldError error = new FieldError("plant", "scientific", "Required to be shorter than 256 characters");
+                FieldError error = new FieldError("plantCare", "scientific", "Required to be shorter than 256 characters");
                 bindingResult.addError(error);
             }
 
             PlantCare repoPlantCare = plantCareRepository.findByScientific(plantCare.getScientific());
             if (repoPlantCare != null) {
-                FieldError error = new FieldError("plant", "scientific", "Plant-Regimen already stored in database");
+                FieldError error = new FieldError("plantCare", "scientific", "Plant-Regimen already stored in database");
                 bindingResult.addError(error);
             }
 
             if (plantCare.getSoilAdvice() != null && plantCare.getSoilAdvice().length() > 255) {
-                FieldError error = new FieldError("plant", "soilAdvice", "Required to be shorter than 256 characters");
+                FieldError error = new FieldError("plantCare", "soilAdvice", "Required to be shorter than 256 characters");
                 bindingResult.addError(error);
             }
 
             if (plantCare.getDescription() != null && plantCare.getDescription().length() > 255) {
-                FieldError error = new FieldError("plant", "description", "Required to be shorter than 256 characters");
+                FieldError error = new FieldError("plantCare", "description", "Required to be shorter than 256 characters");
                 bindingResult.addError(error);
             }
 

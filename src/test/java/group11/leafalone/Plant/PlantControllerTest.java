@@ -244,6 +244,23 @@ class PlantControllerTest {
         verify(plantCareRepository, times(0)).save(any(PlantCare.class));
     }
 
+    @Test
+    @WithMockUser()
+    void ContributePlant_POST_PlantCareNameAlreadyInUse() throws Exception {
+        when(plantCareRepository.findByScientific("scientific")).thenReturn(new PlantCare());
+        mockMVC.perform(post("/plants/contribute")
+                .param("colloquial", "colloquial")
+                .param("scientific", "scientific")
+                .param("waterCycle", "1")
+                .param("waterAmount", "1")
+                .param("soilAdvice", "soilAdvice")
+                .param("description", "description"))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(view().name("plants/contribute"))
+                .andExpect(model().attributeHasFieldErrors("plantCare", "scientific"));
+        verify(plantRepository, times(0)).save(any(Plant.class));
+    }
+
     //list
 
     @Test
