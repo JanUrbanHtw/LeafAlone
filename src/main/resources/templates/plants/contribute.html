@@ -54,7 +54,7 @@
     <div class="form-group">
         <label th:for="soilAdvice">What kind of soil is ideal for this plant?</label>
         <br/>
-        <textarea th:type="text" th:field="*{soilAdvice}" path="soilAdvice" class="form-control"
+        <textarea lang="en" spellcheck="true" th:type="text" th:field="*{soilAdvice}" path="soilAdvice" class="form-control"
                   id="soilAdvice"></textarea>
         <p class="font-weight-bold errorMessage text-danger" th:if="${#fields.hasErrors('soilAdvice')}"
            th:errors="*{soilAdvice}">
@@ -63,7 +63,7 @@
     <div class="form-group">
         <label for="description">general description, additional information</label>
         <br/>
-        <textarea th:type="text" th:field="*{description}" path="description" class="form-control"
+        <textarea lang="en" spellcheck="true" th:type="text" th:field="*{description}" path="description" class="form-control"
                   id="description"></textarea>
         <p class="font-weight-bold errorMessage text-danger" th:if="${#fields.hasErrors('description')}"
            th:errors="*{description}">

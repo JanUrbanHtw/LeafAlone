@@ -15,10 +15,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -272,15 +269,37 @@ class PlantControllerTest {
         ArrayList<Plant> list = new ArrayList<>();
         list.add(new Plant.Builder().withName("Plant1").build());
         list.add(new Plant.Builder().withName("Plant2").build());
-        when(plantService.findByLeafAloneUser(user))
+        when(plantService.findByLeafAloneUserOrdered(user))
                 .thenReturn(list);
 
         mockMVC.perform(get("/plants/list"))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(view().name("plants/list"))
                 .andExpect(model().attribute("plants", list));
-        verify(plantRepository).findByLeafAloneUser(user);
+        verify(plantRepository).findByLeafAloneUserOrdered(user);
     }
+
+    @Test
+    @WithMockUser(username = "name")
+    void WateredPlant_GET_ShouldRenderListAndUpdatePlant() throws Exception {
+        Plant plant = new Plant.Builder().withName("Dummy").build();
+        Optional<Plant> optionalPlant = Optional.of(plant);
+
+        ArrayList<Plant> list = new ArrayList<>();
+        list.add(plant);
+
+        when(plantRepository.findByName("Dummy")).thenReturn(optionalPlant);
+        when(plantRepository.findByLeafAloneUserOrdered(userService.getCurrentUser())).thenReturn(list);
+
+        mockMVC.perform(get("/plants/watered/Dummy"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/plants/list?message=Dummy got watered"))
+                .andExpect(model().attribute("plants", list));
+        verify(plantRepository, times(1)).save(plant);
+        verify(plantRepository).findByLeafAloneUserOrdered(userService.getCurrentUser());
+    }
+
+    //confirm
 
     @Test
     void confirmPostShouldRenderConfirmPage() throws Exception {

@@ -2,11 +2,14 @@ package group11.leafalone.Plant;
 
 import group11.leafalone.Auth.LeafAloneUserDetailsService;
 import group11.leafalone.Auth.UserRepository;
+import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -93,9 +96,17 @@ public class PlantController {
 
     @GetMapping("plants/list")
     public String getPlantList(Model model) {
-        List<Plant> plantList = plantService.findByLeafAloneUser(userService.getCurrentUser());
+        List<Plant> plantList = plantService.findByLeafAloneUserOrdered(userService.getCurrentUser());
         model.addAttribute("plants", plantList);
         return "plants/list";
 
+    }
+
+    @GetMapping("plants/watered/{name}")
+    public String waterPlant(@PathVariable String name, Model model) {
+        plantService.waterPlant(name);
+        List<Plant> plantList = plantService.findByLeafAloneUserOrdered(userService.getCurrentUser());
+        model.addAttribute("plants", plantList);
+        return "redirect:/plants/list?message="+name+" got watered";
     }
 }
