@@ -1,6 +1,7 @@
 package group11.leafalone.Plant;
 
 import group11.leafalone.Auth.LeafAloneUser;
+import group11.leafalone.Auth.LeafAloneUserDetailsService;
 import group11.leafalone.Auth.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,6 +10,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -28,17 +30,25 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class PlantControllerTest {
     private MockMvc mockMVC;
 
-    private UserRepository userRepository;
     private PlantRepository plantRepository;
     private PlantCareRepository plantCareRepository;
+    private UserRepository userRepository;
+
+    private PlantService plantService;
+    private PlantCareService plantCareService;
+    private LeafAloneUserDetailsService userService;
 
     @BeforeEach
     void init() {
-        plantCareRepository = Mockito.mock(PlantCareRepository.class);
         plantRepository = Mockito.mock(PlantRepository.class);
+        plantCareRepository = Mockito.mock(PlantCareRepository.class);
         userRepository = Mockito.mock(UserRepository.class);
 
-        PlantController plantController = new PlantController(userRepository, plantRepository, plantCareRepository);
+        userService = new LeafAloneUserDetailsService(userRepository, new BCryptPasswordEncoder());
+        plantService = new PlantService(plantRepository, userService);
+        plantCareService = new PlantCareService(plantCareRepository, userService);
+
+        PlantController plantController = new PlantController(plantService, plantCareService, userService);
         mockMVC = MockMvcBuilders.standaloneSetup(plantController).build();
     }
 
@@ -49,7 +59,7 @@ class PlantControllerTest {
         PlantCare[] plantCares = {new PlantCare(), new PlantCare()};
         ArrayList<PlantCare> plantCareList = new ArrayList<>(Arrays.asList(plantCares));
 
-        when(plantCareRepository.findAll()).thenReturn(plantCareList);
+        when(plantCareService.findAll()).thenReturn(plantCareList);
         mockMVC.perform(get("/plants/add"))
                 .andExpect(view().name("plants/add"))
                 .andExpect(status().is2xxSuccessful())
@@ -107,18 +117,18 @@ class PlantControllerTest {
         verify(plantRepository, times(0)).save(any(Plant.class));
     }
 
-    //TODO: no plants with same name in repository, works in reality but not in tests
     @Test
-    @WithMockUser(username = "name")
+    @WithMockUser()
     void AddPlant_POST_PlantNameAlreadyInUse() throws Exception {
-        mockMVC.perform(post("/plants/add")
-                .param("name", "plantName"));
+        List<String> names = new ArrayList<>();
+        names.add("plantName");
+        when(plantRepository.findNamesByLeafAloneUser(userService.getCurrentUser())).thenReturn(names);
         mockMVC.perform(post("/plants/add")
                 .param("name", "plantName"))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(view().name("plants/add"))
-                .andExpect(model().attributeHasFieldErrors("plant", "plantName"));
-        verify(plantRepository, times(1)).save(any(Plant.class));
+                .andExpect(model().attributeHasFieldErrors("plant", "name"));
+        verify(plantRepository, times(0)).save(any(Plant.class));
     }
 
     //contributePlant
@@ -240,12 +250,12 @@ class PlantControllerTest {
     @WithMockUser(username = "name")
     void ListPlant_GET_ShouldRenderList() throws Exception {
         LeafAloneUser user = new LeafAloneUser.Builder().build();
-        when(userRepository.findByUsername("name")).thenReturn(user);
+        when(userService.findByUsername("name")).thenReturn(user);
 
         ArrayList<Plant> list = new ArrayList<>();
         list.add(new Plant.Builder().withName("Plant1").build());
         list.add(new Plant.Builder().withName("Plant2").build());
-        when(plantRepository.findByLeafAloneUser(user))
+        when(plantService.findByLeafAloneUser(user))
                 .thenReturn(list);
 
         mockMVC.perform(get("/plants/list"))
@@ -272,7 +282,7 @@ class PlantControllerTest {
     @Test
     @WithMockUser(username = "user")
     void confirmOkGetShouldRenderIndexPage() throws Exception {
-        when(userRepository.findByUsername("user")).thenReturn(new LeafAloneUser("user", "password", "ROLE_CONTRIBUTOR", "password"));
+        when(userService.findByUsername("user")).thenReturn(new LeafAloneUser("user", "password", "ROLE_CONTRIBUTOR", "password"));
 
         mockMVC.perform(post("/plants/confirm")
                 .param("colloquial", "colloquial")

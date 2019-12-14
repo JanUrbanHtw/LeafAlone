@@ -4,12 +4,10 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,13 +22,11 @@ import javax.validation.Valid;
 @Controller
 public class LoginController {
 
-    private UserRepository userRepository;
-    private PasswordEncoder passwordEncoder;
+    private LeafAloneUserDetailsService userService;
 
     //testing
-    public LoginController(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
+    public LoginController(LeafAloneUserDetailsService userService) {
+        this.userService = userService;
     }
 
     @RequestMapping("/login")
@@ -56,20 +52,11 @@ public class LoginController {
 
     @PostMapping("/register")
     public String registerSubmit(@Valid LeafAloneUser user, BindingResult bindingResult, Model model, HttpServletRequest request) {
-        if (!(user.getPassword().equals(user.getConfirmPassword()))) {
-            FieldError error = new FieldError("user", "confirmPassword", "Required to be identical to password");
-            bindingResult.addError(error);
-        }
-        LeafAloneUser repoUser = userRepository.findByUsername(user.getUsername());
-        if (repoUser != null) {
-            FieldError error = new FieldError("user", "username", "Username already taken");
-            bindingResult.addError(error);
-        }
+        bindingResult = userService.validateUser(user, bindingResult);
         if (bindingResult.hasErrors() || bindingResult.hasFieldErrors()) {
             return "register";
         }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
+        userService.save(user);
         try {
             request.login(user.getUsername(), user.getConfirmPassword());
         } catch (ServletException e) {

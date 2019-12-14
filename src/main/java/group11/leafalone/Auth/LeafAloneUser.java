@@ -27,8 +27,7 @@ public class LeafAloneUser {
     @NotEmpty(message = "Confirmation is required")
     private String confirmPassword;
 
-    protected LeafAloneUser() {
-    }
+    public LeafAloneUser() {}
 
     public LeafAloneUser(@NotEmpty(message = "Username is required") String username, @NotEmpty(message = "Password is required") String password, String role, @NotEmpty(message = "Confirmation is required") String confirmPassword) {
         this.username = username;

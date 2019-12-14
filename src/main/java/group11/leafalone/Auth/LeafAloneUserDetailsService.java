@@ -3,10 +3,14 @@ package group11.leafalone.Auth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -16,6 +20,16 @@ public class LeafAloneUserDetailsService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    public LeafAloneUserDetailsService(){}
+
+    public LeafAloneUserDetailsService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) {
@@ -32,9 +46,35 @@ public class LeafAloneUserDetailsService implements UserDetailsService {
         //return new LeafAloneUserPrincipal(leafAloneUser);
     }
 
-    public LeafAloneUser loadLAUserbyUsername(String username) {
+    public LeafAloneUser loadUserbyUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
+    public LeafAloneUser getCurrentUser() {
+        SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userRepository.findByUsername(userDetails.getUsername());
+    }
 
+    public LeafAloneUser findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    public BindingResult validateUser(LeafAloneUser user, BindingResult bindingResult) {
+        if (!(user.getPassword().equals(user.getConfirmPassword()))) {
+            FieldError error = new FieldError("user", "confirmPassword", "Required to be identical to password");
+            bindingResult.addError(error);
+        }
+        LeafAloneUser repoUser = userRepository.findByUsername(user.getUsername());
+        if (repoUser != null) {
+            FieldError error = new FieldError("user", "username", "Username already taken");
+            bindingResult.addError(error);
+        }
+        return bindingResult;
+    }
+
+    public void save(LeafAloneUser user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
+    }
 }

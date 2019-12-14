@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
+import javax.imageio.plugins.tiff.BaselineTIFFTagSet;
 import javax.servlet.http.HttpServletRequest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -26,13 +27,14 @@ class LoginControllerTest {
     private MockMvc mockMVC;
 
     private UserRepository userRepository;
+    private LeafAloneUserDetailsService userService;
     private LoginController loginController;
 
     @BeforeEach
     void init() {
         userRepository = Mockito.mock(UserRepository.class);
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        loginController = new LoginController(userRepository, passwordEncoder);
+        userService = new LeafAloneUserDetailsService(userRepository, new BCryptPasswordEncoder());
+        loginController = new LoginController(userService);
 
         mockMVC = MockMvcBuilders.standaloneSetup(loginController).build();
     }
