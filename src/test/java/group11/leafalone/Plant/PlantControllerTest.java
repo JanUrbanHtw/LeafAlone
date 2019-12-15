@@ -337,5 +337,71 @@ class PlantControllerTest {
         assertThat(savedPlantCare.getValue().getScientific()).isEqualTo("scientific");
         assertThat(savedPlantCare.getValue().getColloquial()).isEqualTo("colloquial");
     }
+
+    //edit
+
+    @Test
+    void EditPlant_GET_shouldRenderEdit() throws Exception {
+        PlantCare[] plantCares = {new PlantCare(), new PlantCare()};
+        ArrayList<PlantCare> plantCareList = new ArrayList<>(Arrays.asList(plantCares));
+        Plant plant = new Plant.Builder().withName("dummy").build();
+        Optional<Plant> optional = Optional.of(plant);
+
+        when(plantRepository.findByName("dummy")).thenReturn(optional);
+        when(plantCareService.findAll()).thenReturn(plantCareList);
+
+        mockMVC.perform(get("/plants/edit/dummy"))
+                .andExpect(view().name("plants/edit"))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(model().attribute("plant", plant))
+                .andExpect(model().attribute("sunSituations", SunSituation.values()))
+                .andExpect(model().attribute("plantCares", plantCareList));
+        verify(plantCareRepository).findAll();
+        verify(plantRepository).findByName("dummy");
+    }
+
+    @Test
+    @WithMockUser
+    void EditPlant_POST_correctShouldSaveToDB() throws Exception {
+        Plant plant = new Plant.Builder().withName("dummy").build();
+        Optional<Plant> optional = Optional.of(plant);
+        when(plantRepository.findByName("dummy")).thenReturn(optional);
+
+        mockMVC.perform(post("/plants/edit/dummy")
+                .param("name", "dummy"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/plants/list"));
+        verify(plantRepository, times(1)).save(any(Plant.class));
+    }
+
+    @Test
+    @WithMockUser
+    void EditPlant_POST_acquisitionInTheFuture() throws Exception {
+        String date = (Calendar.getInstance().get(Calendar.YEAR) + 1) + "-01-01T00:00:00.000Z";
+        mockMVC.perform(post("/plants/edit/dummy")
+                .param("name", "dummy")
+                .param("acquisition", date))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(view().name("plants/edit"))
+                .andExpect(model().attributeHasFieldErrors("plant", "acquisition"));
+        verify(plantRepository, times(0)).save(any(Plant.class));
+    }
+
+    @Test
+    @WithMockUser
+    void EditPlant_POST_wateredInTheFuture() throws Exception {
+        String date = (Calendar.getInstance().get(Calendar.YEAR) + 1) + "-01-01T00:00:00.000Z";
+        Plant plant = new Plant.Builder().withName("dummy").build();
+        Optional<Plant> optional = Optional.of(plant);
+        when(plantRepository.findByName("dummy")).thenReturn(optional);
+
+        mockMVC.perform(post("/plants/edit/dummy")
+                .param("name", "dummy")
+                .param("watered", date))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(view().name("plants/edit"))
+                .andExpect(model().attributeHasFieldErrors("plant", "watered"));
+        verify(plantRepository, times(0)).save(any(Plant.class));
+    }
 }
 

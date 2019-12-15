@@ -23,6 +23,7 @@
             <th scope="col">Last watering date</th>
             <th scope="col">Additional notes</th>
             <th scope="col"></th>
+            <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
@@ -36,7 +37,10 @@
             <td th:text="${plant.getWatered().toLocaleString()}"></td>
             <td th:text="${plant.getNotes()}"></td>
             <td>
-                <a class="btn btn-outline-info" th:href="@{watered/{name}(name=${plant.getName()})}">Water</a>
+                <a class="btn btn-outline-info" th:href="@{/plants/watered/{name}(name=${plant.getName()})}">Water</a>
+            </td>
+            <td>
+                <a class="btn btn-outline-success" th:href="@{/plants/edit/{name}(name=${plant.getName()})}">Edit</a>
             </td>
         </tr>
         </tbody>

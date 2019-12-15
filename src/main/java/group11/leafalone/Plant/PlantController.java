@@ -49,7 +49,7 @@ public class PlantController {
             model.addAttribute("plantCares", plantCareService.findAll());
             return "plants/add";
         }
-        plantService.save(plant);
+        plantService.save(plant, plant.getName());
         return "redirect:list";
     }
 
@@ -108,5 +108,30 @@ public class PlantController {
         List<Plant> plantList = plantService.findByLeafAloneUserOrdered(userService.getCurrentUser());
         model.addAttribute("plants", plantList);
         return "redirect:/plants/list?message="+name+" got watered";
+    }
+
+    //Edit Plant
+
+    @GetMapping("plants/edit/{name}")
+    public String editPlant(@PathVariable String name, Model model) {
+        Plant plant = plantService.findByName(name);
+        model.addAttribute("plant", plant);
+        model.addAttribute("sunSituations", SunSituation.values());
+        model.addAttribute("plantCares", plantCareService.findAll());
+        return "plants/edit";
+    }
+
+    @PostMapping("plants/edit/{name}")
+    public String editPlantSubmit(@PathVariable String name, @Valid Plant plant, BindingResult bindingResult, Model model) {
+        bindingResult = plantService.validatePlant(plant, bindingResult);
+
+        if (bindingResult.hasFieldErrors("acquisition") || bindingResult.hasFieldErrors("watered") || bindingResult.hasFieldErrors("notes")) {
+            model.addAttribute("plant", plant);
+            model.addAttribute("sunSituations", SunSituation.values());
+            model.addAttribute("plantCares", plantCareService.findAll());
+            return "plants/edit";
+        }
+        plantService.save(plant, name);
+        return "redirect:/plants/list";
     }
 }

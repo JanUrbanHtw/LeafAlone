@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <title>Edit your Plant</title>
+</head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+<div class="container">
+    <br>
+    <!--/*@thymesVar id="plant" type="group11.leafalone.Plant.Plant"*/-->
+    <form action="#" th:action="@{/plants/edit/{name}(name=${plant.getName()})}" th:object="${plant}" id="addPlantForm" method="post">
+        <div class="form-group">
+            <label>Plant-Name:</label>
+            <p th:text="${plant.name}" class="font-weight-bold text-success" id="nameText">
+        </div>
+
+        <div class="form-group">
+            <label th:for="plantCare">Type of plant:</label>
+            <select class="custom-select" th:field="*{plantCare}" path="plantCare" id="plantCare">
+                <!--/*@thymesVar id="plantCare" type="group11.leafalone.Plant.PlantCare"*/-->
+                <option th:each="plantCare : ${plantCares}" th:value="${plantCare.id}"
+                        th:text="${plantCare.colloquial}"></option>
+            </select>
+            <p class="font-weight-bold errorMessage text-danger" th:if="${#fields.hasErrors('plantCare')}"
+               th:errors="*{plantCare}">
+                Plant-Typ
+                Error</p>
+        </div>
+
+        <div class="form-group">
+            <label th:for="sun">Sun-Situation of the plant:</label>
+            <select class="custom-select" th:field="*{sun}" path="sun" id="sun">
+                <option th:each="sun : ${sunSituations}" th:value="${sun}" th:text="${sun.getName()}"></option>
+            </select>
+            <p class="font-weight-bold errorMessage text-danger" th:if="${#fields.hasErrors('sun')}" th:errors="*{sun}">
+                Sun-Situation Error</p>
+        </div>
+
+        <div class="form-group">
+            <label th:for="acquisition">Date of acquisition:</label>
+            <input th:type="date" path="acquisition" th:field="*{acquisition}" class="form-control" id="acquisition">
+            <p class="font-weight-bold errorMessage text-danger" th:if="${#fields.hasErrors('acquisition')}"
+               th:errors="*{acquisition}">Acquisition-Date Error</p>
+        </div>
+
+        <div class="form-group">
+            <label th:for="watered">Date of last watering:</label>
+            <input th:type="date" path="watered" th:field="*{watered}" class="form-control" id="watered">
+            <p class="font-weight-bold errorMessage text-danger" th:if="${#fields.hasErrors('watered')}"
+               th:errors="*{watered}">
+                Last-Watered-Date Error</p>
+        </div>
+
+        <div class="form-group">
+            <label th:for="notes">Additional Notes:</label>
+            <textarea lang="en" spellcheck="true" th:type="text" th:field="*{notes}" path="notes" class="form-control" id="notes"/>
+            <p class="font-weight-bold text-danger" th:if="${#fields.hasErrors('notes')}" th:errors="*{notes}">Notes
+                Error</p>
+        </div>
+        <button class="btn btn-success" id="submitButton" th:type="submit">Submit changes</button>
+    </form>
+</div>
+
+</body>
+</html>

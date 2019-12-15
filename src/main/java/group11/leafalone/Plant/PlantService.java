@@ -24,7 +24,7 @@ public class PlantService {
         this.userService = userService;
     }
 
-    public void save(Plant plant) {
+    public void save(Plant plant, String name) {
         Date today = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
         if(plant.getAcquisition() == null) {
             plant.setAcquisition(today);
@@ -32,8 +32,24 @@ public class PlantService {
         if(plant.getWatered() == null) {
             plant.setWatered(today);
         }
-        plant.setLeafAloneUser(userService.getCurrentUser());
-        plantRepository.save(plant);
+        Plant repoPlant;
+        try {
+            repoPlant = findByName(name);
+        } catch (ResponseStatusException e) {
+            plant.setLeafAloneUser(userService.getCurrentUser());
+            plantRepository.save(plant);
+            return;
+        }
+        if(repoPlant != null) {
+            repoPlant.setPlantCare(plant.getPlantCare());
+            repoPlant.setSun(plant.getSun());
+            repoPlant.setAcquisition(plant.getAcquisition());
+            repoPlant.setWatered(plant.getWatered());
+            repoPlant.setNotes(plant.getNotes());
+            plantRepository.save(repoPlant);
+            return;
+        }
+
     }
 
     public List<Plant> findByLeafAloneUser(LeafAloneUser leafAloneUser){
@@ -41,13 +57,13 @@ public class PlantService {
     }
 
     public BindingResult validatePlant(Plant plant, BindingResult bindingResult) {
-        if (plant.getName().length() > 255) {
+        if (plant.getName() != null) if (plant.getName().length() > 255) {
             FieldError error = new FieldError("plant", "name", "Required to be shorter than 256 characters");
             bindingResult.addError(error);
         }
 
         List<String> savedPlants = plantRepository.findNamesByLeafAloneUser(userService.getCurrentUser());
-        if(savedPlants.contains(plant.getName())) {
+        if(plant.getName() != null) if (savedPlants.contains(plant.getName())) {
             FieldError error = new FieldError("plant", "name", "Name already in use");
             bindingResult.addError(error);
         }
@@ -83,14 +99,21 @@ public class PlantService {
     }
 
     public void waterPlant(String name) throws ResponseStatusException {
+        Plant plant = findByName(name);
+        Date today = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
+        plant.setWatered(today);
+        plantRepository.save(plant);
+    }
+
+    public Plant findByName(String name) throws ResponseStatusException {
+        if(name == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
         Optional<Plant> plant = plantRepository.findByName(name);
         if (!plant.isPresent()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Plant not found");
         }
-        Date today = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
-        Plant actualPlant = plant.get();
-        actualPlant.setWatered(today);
-        plantRepository.save(actualPlant);
+        return plant.get();
     }
 
     public List<Plant> findByLeafAloneUserOrdered(LeafAloneUser user) {
