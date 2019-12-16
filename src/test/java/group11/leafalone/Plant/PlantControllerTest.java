@@ -279,7 +279,7 @@ class PlantControllerTest {
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(view().name("plants/list"))
                 .andExpect(model().attribute("plants", list));
-        verify(plantRepository).findByLeafAloneUserOrdered(user);
+        verify(plantRepository).findByLeafAloneUserOrdered(user.getId());
     }
 
     @Test
@@ -295,14 +295,14 @@ class PlantControllerTest {
 
         when(userRepository.findByUsername("name")).thenReturn(user);
         when(plantRepository.findByName(userService.getCurrentUser().getId(), "Dummy")).thenReturn(optionalPlant);
-        when(plantRepository.findByLeafAloneUserOrdered(userService.getCurrentUser())).thenReturn(list);
+        when(plantRepository.findByLeafAloneUserOrdered(userService.getCurrentUser().getId())).thenReturn(list);
 
         mockMVC.perform(get("/plants/watered/Dummy"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/plants/list?message=Dummy got watered"))
                 .andExpect(model().attribute("plants", list));
         verify(plantRepository, times(1)).save(plant);
-        verify(plantRepository).findByLeafAloneUserOrdered(userService.getCurrentUser());
+        verify(plantRepository).findByLeafAloneUserOrdered(userService.getCurrentUser().getId());
     }
 
     //confirm

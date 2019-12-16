@@ -27,6 +27,6 @@ public interface PlantRepository extends CrudRepository<Plant, Long> {
         return names;
     }
 
-    @Query(value="SELECT * FROM user_plant ORDER BY id ASC", nativeQuery = true)
-    List<Plant> findByLeafAloneUserOrdered(LeafAloneUser user);
+    @Query(value="SELECT * FROM user_plant WHERE user_id= :user_id ORDER BY id ASC", nativeQuery = true)
+    List<Plant> findByLeafAloneUserOrdered(@Param("user_id") Long user_id);
 }

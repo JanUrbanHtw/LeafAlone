@@ -117,7 +117,7 @@ public class PlantService {
     }
 
     public List<Plant> findByLeafAloneUserOrdered(LeafAloneUser user) {
-        return plantRepository.findByLeafAloneUserOrdered(user);
+        return plantRepository.findByLeafAloneUserOrdered(user.getId());
     }
 
 }
