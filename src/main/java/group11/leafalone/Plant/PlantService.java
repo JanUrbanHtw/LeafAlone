@@ -109,7 +109,7 @@ public class PlantService {
         if(name == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
-        Optional<Plant> plant = plantRepository.findByName(name);
+        Optional<Plant> plant = plantRepository.findByName(userService.getCurrentUser().getId(), name);
         if (!plant.isPresent()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Plant not found");
         }

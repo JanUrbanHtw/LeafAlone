@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,9 @@ import java.util.Optional;
 public interface PlantRepository extends CrudRepository<Plant, Long> {
 
     List<Plant> findByLeafAloneUser(LeafAloneUser leafAloneUser);
-    Optional<Plant> findByName(String name);
+
+    @Query(nativeQuery = true, value = "SELECT * FROM user_plant WHERE user_id = :user_id AND name = :name")
+    Optional<Plant> findByName(@Param("user_id") Long user_id, @Param("name") String name);
 
     default List<String> findNamesByLeafAloneUser (LeafAloneUser leafAloneUser) {
         List<String> names = new ArrayList<>();

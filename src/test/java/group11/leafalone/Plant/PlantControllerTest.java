@@ -66,8 +66,11 @@ class PlantControllerTest {
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser("name")
     void AddPlant_POST_correctShouldSaveToDB() throws Exception {
+        LeafAloneUser user = new LeafAloneUser("name", "password", "ROLE_USER", "password");
+        when(userRepository.findByUsername("name")).thenReturn(user);
+
         mockMVC.perform(post("/plants/add")
                 .param("name", "plantName"))
                 .andExpect(status().is3xxRedirection())
@@ -288,7 +291,10 @@ class PlantControllerTest {
         ArrayList<Plant> list = new ArrayList<>();
         list.add(plant);
 
-        when(plantRepository.findByName("Dummy")).thenReturn(optionalPlant);
+        LeafAloneUser user = new LeafAloneUser("name", "password", "ROLE_USER", "password");
+
+        when(userRepository.findByUsername("name")).thenReturn(user);
+        when(plantRepository.findByName(userService.getCurrentUser().getId(), "Dummy")).thenReturn(optionalPlant);
         when(plantRepository.findByLeafAloneUserOrdered(userService.getCurrentUser())).thenReturn(list);
 
         mockMVC.perform(get("/plants/watered/Dummy"))
@@ -341,13 +347,16 @@ class PlantControllerTest {
     //edit
 
     @Test
+    @WithMockUser("name")
     void EditPlant_GET_shouldRenderEdit() throws Exception {
         PlantCare[] plantCares = {new PlantCare(), new PlantCare()};
         ArrayList<PlantCare> plantCareList = new ArrayList<>(Arrays.asList(plantCares));
         Plant plant = new Plant.Builder().withName("dummy").build();
         Optional<Plant> optional = Optional.of(plant);
+        LeafAloneUser user = new LeafAloneUser("name", "password", "ROLE_USER", "password");
 
-        when(plantRepository.findByName("dummy")).thenReturn(optional);
+        when(userRepository.findByUsername("name")).thenReturn(user);
+        when(plantRepository.findByName(userService.getCurrentUser().getId(),"dummy")).thenReturn(optional);
         when(plantCareService.findAll()).thenReturn(plantCareList);
 
         mockMVC.perform(get("/plants/edit/dummy"))
@@ -357,15 +366,19 @@ class PlantControllerTest {
                 .andExpect(model().attribute("sunSituations", SunSituation.values()))
                 .andExpect(model().attribute("plantCares", plantCareList));
         verify(plantCareRepository).findAll();
-        verify(plantRepository).findByName("dummy");
+        verify(plantRepository).findByName(userService.getCurrentUser().getId(), "dummy");
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser("name")
     void EditPlant_POST_correctShouldSaveToDB() throws Exception {
         Plant plant = new Plant.Builder().withName("dummy").build();
         Optional<Plant> optional = Optional.of(plant);
-        when(plantRepository.findByName("dummy")).thenReturn(optional);
+
+        LeafAloneUser user = new LeafAloneUser("name", "password", "ROLE_USER", "password");
+
+        when(userRepository.findByUsername("name")).thenReturn(user);
+        when(plantRepository.findByName(userService.getCurrentUser().getId(),"dummy")).thenReturn(optional);
 
         mockMVC.perform(post("/plants/edit/dummy")
                 .param("name", "dummy"))
@@ -388,12 +401,15 @@ class PlantControllerTest {
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser("name")
     void EditPlant_POST_wateredInTheFuture() throws Exception {
         String date = (Calendar.getInstance().get(Calendar.YEAR) + 1) + "-01-01T00:00:00.000Z";
         Plant plant = new Plant.Builder().withName("dummy").build();
         Optional<Plant> optional = Optional.of(plant);
-        when(plantRepository.findByName("dummy")).thenReturn(optional);
+        LeafAloneUser user = new LeafAloneUser("name", "password", "ROLE_USER", "password");
+
+        when(userRepository.findByUsername("name")).thenReturn(user);
+        when(plantRepository.findByName(userService.getCurrentUser().getId(),"dummy")).thenReturn(optional);
 
         mockMVC.perform(post("/plants/edit/dummy")
                 .param("name", "dummy")
