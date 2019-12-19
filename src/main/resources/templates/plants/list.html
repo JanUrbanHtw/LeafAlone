@@ -44,7 +44,14 @@
                 <a class="btn btn-outline-success" th:href="@{/plants/edit/{name}(name=${plant.getName()})}">Edit</a>
             </td>
             <td>
-                <a onclick="return confirm('Do you really want to delete the plant?')" class="btn btn-outline-danger" th:href="@{/plants/delete/{name}(name=${plant.getName()})}">Delete</a>
+                <a onclick="return confirm('Do you really want to delete the plant?')" class="btn btn-outline-danger"
+                   th:href="@{/plants/delete/{name}(name=${plant.getName()})}">Delete</a>
+            </td>
+        </tr>
+        <tr th:if="${plants.size() == 0}">
+            <td colspan="8">
+                <p style="margin-bottom: 0" class="text-center"><a id="addPlantLink" class="btn btn-outline-success"
+                                                                   href="/plants/add">add a plant</a></p>
             </td>
         </tr>
         </tbody>

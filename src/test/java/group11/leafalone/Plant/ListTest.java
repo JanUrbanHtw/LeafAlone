@@ -9,6 +9,7 @@ import org.fluentlenium.core.annotation.Page;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -62,6 +63,7 @@ class ListTest extends FluentTest {
     }
 
     @Test
+    @DirtiesContext
     void submittedShouldBePresent() {
         String name = "name";
 
@@ -77,5 +79,13 @@ class ListTest extends FluentTest {
 
         goTo(listPage)
                 .isContainedInList(name);
+    }
+
+    @Test
+    void addPlantLinkShouldBePresentAndRedirect() {
+        loginAsUser();
+        goTo(listPage)
+                .clickPlantLink();
+        assertThat(window().title()).isEqualTo(AddPage.TITLE);
     }
 }
