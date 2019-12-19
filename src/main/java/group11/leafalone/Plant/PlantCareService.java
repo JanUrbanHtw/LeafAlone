@@ -1,9 +1,12 @@
 package group11.leafalone.Plant;
 
+import group11.leafalone.Auth.LeafAloneUser;
 import group11.leafalone.Auth.LeafAloneUserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+
+import java.util.List;
 
 @Service
 public class PlantCareService {
@@ -55,5 +58,9 @@ public class PlantCareService {
     public void save(PlantCare plantCare){
         plantCare.setContributor(userService.getCurrentUser());
         plantCareRepository.save(plantCare);
+    }
+
+    public List<PlantCare> findByLeafAloneUserOrdered(LeafAloneUser user) {
+        return plantCareRepository.findByLeafAloneUserOrdered(user.getId());
     }
 }

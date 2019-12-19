@@ -118,6 +118,14 @@ public class PlantController {
         return "redirect:/plants/list?message="+name+" got deleted";
     }
 
+    //Types
+    @GetMapping("plants/types")
+    public String getTypesList(Model model) {
+        List<PlantCare> plantCareList = plantCareService.findByLeafAloneUserOrdered(userService.getCurrentUser());
+        model.addAttribute("plantCares", plantCareList);
+        return "plants/types";
+    }
+
     //Edit Plant
 
     @GetMapping("plants/edit/{name}")

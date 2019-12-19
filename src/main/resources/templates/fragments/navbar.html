@@ -15,6 +15,9 @@
                 <li class="nav-item"><a class="nav-link" href="/plants/contribute" id="contributeLink">Add care
                     regimen</a></li>
             </div>
+            <div sec:authorize="hasRole('CONTRIBUTOR')">
+                <li class="nav-item"><a class="nav-link" href="/plants/types" id="typesLink">Your Plant-Types</a></li>
+            </div>
         </ul>
         <ul class="navbar-nav">
             <li class="nav-item"><a class="nav-link" href="/about" id="aboutLink">About Us</a></li>

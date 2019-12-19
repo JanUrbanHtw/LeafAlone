@@ -442,5 +442,25 @@ class PlantControllerTest {
                 .andExpect(model().attributeHasFieldErrors("plant", "watered"));
         verify(plantRepository, times(0)).save(any(Plant.class));
     }
+
+    // types
+    @Test
+    @WithMockUser(username = "name")
+    void TypesPlantCare_GET_ShouldRenderTypes() throws Exception {
+        LeafAloneUser user = new LeafAloneUser.Builder().build();
+        when(userService.findByUsername("name")).thenReturn(user);
+
+        ArrayList<PlantCare> list = new ArrayList<>();
+        list.add(new PlantCare.Builder().withColloquial("colloquial1").withScientific("scientific1").build());
+        list.add(new PlantCare.Builder().withColloquial("colloquial2").withScientific("scientific2").build());
+        when(plantCareService.findByLeafAloneUserOrdered(user))
+                .thenReturn(list);
+
+        mockMVC.perform(get("/plants/types"))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(view().name("plants/types"))
+                .andExpect(model().attribute("plantCares", list));
+        verify(plantCareRepository).findByLeafAloneUserOrdered(user.getId());
+    }
 }
 
