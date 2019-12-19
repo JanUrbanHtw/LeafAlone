@@ -20,6 +20,7 @@
             <th scope="col">Preferred water amount</th>
             <th scope="col">Preferred soil</th>
             <th scope="col">Description</th>
+            <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
@@ -32,6 +33,9 @@
             <td th:text="${plantCare.getWaterAmount()}"></td>
             <td th:text="${plantCare.getSoilAdvice()}"></td>
             <td th:text="${plantCare.getDescription()}"></td>
+            <td>
+                <a class="btn btn-outline-success" th:href="@{/plants/plant_care/{name}(name=${plantCare.getScientific()})}">Details</a>
+            </td>
         </tr>
         </tbody>
     </table>

@@ -462,5 +462,21 @@ class PlantControllerTest {
                 .andExpect(model().attribute("plantCares", list));
         verify(plantCareRepository).findByLeafAloneUserOrdered(user.getId());
     }
+
+    @Test
+    @WithMockUser(username = "name")
+    void DetailsPlantCare_GET_shouldRenderDetails() throws Exception {
+        LeafAloneUser user = new LeafAloneUser.Builder().build();
+        when(userService.findByUsername("name")).thenReturn(user);
+
+        PlantCare plantCare = new PlantCare.Builder().withScientific("dummy").build();
+        when(plantCareRepository.findByScientific("dummy")).thenReturn(plantCare);
+
+        mockMVC.perform(get("/plants/plant_care/dummy"))
+                .andExpect(view().name("plants/plant_care"))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(model().attribute("plantCare", plantCare));
+        verify(plantCareRepository).findByScientific("dummy");
+    }
 }
 

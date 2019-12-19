@@ -126,6 +126,13 @@ public class PlantController {
         return "plants/types";
     }
 
+    @GetMapping("plants/plant_care/{name}")
+    public String getDetails(@PathVariable String name, Model model) {
+        PlantCare plantCare = plantCareService.findByScientific(name);
+        model.addAttribute("plantCare",plantCare);
+        return "plants/plant_care";
+    }
+
     //Edit Plant
 
     @GetMapping("plants/edit/{name}")

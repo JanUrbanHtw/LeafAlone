@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <title>Plant-Type Details</title>
+</head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+<div class="container">
+    <br>
+    <div style="margin: 0.5em" class="card border-success">
+        <div class="card-body">
+            <label class="font-weight-bold">Created By:</label>
+            <p id="contributor" th:text="${plantCare.getContributor().getUsername()}"></p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div style="margin: 0.5em" class="card border-success">
+                <div class="card-body">
+                    <label class="font-weight-bold">Colloquial Name:</label>
+                    <p id="colloquial" th:text="${plantCare.getColloquial()}"></p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div style="margin: 0.5em" class="card border-success">
+                <div class="card-body">
+                    <label class="font-weight-bold">Scientific Name:</label>
+                    <p id="scientific" th:text="${plantCare.getScientific()}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin: 0.5em" class="card border-success">
+        <div class="card-body">
+            <label class="font-weight-bold">Sun Situation:</label>
+            <p id="sun" th:text="${plantCare.getSunSituation().getName()}"></p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div style="margin: 0.5em" class="card border-success">
+                <div class="card-body">
+                    <label class="font-weight-bold">Water Cycle:</label>
+                    <p id="waterCycle" th:text="${plantCare.getWaterCycle()}"></p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div style="margin: 0.5em" class="card border-success">
+                <div class="card-body">
+                    <label class="font-weight-bold">Water Amount:</label>
+                    <p id="waterAmount" th:text="${plantCare.getWaterAmount()}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin: 0.5em" class="card border-success">
+        <div class="card-body">
+            <label class="font-weight-bold">Soil Advice:</label>
+            <p id="soilAdvice" th:text="${plantCare.getSoilAdvice()}"></p>
+        </div>
+    </div>
+
+    <div style="margin: 0.5em" class="card border-success">
+        <div class="card-body">
+            <label class="font-weight-bold">Description:</label>
+            <p id="description" th:text="${plantCare.getDescription()}"></p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

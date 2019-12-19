@@ -2,11 +2,14 @@ package group11.leafalone.Plant;
 
 import group11.leafalone.Auth.LeafAloneUser;
 import group11.leafalone.Auth.LeafAloneUserDetailsService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PlantCareService {
@@ -62,5 +65,9 @@ public class PlantCareService {
 
     public List<PlantCare> findByLeafAloneUserOrdered(LeafAloneUser user) {
         return plantCareRepository.findByLeafAloneUserOrdered(user.getId());
+    }
+
+    public PlantCare findByScientific(String name) {
+        return plantCareRepository.findByScientific(name);
     }
 }
