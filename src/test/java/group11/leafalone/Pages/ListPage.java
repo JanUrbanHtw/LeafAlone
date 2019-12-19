@@ -6,6 +6,8 @@ import org.fluentlenium.core.domain.FluentList;
 import org.fluentlenium.core.domain.FluentWebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.concurrent.TimeUnit;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @PageUrl("http://localhost:8080/plants/list")
@@ -14,6 +16,9 @@ public class ListPage extends FluentPage {
 
     @FindBy(id = "plantList")
     private FluentWebElement list;
+
+    @FindBy(id = "addPlantLink")
+    private FluentWebElement plantLink;
 
     public ListPage isContainedInList(String name) {
         boolean found = false;
@@ -29,5 +34,9 @@ public class ListPage extends FluentPage {
         return this;
     }
 
-
+    public ListPage clickPlantLink() {
+        plantLink.click();
+        await().atMost(5, TimeUnit.SECONDS).untilPage().isLoaded();
+        return this;
+    }
 }
