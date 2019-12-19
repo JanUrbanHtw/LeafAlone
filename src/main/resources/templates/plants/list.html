@@ -24,6 +24,7 @@
             <th scope="col">Additional notes</th>
             <th scope="col"></th>
             <th scope="col"></th>
+            <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
@@ -41,6 +42,9 @@
             </td>
             <td>
                 <a class="btn btn-outline-success" th:href="@{/plants/edit/{name}(name=${plant.getName()})}">Edit</a>
+            </td>
+            <td>
+                <a onclick="return confirm('Do you really want to delete the plant?')" class="btn btn-outline-danger" th:href="@{/plants/delete/{name}(name=${plant.getName()})}">Delete</a>
             </td>
         </tr>
         </tbody>

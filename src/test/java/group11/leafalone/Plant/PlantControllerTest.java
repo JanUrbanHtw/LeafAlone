@@ -344,6 +344,29 @@ class PlantControllerTest {
         assertThat(savedPlantCare.getValue().getColloquial()).isEqualTo("colloquial");
     }
 
+    @Test
+    @WithMockUser(username = "name")
+    void DeletePlant_GET_ShouldRenderListAndDeletePlant() throws Exception {
+        Plant plant = new Plant.Builder().withName("Dummy").withId(123456789).build();
+        Optional<Plant> optionalPlant = Optional.of(plant);
+
+        ArrayList<Plant> list = new ArrayList<>();
+        list.add(plant);
+
+        LeafAloneUser user = new LeafAloneUser("name", "password", "ROLE_USER", "password");
+
+        when(userRepository.findByUsername("name")).thenReturn(user);
+        when(plantRepository.findByName(userService.getCurrentUser().getId(), "Dummy")).thenReturn(optionalPlant);
+        when(plantRepository.findByLeafAloneUserOrdered(userService.getCurrentUser().getId())).thenReturn(list);
+
+        mockMVC.perform(get("/plants/delete/Dummy"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/plants/list?message=Dummy got deleted"))
+                .andExpect(model().attribute("plants", list));
+        verify(plantRepository, times(1)).deleteById(plant.getId());
+        verify(plantRepository).findByLeafAloneUserOrdered(userService.getCurrentUser().getId());
+    }
+
     //edit
 
     @Test

@@ -120,4 +120,8 @@ public class PlantService {
         return plantRepository.findByLeafAloneUserOrdered(user.getId());
     }
 
+    public void deletePlant(String name) {
+        Plant plant = findByName(name);
+        plantRepository.deleteById(plant.getId());
+    }
 }

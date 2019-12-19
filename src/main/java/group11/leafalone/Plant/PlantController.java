@@ -110,6 +110,14 @@ public class PlantController {
         return "redirect:/plants/list?message="+name+" got watered";
     }
 
+    @GetMapping("plants/delete/{name}")
+    public String deletePlant(@PathVariable String name, Model model) {
+        plantService.deletePlant(name);
+        List<Plant> plantList = plantService.findByLeafAloneUserOrdered(userService.getCurrentUser());
+        model.addAttribute("plants", plantList);
+        return "redirect:/plants/list?message="+name+" got deleted";
+    }
+
     //Edit Plant
 
     @GetMapping("plants/edit/{name}")
