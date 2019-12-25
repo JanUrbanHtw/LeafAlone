@@ -74,7 +74,7 @@ class PlantControllerTest {
         mockMVC.perform(post("/plants/add")
                 .param("name", "plantName"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:list"));
+                .andExpect(view().name("redirect:/plants/list"));
         verify(plantRepository, times(1)).save(any(Plant.class));
     }
 
@@ -135,8 +135,8 @@ class PlantControllerTest {
 
     @Test
     void ContributePlant_GET_shouldRenderContribute() throws Exception {
-        mockMVC.perform(get("/plants/contribute"))
-                .andExpect(view().name("plants/contribute"))
+        mockMVC.perform(get("/plant_types/add"))
+                .andExpect(view().name("plant_types/add"))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(model().attribute("sunSituations", SunSituation.values()));
     }
@@ -144,7 +144,7 @@ class PlantControllerTest {
     @Test
     @WithMockUser
     void ContributePlant_POST_correctShouldForwardToConfirm() throws Exception {
-        mockMVC.perform(post("/plants/contribute")
+        mockMVC.perform(post("/plant_types/add")
                 .param("colloquial", "colloquial")
                 .param("scientific", "scientific")
                 .param("waterCycle", "1")
@@ -152,34 +152,34 @@ class PlantControllerTest {
                 .param("soilAdvice", "soilAdvice")
                 .param("description", "description"))
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(view().name("forward:/plants/confirm"))
+                .andExpect(view().name("forward:/plant_types/confirm"))
                 .andExpect(model().attributeExists("plantCare"));
     }
 
     @Test
     void ContributePlant_POST_noColloquial() throws Exception {
-        mockMVC.perform(post("/plants/contribute")
+        mockMVC.perform(post("/plant_types/add")
                 .param("scientific", "scientific")
                 .param("waterCycle", "1")
                 .param("waterAmount", "1")
                 .param("soilAdvice", "soilAdvice")
                 .param("description", "description"))
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(view().name("plants/contribute"))
+                .andExpect(view().name("plant_types/add"))
                 .andExpect(model().attributeHasFieldErrors("plantCare", "colloquial"));
         verify(plantCareRepository, times(0)).save(any(PlantCare.class));
     }
 
     @Test
     void ContributePlant_POST_noScientific() throws Exception {
-        mockMVC.perform(post("/plants/contribute")
+        mockMVC.perform(post("/plant_types/add")
                 .param("colloquial", "colloquial")
                 .param("waterCycle", "1")
                 .param("waterAmount", "1")
                 .param("soilAdvice", "soilAdvice")
                 .param("description", "description"))
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(view().name("plants/contribute"))
+                .andExpect(view().name("plant_types/add"))
                 .andExpect(model().attributeHasFieldErrors("plantCare", "scientific"));
         verify(plantCareRepository, times(0)).save(any(PlantCare.class));
     }
@@ -187,7 +187,7 @@ class PlantControllerTest {
     @ParameterizedTest
     @ValueSource(strings = {"", "0"})
     void ContributePlant_POST_invalidWaterCycle(String cycle) throws Exception {
-        mockMVC.perform(post("/plants/contribute")
+        mockMVC.perform(post("/plant_types/add")
                 .param("colloquial", "colloquial")
                 .param("scientific", "scientific")
                 .param("waterCycle", cycle)
@@ -195,7 +195,7 @@ class PlantControllerTest {
                 .param("soilAdvice", "soilAdvice")
                 .param("description", "description"))
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(view().name("plants/contribute"))
+                .andExpect(view().name("plant_types/add"))
                 .andExpect(model().attributeHasFieldErrors("plantCare", "waterCycle"));
         verify(plantCareRepository, times(0)).save(any(PlantCare.class));
     }
@@ -203,7 +203,7 @@ class PlantControllerTest {
     @ParameterizedTest
     @ValueSource(strings = {"", "0"})
     void ContributePlant_POST_invalidWaterAmount(String amount) throws Exception {
-        mockMVC.perform(post("/plants/contribute")
+        mockMVC.perform(post("/plant_types/add")
                 .param("colloquial", "colloquial")
                 .param("scientific", "scientific")
                 .param("waterCycle", "1")
@@ -211,35 +211,35 @@ class PlantControllerTest {
                 .param("soilAdvice", "soilAdvice")
                 .param("description", "description"))
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(view().name("plants/contribute"))
+                .andExpect(view().name("plant_types/add"))
                 .andExpect(model().attributeHasFieldErrors("plantCare", "waterAmount"));
         verify(plantCareRepository, times(0)).save(any(PlantCare.class));
     }
 
     @Test
     void ContributePlant_POST_noSoilAdvice() throws Exception {
-        mockMVC.perform(post("/plants/contribute")
+        mockMVC.perform(post("/plant_types/add")
                 .param("colloquial", "colloquial")
                 .param("scientific", "scientific")
                 .param("waterCycle", "1")
                 .param("waterAmount", "1")
                 .param("description", "description"))
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(view().name("plants/contribute"))
+                .andExpect(view().name("plant_types/add"))
                 .andExpect(model().attributeHasFieldErrors("plantCare", "soilAdvice"));
         verify(plantCareRepository, times(0)).save(any(PlantCare.class));
     }
 
     @Test
     void ContributePlant_POST_noDescription() throws Exception {
-        mockMVC.perform(post("/plants/contribute")
+        mockMVC.perform(post("/plant_types/add")
                 .param("colloquial", "colloquial")
                 .param("scientific", "scientific")
                 .param("waterCycle", "1")
                 .param("waterAmount", "1")
                 .param("soilAdvice", "soilAdvice"))
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(view().name("plants/contribute"))
+                .andExpect(view().name("plant_types/add"))
                 .andExpect(model().attributeHasFieldErrors("plantCare", "description"));
         verify(plantCareRepository, times(0)).save(any(PlantCare.class));
     }
@@ -248,7 +248,7 @@ class PlantControllerTest {
     @WithMockUser()
     void ContributePlant_POST_PlantCareNameAlreadyInUse() throws Exception {
         when(plantCareRepository.findByScientific("scientific")).thenReturn(new PlantCare());
-        mockMVC.perform(post("/plants/contribute")
+        mockMVC.perform(post("/plant_types/add")
                 .param("colloquial", "colloquial")
                 .param("scientific", "scientific")
                 .param("waterCycle", "1")
@@ -256,7 +256,7 @@ class PlantControllerTest {
                 .param("soilAdvice", "soilAdvice")
                 .param("description", "description"))
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(view().name("plants/contribute"))
+                .andExpect(view().name("plant_types/add"))
                 .andExpect(model().attributeHasFieldErrors("plantCare", "scientific"));
         verify(plantRepository, times(0)).save(any(Plant.class));
     }
@@ -309,7 +309,7 @@ class PlantControllerTest {
 
     @Test
     void confirmPostShouldRenderConfirmPage() throws Exception {
-        mockMVC.perform(post("/plants/confirm")
+        mockMVC.perform(post("/plant_types/confirm")
                 .param("colloquial", "colloquial")
                 .param("scientific", "scientific")
                 .param("waterCycle", "1")
@@ -317,7 +317,7 @@ class PlantControllerTest {
                 .param("soilAdvice", "soilAdvice")
                 .param("description", "description"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("plants/confirm"))
+                .andExpect(view().name("plant_types/confirm"))
                 .andExpect(model().attributeExists("plantCare"));
     }
 
@@ -326,7 +326,7 @@ class PlantControllerTest {
     void confirmOkGetShouldRenderIndexPage() throws Exception {
         when(userService.findByUsername("user")).thenReturn(new LeafAloneUser("user", "password", "ROLE_CONTRIBUTOR", "password"));
 
-        mockMVC.perform(post("/plants/confirm")
+        mockMVC.perform(post("/plant_types/confirm")
                 .param("colloquial", "colloquial")
                 .param("scientific", "scientific")
                 .param("waterCycle", "1")
@@ -334,7 +334,7 @@ class PlantControllerTest {
                 .param("soilAdvice", "soilAdvice")
                 .param("description", "description"));
 
-        mockMVC.perform(get("/plants/confirm/ok"))
+        mockMVC.perform(get("/plant_types/confirm/ok"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/?message=Thank you for your contribution."));
 
@@ -456,9 +456,9 @@ class PlantControllerTest {
         when(plantCareService.findByLeafAloneUserOrdered(user))
                 .thenReturn(list);
 
-        mockMVC.perform(get("/plants/types"))
+        mockMVC.perform(get("/plant_types/list"))
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(view().name("plants/types"))
+                .andExpect(view().name("plant_types/list"))
                 .andExpect(model().attribute("plantCares", list));
         verify(plantCareRepository).findByLeafAloneUserOrdered(user.getId());
     }
@@ -472,8 +472,8 @@ class PlantControllerTest {
         PlantCare plantCare = new PlantCare.Builder().withScientific("dummy").build();
         when(plantCareRepository.findByScientific("dummy")).thenReturn(plantCare);
 
-        mockMVC.perform(get("/plants/plant_care/dummy"))
-                .andExpect(view().name("plants/plant_care"))
+        mockMVC.perform(get("/plant_types/details/dummy"))
+                .andExpect(view().name("plant_types/details"))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(model().attribute("plantCare", plantCare));
         verify(plantCareRepository).findByScientific("dummy");

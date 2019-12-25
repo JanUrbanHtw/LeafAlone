@@ -1,15 +1,12 @@
 package group11.leafalone.Plant;
 
 import group11.leafalone.Auth.LeafAloneUserDetailsService;
-import group11.leafalone.Auth.UserRepository;
-import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -31,7 +28,7 @@ public class PlantController {
 
     //AddPlant
 
-    @GetMapping("/plants/add")
+    @GetMapping("plants/add")
     public String addPlantForm(Model model) {
         model.addAttribute("plant", new Plant());
         model.addAttribute("sunSituations", SunSituation.values());
@@ -39,7 +36,7 @@ public class PlantController {
         return "plants/add";
     }
 
-    @PostMapping("/plants/add")
+    @PostMapping("plants/add")
     public String addPlantSubmit(@Valid Plant plant, BindingResult bindingResult, Model model) {
         bindingResult = plantService.validatePlant(plant, bindingResult);
 
@@ -50,13 +47,13 @@ public class PlantController {
             return "plants/add";
         }
         plantService.save(plant, plant.getName());
-        return "redirect:list";
+        return "redirect:/plants/list";
     }
 
-    //Contribute Plant
+    //Add Plant-Type
 
-    @GetMapping("/plants/contribute")
-    public String contributePlantForm(Model model) {
+    @GetMapping("plant_types/add")
+    public String addPlantTypForm(Model model) {
         PlantCare plantCare = new PlantCare();
         if(this.plantCare != null) {
             plantCare = this.plantCare;
@@ -64,35 +61,35 @@ public class PlantController {
         }
         model.addAttribute("plantCare",plantCare);
         model.addAttribute("sunSituations", SunSituation.values());
-        return "plants/contribute";
+        return "plant_types/add";
     }
 
-    @PostMapping("/plants/contribute")
+    @PostMapping("plant_types/add")
     public String contributePlantSubmit(@Valid PlantCare plantCare, BindingResult bindingResult, Model model) {
         bindingResult = plantCareService.validatePlantCare(plantCare, bindingResult);
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("sunSituations", SunSituation.values());
-            return "plants/contribute";
+            return "plant_types/add";
         }
-        return "forward:/plants/confirm";
+        return "forward:/plant_types/confirm";
     }
 
-    @PostMapping("/plants/confirm")
+    @PostMapping("plant_types/confirm")
     public String confirmPlantCare(@Valid PlantCare plantCare, Model model) {
         this.plantCare = plantCare;
         model.addAttribute("plantCare", plantCare);
-        return "plants/confirm";
+        return "plant_types/confirm";
     }
 
-    @GetMapping("/plants/confirm/ok")
+    @GetMapping("plant_types/confirm/ok")
     public String confirmPlantCareOk() {
         plantCareService.save(plantCare);
         this.plantCare = null;
         return "redirect:/?message=Thank you for your contribution.";
     }
 
-    //List Plant
+    //List Plants
 
     @GetMapping("plants/list")
     public String getPlantList(Model model) {
@@ -118,19 +115,20 @@ public class PlantController {
         return "redirect:/plants/list?message="+name+" got deleted";
     }
 
-    //Types
-    @GetMapping("plants/types")
+    //List Plant-Types
+
+    @GetMapping("plant_types/list")
     public String getTypesList(Model model) {
         List<PlantCare> plantCareList = plantCareService.findByLeafAloneUserOrdered(userService.getCurrentUser());
         model.addAttribute("plantCares", plantCareList);
-        return "plants/types";
+        return "plant_types/list";
     }
 
-    @GetMapping("plants/plant_care/{name}")
+    @GetMapping("plant_types/details/{name}")
     public String getDetails(@PathVariable String name, Model model) {
         PlantCare plantCare = plantCareService.findByScientific(name);
         model.addAttribute("plantCare",plantCare);
-        return "plants/plant_care";
+        return "plant_types/details";
     }
 
     //Edit Plant

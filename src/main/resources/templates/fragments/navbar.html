@@ -6,17 +6,17 @@
         <a class="navbar-brand h1" id="homeLink" href="/">LeafAlone</a>
         <ul class="navbar-nav mr-auto">
             <div sec:authorize="hasAnyRole('USER', 'CONTRIBUTOR')">
-                <li class="nav-item"><a class="nav-link" href="/plants/add" id="plantLink">Add a new plant</a></li>
+                <li class="nav-item"><a class="nav-link" href="/plants/add" id="addPlantLink">Add a new plant</a></li>
             </div>
             <div sec:authorize="hasAnyRole('USER', 'CONTRIBUTOR')">
-                <li class="nav-item"><a class="nav-link" href="/plants/list" id="listLink">Your Plants</a></li>
+                <li class="nav-item"><a class="nav-link" href="/plants/list" id="listPlantsLink">Your Plants</a></li>
             </div>
             <div sec:authorize="hasRole('CONTRIBUTOR')">
-                <li class="nav-item"><a class="nav-link" href="/plants/contribute" id="contributeLink">Add care
+                <li class="nav-item"><a class="nav-link" href="/plant_types/add" id="addPlantTypeLink">Add care
                     regimen</a></li>
             </div>
             <div sec:authorize="hasRole('CONTRIBUTOR')">
-                <li class="nav-item"><a class="nav-link" href="/plants/types" id="typesLink">Your Plant-Types</a></li>
+                <li class="nav-item"><a class="nav-link" href="/plant_types/list" id="listPlantTypesLink">Your Plant-Types</a></li>
             </div>
         </ul>
         <ul class="navbar-nav">

@@ -11,7 +11,7 @@
 <div th:replace="fragments/navbar :: navbar"></div>
 <div class="container">
 <br>
-<form action="#" th:action="@{/plants/contribute}" th:object="${plantCare}" method="post" id="contributeForm">
+<form action="#" th:action="@{/plant_types/add}" th:object="${plantCare}" method="post" id="contributeForm">
     <div class="form-group">
         <label th:for="colloquial">Colloquial plant name:</label>
         <input th:type="text" th:field="*{colloquial}" path="colloquial" class="form-control" id="colloquial">

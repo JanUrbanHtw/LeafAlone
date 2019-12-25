@@ -8,7 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.fluentlenium.core.filter.FilterConstructor.withText;
 
-@PageUrl("http://localhost:8080/plants/contribute")
+@PageUrl("http://localhost:8080/plant_types/add")
 public class ContributePage extends FluentPage {
     public static final String TITLE = "Contribute your plant knowledge!";
 

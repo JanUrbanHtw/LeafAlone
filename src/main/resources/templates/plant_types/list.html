@@ -34,7 +34,7 @@
             <td th:text="${plantCare.getSoilAdvice()}"></td>
             <td th:text="${plantCare.getDescription()}"></td>
             <td>
-                <a class="btn btn-outline-success" th:href="@{/plants/plant_care/{name}(name=${plantCare.getScientific()})}">Details</a>
+                <a class="btn btn-outline-success" th:href="@{/plant_types/details/{name}(name=${plantCare.getScientific()})}">Details</a>
             </td>
         </tr>
         </tbody>
