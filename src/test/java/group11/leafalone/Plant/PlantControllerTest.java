@@ -68,7 +68,7 @@ class PlantControllerTest {
     @Test
     @WithMockUser("name")
     void AddPlant_POST_correctShouldSaveToDB() throws Exception {
-        LeafAloneUser user = new LeafAloneUser("name", "password", "ROLE_USER", "password");
+        LeafAloneUser user = new LeafAloneUser("name", "password", "ROLE_USER", "leafalone@mail.de", "password");
         when(userRepository.findByUsername("name")).thenReturn(user);
 
         mockMVC.perform(post("/plants/add")
@@ -291,7 +291,7 @@ class PlantControllerTest {
         ArrayList<Plant> list = new ArrayList<>();
         list.add(plant);
 
-        LeafAloneUser user = new LeafAloneUser("name", "password", "ROLE_USER", "password");
+        LeafAloneUser user = new LeafAloneUser("name", "password", "ROLE_USER", "leafalone@mail.de", "password");
 
         when(userRepository.findByUsername("name")).thenReturn(user);
         when(plantRepository.findByName(userService.getCurrentUser().getId(), "Dummy")).thenReturn(optionalPlant);
@@ -324,7 +324,7 @@ class PlantControllerTest {
     @Test
     @WithMockUser(username = "user")
     void confirmOkGetShouldRenderIndexPage() throws Exception {
-        when(userService.findByUsername("user")).thenReturn(new LeafAloneUser("user", "password", "ROLE_CONTRIBUTOR", "password"));
+        when(userService.findByUsername("user")).thenReturn(new LeafAloneUser("user", "password", "ROLE_CONTRIBUTOR", "leafalone@mail.de", "password"));
 
         mockMVC.perform(post("/plant_types/confirm")
                 .param("colloquial", "colloquial")
@@ -353,7 +353,7 @@ class PlantControllerTest {
         ArrayList<Plant> list = new ArrayList<>();
         list.add(plant);
 
-        LeafAloneUser user = new LeafAloneUser("name", "password", "ROLE_USER", "password");
+        LeafAloneUser user = new LeafAloneUser("name", "password", "ROLE_USER", "leafalone@mail.de", "password");
 
         when(userRepository.findByUsername("name")).thenReturn(user);
         when(plantRepository.findByName(userService.getCurrentUser().getId(), "Dummy")).thenReturn(optionalPlant);
@@ -376,7 +376,7 @@ class PlantControllerTest {
         ArrayList<PlantCare> plantCareList = new ArrayList<>(Arrays.asList(plantCares));
         Plant plant = new Plant.Builder().withName("dummy").build();
         Optional<Plant> optional = Optional.of(plant);
-        LeafAloneUser user = new LeafAloneUser("name", "password", "ROLE_USER", "password");
+        LeafAloneUser user = new LeafAloneUser("name", "password", "ROLE_USER", "leafalone@mail.de", "password");
 
         when(userRepository.findByUsername("name")).thenReturn(user);
         when(plantRepository.findByName(userService.getCurrentUser().getId(),"dummy")).thenReturn(optional);
@@ -398,7 +398,7 @@ class PlantControllerTest {
         Plant plant = new Plant.Builder().withName("dummy").build();
         Optional<Plant> optional = Optional.of(plant);
 
-        LeafAloneUser user = new LeafAloneUser("name", "password", "ROLE_USER", "password");
+        LeafAloneUser user = new LeafAloneUser("name", "password", "ROLE_USER", "leafalone@mail.de", "password");
 
         when(userRepository.findByUsername("name")).thenReturn(user);
         when(plantRepository.findByName(userService.getCurrentUser().getId(),"dummy")).thenReturn(optional);
@@ -429,7 +429,7 @@ class PlantControllerTest {
         String date = (Calendar.getInstance().get(Calendar.YEAR) + 1) + "-01-01T00:00:00.000Z";
         Plant plant = new Plant.Builder().withName("dummy").build();
         Optional<Plant> optional = Optional.of(plant);
-        LeafAloneUser user = new LeafAloneUser("name", "password", "ROLE_USER", "password");
+        LeafAloneUser user = new LeafAloneUser("name", "password", "ROLE_USER", "leafalone@mail.de", "password");
 
         when(userRepository.findByUsername("name")).thenReturn(user);
         when(plantRepository.findByName(userService.getCurrentUser().getId(),"dummy")).thenReturn(optional);

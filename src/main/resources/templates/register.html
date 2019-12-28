@@ -32,6 +32,13 @@
         </div>
 
         <div class="form-group">
+            <label th:for="username">Email:</label>
+            <input th:type="text" th:field="*{email}" path="email" class="form-control" id="emailInput">
+            <p class="font-weight-bold errorMessage" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
+                Email Error</p>
+        </div>
+
+        <div class="form-group">
             <label th:for="password">Password:</label>
             <input th:type="password" path="password" th:field="*{password}" class="form-control" id="passwordInput">
             <p class="font-weight-bold errorMessage text-danger" th:if="${#fields.hasErrors('password')}"

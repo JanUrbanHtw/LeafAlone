@@ -1,5 +1,6 @@
 package group11.leafalone.Auth;
 
+import group11.leafalone.Email.LeafAloneEmailService;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,13 +21,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @Controller
-public class LoginController {
+public class AuthController {
 
     private LeafAloneUserDetailsService userService;
+    private LeafAloneEmailService emailService;
 
     //testing
-    public LoginController(LeafAloneUserDetailsService userService) {
+    public AuthController(LeafAloneUserDetailsService userService, LeafAloneEmailService emailService) {
         this.userService = userService;
+        this.emailService = emailService;
     }
 
     @RequestMapping("/login")
@@ -57,6 +60,7 @@ public class LoginController {
             return "register";
         }
         userService.save(user);
+        emailService.sendRegistrationMail(user.getUsername(), user.getEmail());
         try {
             request.login(user.getUsername(), user.getConfirmPassword());
         } catch (ServletException e) {

@@ -24,6 +24,9 @@ public class RegisterPage extends FluentPage {
     @FindBy(id = "roleInput")
     private FluentWebElement roleInput;
 
+    @FindBy(id = "emailInput")
+    private FluentWebElement emailInput;
+
     @FindBy(id = "passwordInput")
     private FluentWebElement passwordInput;
 
@@ -40,6 +43,11 @@ public class RegisterPage extends FluentPage {
 
     public RegisterPage setRole(String role) {
         roleInput.find("option", withText(role)).click();
+        return this;
+    }
+
+    public RegisterPage inputEmail(String email) {
+        emailInput.write(email);
         return this;
     }
 

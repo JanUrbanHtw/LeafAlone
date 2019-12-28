@@ -1,8 +1,9 @@
-insert into leaf_alone_user (id, username, password, role)
-values (-1, 'user', '$2a$10$WrOoBjGqVDd4cCBxmpeMBO2zYVEeT0ixssruKpITP9ViF4aBDDqk2', 'ROLE_USER');
+insert into leaf_alone_user (id, username, password, email, role)
+values (-1, 'user', '$2a$10$WrOoBjGqVDd4cCBxmpeMBO2zYVEeT0ixssruKpITP9ViF4aBDDqk2', 'user@user.user', 'ROLE_USER');
 
-insert into leaf_alone_user (id, username, password, role)
-values (-2, 'contributor', '$2a$10$WTnBAWaow./4WdtQRtYpBOjQ5dho3r4njRyM2nswWABcIr.BBXiCy', 'ROLE_CONTRIBUTOR');
+insert into leaf_alone_user (id, username, password, email, role)
+values (-2, 'contributor', '$2a$10$WTnBAWaow./4WdtQRtYpBOjQ5dho3r4njRyM2nswWABcIr.BBXiCy',
+        'contributor@contributor.com', 'ROLE_CONTRIBUTOR');
 
 insert into plant_care (id, colloquial, scientific, sun_situation, water_cycle,
                         water_amount, soil_advice, description, contributor_id)

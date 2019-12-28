@@ -30,6 +30,7 @@ class RegisterTest extends FluentTest {
         goTo(registerPage)
                 .inputUsername("testUser")
                 .setRole("Standard User")
+                .inputEmail("melonlord@posteo.de")
                 .inputPassword("testPassword")
                 .inputConfirmPassword("testPassword")
                 .submit();
@@ -42,6 +43,7 @@ class RegisterTest extends FluentTest {
         goTo(registerPage)
                 .inputUsername("testContributor")
                 .setRole("Contributor")
+                .inputEmail("leafalone@mail.de")
                 .inputPassword("testPassword")
                 .inputConfirmPassword("testPassword")
                 .submit();
@@ -53,6 +55,7 @@ class RegisterTest extends FluentTest {
         goTo(registerPage)
                 .inputUsername("testUser2")
                 .setRole("Standard User")
+                .inputEmail("leafalone@mail.de")
                 .inputPassword("1")
                 .inputConfirmPassword("2")
                 .submit()

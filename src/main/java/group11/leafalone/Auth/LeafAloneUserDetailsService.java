@@ -70,6 +70,11 @@ public class LeafAloneUserDetailsService implements UserDetailsService {
             FieldError error = new FieldError("user", "username", "Username already taken");
             bindingResult.addError(error);
         }
+        LeafAloneUser emailUser = userRepository.findByEmail(user.getEmail());
+        if (emailUser != null) {
+            FieldError error = new FieldError("user", "email", "Email already in use");
+            bindingResult.addError(error);
+        }
         return bindingResult;
     }
 

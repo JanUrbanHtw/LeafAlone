@@ -12,6 +12,7 @@ public class AboutUsController {
     public ModelAndView hello() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("index.html");
+        modelAndView.addObject("newUser", true);
         return modelAndView;
     }
 
