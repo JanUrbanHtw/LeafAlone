@@ -46,10 +46,6 @@ public class LeafAloneUserDetailsService implements UserDetailsService {
         //return new LeafAloneUserPrincipal(leafAloneUser);
     }
 
-    public LeafAloneUser loadUserbyUsername(String username) {
-        return userRepository.findByUsername(username);
-    }
-
     public LeafAloneUser getCurrentUser() {
         SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -70,7 +66,7 @@ public class LeafAloneUserDetailsService implements UserDetailsService {
             FieldError error = new FieldError("user", "username", "Username already taken");
             bindingResult.addError(error);
         }
-        LeafAloneUser emailUser = userRepository.findByEmail(user.getEmail());
+        LeafAloneUser emailUser = userRepository.findByEmail(user.getEmail()); //TODO does this ever work
         if (emailUser != null) {
             FieldError error = new FieldError("user", "email", "Email already in use");
             bindingResult.addError(error);

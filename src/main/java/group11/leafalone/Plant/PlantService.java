@@ -2,12 +2,15 @@ package group11.leafalone.Plant;
 
 import group11.leafalone.Auth.LeafAloneUser;
 import group11.leafalone.Auth.LeafAloneUserDetailsService;
+import group11.leafalone.LeafAloneUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -32,6 +35,11 @@ public class PlantService {
         if(plant.getWatered() == null) {
             plant.setWatered(today);
         }
+        Date watered = plant.getWatered();
+        Date nextWatering = calculateNextWatering(plant, watered);
+        plant.setNextWatering(nextWatering);
+//        plant.setNextWatering(calculateNextWatering(plant, plant.getWatered()));
+
         Plant repoPlant;
         try {
             repoPlant = findByName(name);
@@ -102,7 +110,20 @@ public class PlantService {
         Plant plant = findByName(name);
         Date today = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
         plant.setWatered(today);
+        plant.setNextWatering(calculateNextWatering(plant, today));
         plantRepository.save(plant);
+    }
+
+    Date calculateNextWatering(Plant plant, Date today) {
+        LocalDateTime todayDateTime = today.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+
+        todayDateTime = todayDateTime.plusDays(plant.getPlantCare().getWaterCycle());
+        try {
+            return LeafAloneUtil.stripHoursAndMinutes(Date.from(todayDateTime.atZone(ZoneId.systemDefault()).toInstant()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return Date.from(todayDateTime.atZone(ZoneId.systemDefault()).toInstant());
     }
 
     public Plant findByName(String name) throws ResponseStatusException {
@@ -123,5 +144,23 @@ public class PlantService {
     public void deletePlant(String name) {
         Plant plant = findByName(name);
         plantRepository.deleteById(plant.getId());
+    }
+
+    public List<Plant> getPlantsToWaterToday() {
+        try {
+            return plantRepository.findByNextWatering(LeafAloneUtil.stripHoursAndMinutes(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant())));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return plantRepository.findByNextWatering(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
+    }
+
+    public List<Plant> getPlantsToWaterTodayOrderedByUser() {
+        try {
+            return plantRepository.findByNextWateringOrderedByUser(LeafAloneUtil.stripHoursAndMinutes(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant())));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return plantRepository.findByNextWatering(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
     }
 }

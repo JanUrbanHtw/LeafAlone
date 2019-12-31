@@ -6,6 +6,6 @@ public interface UserRepository extends CrudRepository<LeafAloneUser, Long> {
 
     LeafAloneUser findByUsername(String username);
 
-    LeafAloneUser findByEmail(String email); //TODO implement somewhere??
+    LeafAloneUser findByEmail(String email); //TODO apparently works already?
 
 }

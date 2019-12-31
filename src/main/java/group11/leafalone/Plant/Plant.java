@@ -22,7 +22,7 @@ public class Plant {
     @NotEmpty(message = "Name is required")
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "plantcare_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private PlantCare plantCare;
@@ -38,10 +38,14 @@ public class Plant {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date watered;
 
+    @Column(name = "next_watering")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date nextWatering;
+
     @Column(name = "notes")
     private String notes;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private LeafAloneUser leafAloneUser;
@@ -147,6 +151,10 @@ public class Plant {
         return watered;
     }
 
+    public Date getNextWatering() {
+        return nextWatering;
+    }
+
     public String getNotes() {
         return notes;
     }
@@ -177,6 +185,10 @@ public class Plant {
 
     public void setWatered(Date watered) {
         this.watered = watered;
+    }
+
+    public void setNextWatering(Date nextWatering) {
+        this.nextWatering = nextWatering;
     }
 
     public void setNotes(String notes) {

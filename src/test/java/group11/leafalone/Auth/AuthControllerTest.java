@@ -1,6 +1,8 @@
 package group11.leafalone.Auth;
 
 import group11.leafalone.Email.LeafAloneEmailService;
+import group11.leafalone.Plant.PlantRepository;
+import group11.leafalone.Plant.PlantService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -34,7 +36,7 @@ class AuthControllerTest {
     void init() {
         userRepository = Mockito.mock(UserRepository.class);
         userService = new LeafAloneUserDetailsService(userRepository, new BCryptPasswordEncoder());
-        emailService = new LeafAloneEmailService();
+        emailService = new LeafAloneEmailService(new PlantService(Mockito.mock(PlantRepository.class), userService));
         authController = new AuthController(userService, emailService);
 
         mockMVC = MockMvcBuilders.standaloneSetup(authController).build();
@@ -104,6 +106,12 @@ class AuthControllerTest {
 
         authController.registerSubmit(user, bindingResult, model, request);
         Mockito.verify(bindingResult).addError(new FieldError("user", "confirmPassword", "Required to be identical to password"));
+    }
+
+    //TODO
+    @Test
+    void postWithFalseEmailShouldAddError() {
+
     }
 
     @Test
