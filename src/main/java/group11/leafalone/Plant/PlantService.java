@@ -115,6 +115,10 @@ public class PlantService {
     }
 
     Date calculateNextWatering(Plant plant, Date today) {
+        if(plant.getPlantCare() == null) {
+            return null;
+        }
+
         LocalDateTime todayDateTime = today.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
 
         todayDateTime = todayDateTime.plusDays(plant.getPlantCare().getWaterCycle());
