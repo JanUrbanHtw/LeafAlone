@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/list.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
     <title>Your Plants</title>
@@ -18,39 +19,35 @@
         <tr>
             <th scope="col">Name</th>
             <th scope="col">Type</th>
-            <th scope="col">Current sun situation</th>
-            <th scope="col">Acquisition date</th>
             <th scope="col">Last watering date</th>
-            <th scope="col">Additional notes</th>
-            <th scope="col"></th>
+            <th class="borderColumn" scope="col"></th>
             <th scope="col"></th>
             <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
         <!--/*@thymesVar id="plants" type="java.util.List"*/-->
-        <tr th:each="plant : ${plants}">
-            <!--/*@thymesVar id="plant" type="group11.leafalone.Plant.Plant"*/-->
-            <th scope="row" th:text="${plant.getName()}"></th>
-            <td th:text="${plant.getPlantCare().getColloquial()}"></td>
-            <td th:text="${plant.getSun().getName()}"></td>
-            <td th:text="${plant.getAcquisition().toLocaleString()}"></td>
-            <td th:text="${plant.getWatered().toLocaleString()}"></td>
-            <td th:text="${plant.getNotes()}"></td>
-            <td>
-                <a class="btn btn-outline-info" th:href="@{/plants/watered/{name}(name=${plant.getName()})}">Water</a>
+        <tr th:class="${plant.needsWater}?'table-warning'" th:each="plant : ${plants}">
+            <!--/*@thymesVar id="plant" type="group11.leafalone.ViewModel.List_Plant"*/-->
+            <th scope="row" class="list3col" th:text="${plant.name}"></th>
+            <td class="list3col" th:text="${plant.type}"></td>
+            <td class="list3col" th:text="${plant.wateringDate}"></td>
+            <td class="borderColumn listBtn">
+                <a class="btn" th:classappend="${plant.needsWater}?'btn-info':'btn-outline-info'"
+                   th:href="@{/plants/watered/{name}(name=${plant.getName()})}">Water</a>
             </td>
-            <td>
+            <td class="listBtn">
                 <a class="btn btn-outline-success" th:href="@{/plants/edit/{name}(name=${plant.getName()})}">Edit</a>
             </td>
-            <td>
+            <td class="listBtn">
                 <a onclick="return confirm('Do you really want to delete the plant?')" class="btn btn-outline-danger"
                    th:href="@{/plants/delete/{name}(name=${plant.getName()})}">Delete</a>
             </td>
         </tr>
         <tr th:if="${plants.size() == 0}">
             <td colspan="8">
-                <p style="margin-bottom: 0" class="text-center"><a id="addPlantLink" class="btn btn-outline-success" href="/plants/add">add a plant</a></p>
+                <p style="margin-bottom: 0" class="text-center"><a id="addPlantLink" class="btn btn-outline-success"
+                                                                   href="/plants/add">add a plant</a></p>
             </td>
         </tr>
         </tbody>

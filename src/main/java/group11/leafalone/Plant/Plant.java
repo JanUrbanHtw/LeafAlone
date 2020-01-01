@@ -70,6 +70,7 @@ public class Plant {
         private SunSituation sun;
         private Date acquisition;
         private Date watered;
+        private Date nextWatering;
         private String notes;
         private LeafAloneUser leafAloneUser;
 
@@ -103,6 +104,11 @@ public class Plant {
             return this;
         }
 
+        public Builder withNextWatering(Date nextWatering) {
+            this.nextWatering = nextWatering;
+            return this;
+        }
+
         public Builder withNotes(String notes) {
             this.notes = notes;
             return this;
@@ -121,6 +127,7 @@ public class Plant {
             plant.setSun(this.sun);
             plant.setAcquisition(this.acquisition);
             plant.setWatered(this.watered);
+            plant.setNextWatering(this.nextWatering);
             plant.setNotes(this.notes);
             plant.setLeafAloneUser(this.leafAloneUser);
             return plant;

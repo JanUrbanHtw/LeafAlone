@@ -3,7 +3,6 @@ package group11.leafalone.Plant;
 import group11.leafalone.Auth.LeafAloneUser;
 import group11.leafalone.Auth.LeafAloneUserDetailsService;
 import group11.leafalone.Auth.UserRepository;
-import group11.leafalone.LeafAloneUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,8 +15,6 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -273,22 +270,24 @@ class PlantControllerTest {
         when(userService.findByUsername("name")).thenReturn(user);
 
         ArrayList<Plant> list = new ArrayList<>();
-        list.add(new Plant.Builder().withName("Plant1").build());
-        list.add(new Plant.Builder().withName("Plant2").build());
+        PlantCare care = new PlantCare.Builder().withColloquial("Dummy").build();
+        list.add(new Plant.Builder().withName("Plant1").withPlantCare(care).withWatered(new Date()).withNextWatering(new Date()).build());
+        list.add(new Plant.Builder().withName("Plant2").withPlantCare(care).withWatered(new Date()).withNextWatering(new Date()).build());
         when(plantService.findByLeafAloneUserOrdered(user))
                 .thenReturn(list);
 
         mockMVC.perform(get("/plants/list"))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(view().name("plants/list"))
-                .andExpect(model().attribute("plants", list));
+                .andExpect(model().attributeExists("plants"));
         verify(plantRepository).findByLeafAloneUserOrdered(user.getId());
     }
 
     @Test
     @WithMockUser(username = "name")
     void WateredPlant_GET_ShouldRenderListAndUpdatePlant() throws Exception {
-        Plant plant = new Plant.Builder().withName("Dummy").build();
+        PlantCare plantCare = new PlantCare.Builder().withColloquial("TestDummy").build();
+        Plant plant = new Plant.Builder().withName("Dummy").withPlantCare(plantCare).build();
         Optional<Plant> optionalPlant = Optional.of(plant);
 
         ArrayList<Plant> list = new ArrayList<>();
@@ -303,7 +302,7 @@ class PlantControllerTest {
         mockMVC.perform(get("/plants/watered/Dummy"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/plants/list?message=Dummy got watered"))
-                .andExpect(model().attribute("plants", list));
+                .andExpect(model().attributeExists("plants"));
         verify(plantRepository, times(1)).save(plant);
         verify(plantRepository).findByLeafAloneUserOrdered(userService.getCurrentUser().getId());
     }
@@ -350,7 +349,9 @@ class PlantControllerTest {
     @Test
     @WithMockUser(username = "name")
     void DeletePlant_GET_ShouldRenderListAndDeletePlant() throws Exception {
-        Plant plant = new Plant.Builder().withName("Dummy").withId(123456789).build();
+        PlantCare plantCare = new PlantCare.Builder().withColloquial("TestDummy").withWaterCycle(2).build();
+        Plant plant =
+                new Plant.Builder().withName("Dummy").withPlantCare(plantCare).withId(123456789).withWatered(new Date()).withNextWatering(new Date()).build();
         Optional<Plant> optionalPlant = Optional.of(plant);
 
         ArrayList<Plant> list = new ArrayList<>();
@@ -365,7 +366,7 @@ class PlantControllerTest {
         mockMVC.perform(get("/plants/delete/Dummy"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/plants/list?message=Dummy got deleted"))
-                .andExpect(model().attribute("plants", list));
+                .andExpect(model().attributeExists("plants"));
         verify(plantRepository, times(1)).deleteById(plant.getId());
         verify(plantRepository).findByLeafAloneUserOrdered(userService.getCurrentUser().getId());
     }

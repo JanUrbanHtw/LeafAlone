@@ -1,0 +1,16 @@
+
+table {
+    border: 0.4em solid #e9ecef
+}
+
+.borderColumn {
+    border-left: 0.4em solid #e9ecef
+}
+
+.list3col {
+    width: 33%
+}
+
+.listBtn {
+    width: 1%
+}

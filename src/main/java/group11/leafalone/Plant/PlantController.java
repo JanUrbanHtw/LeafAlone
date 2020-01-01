@@ -1,6 +1,7 @@
 package group11.leafalone.Plant;
 
 import group11.leafalone.Auth.LeafAloneUserDetailsService;
+import group11.leafalone.ViewModel.List_Plant;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,7 +21,7 @@ public class PlantController {
 
     private PlantCare plantCare;
 
-    public PlantController(PlantService plantService, PlantCareService plantCareService, LeafAloneUserDetailsService userService){
+    public PlantController(PlantService plantService, PlantCareService plantCareService, LeafAloneUserDetailsService userService) {
         this.plantService = plantService;
         this.plantCareService = plantCareService;
         this.userService = userService;
@@ -55,11 +56,11 @@ public class PlantController {
     @GetMapping("plant_types/add")
     public String addPlantTypForm(Model model) {
         PlantCare plantCare = new PlantCare();
-        if(this.plantCare != null) {
+        if (this.plantCare != null) {
             plantCare = this.plantCare;
             this.plantCare = null;
         }
-        model.addAttribute("plantCare",plantCare);
+        model.addAttribute("plantCare", plantCare);
         model.addAttribute("sunSituations", SunSituation.values());
         return "plant_types/add";
     }
@@ -93,7 +94,8 @@ public class PlantController {
 
     @GetMapping("plants/list")
     public String getPlantList(Model model) {
-        List<Plant> plantList = plantService.findByLeafAloneUserOrdered(userService.getCurrentUser());
+        List<List_Plant> plantList =
+                List_Plant.plantListToListPlant(plantService.findByLeafAloneUserOrdered(userService.getCurrentUser()));
         model.addAttribute("plants", plantList);
         return "plants/list";
 
@@ -102,17 +104,19 @@ public class PlantController {
     @GetMapping("plants/watered/{name}")
     public String waterPlant(@PathVariable String name, Model model) {
         plantService.waterPlant(name);
-        List<Plant> plantList = plantService.findByLeafAloneUserOrdered(userService.getCurrentUser());
+        List<List_Plant> plantList =
+                List_Plant.plantListToListPlant(plantService.findByLeafAloneUserOrdered(userService.getCurrentUser()));
         model.addAttribute("plants", plantList);
-        return "redirect:/plants/list?message="+name+" got watered";
+        return "redirect:/plants/list?message=" + name + " got watered";
     }
 
     @GetMapping("plants/delete/{name}")
     public String deletePlant(@PathVariable String name, Model model) {
         plantService.deletePlant(name);
-        List<Plant> plantList = plantService.findByLeafAloneUserOrdered(userService.getCurrentUser());
+        List<List_Plant> plantList =
+                List_Plant.plantListToListPlant(plantService.findByLeafAloneUserOrdered(userService.getCurrentUser()));
         model.addAttribute("plants", plantList);
-        return "redirect:/plants/list?message="+name+" got deleted";
+        return "redirect:/plants/list?message=" + name + " got deleted";
     }
 
     //List Plant-Types
@@ -127,7 +131,7 @@ public class PlantController {
     @GetMapping("plant_types/details/{name}")
     public String getDetails(@PathVariable String name, Model model) {
         PlantCare plantCare = plantCareService.findByScientific(name);
-        model.addAttribute("plantCare",plantCare);
+        model.addAttribute("plantCare", plantCare);
         return "plant_types/details";
     }
 
