@@ -18,7 +18,7 @@ public class SmtpServerRule extends ExternalResource {
     @Override
     protected void before() throws Throwable {
         super.before();
-        smtpServer = new GreenMail(new ServerSetup(port, null, "smtp"));
+        smtpServer = new GreenMail(new ServerSetup(port, "testBindAddress", "smtp"));
         smtpServer.start();
     }
 

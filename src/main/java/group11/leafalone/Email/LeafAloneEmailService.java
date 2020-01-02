@@ -19,36 +19,37 @@ import java.util.Properties;
 @Component
 public class LeafAloneEmailService {
 
+    @Autowired
     JavaMailSender mailSender;
     private PlantService plantService;
 
     public LeafAloneEmailService(PlantService plantService) {
-        mailSender = getJavaMailSender();
-        this.plantService = plantService;
+//        mailSender = getJavaMailSender();
+//        this.plantService = plantService;
     }
 
-    @Bean
-    public JavaMailSender getJavaMailSender() {
-
-        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost("smtp.gmail.com");
-        mailSender.setPort(587);
-
-        mailSender.setUsername("lunaire426@gmail.com");
-        mailSender.setPassword("nvpblwnxrqqkmpar");
-
-        Properties props = mailSender.getJavaMailProperties();
-        props.put("mail.transport.protocol", "smtp");
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.debug", "true");
-
-        return mailSender;
-    }
-
-    public void setJavaMailSender(JavaMailSenderImpl mailSender) {
-        this.mailSender = mailSender;
-    }
+//    @Bean
+//    public JavaMailSender getJavaMailSender() {
+//
+//        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+//        mailSender.setHost("smtp.gmail.com");
+//        mailSender.setPort(587);
+//
+//        mailSender.setUsername("lunaire426@gmail.com");
+//        mailSender.setPassword("nvpblwnxrqqkmpar");
+//
+//        Properties props = mailSender.getJavaMailProperties();
+//        props.put("mail.transport.protocol", "smtp");
+//        props.put("mail.smtp.auth", "true");
+//        props.put("mail.smtp.starttls.enable", "true");
+//        props.put("mail.debug", "true");
+//
+//        return mailSender;
+//    }
+//
+//    public void setJavaMailSender(JavaMailSenderImpl mailSender) {
+//        this.mailSender = mailSender;
+//    }
 
     public void sendSimpleMessage(
             String to, String subject, String text) {
@@ -61,10 +62,10 @@ public class LeafAloneEmailService {
 
     @Async
     public void sendRegistrationMail(String username, String email) {
-
-        String emailText = "Hello " + username + "!" + System.lineSeparator() + "Thank you for registering on our site. We hope you enjoy your stay." + System.lineSeparator() + "Your LeafAlone team";
-
-        sendSimpleMessage(email, "Registration Complete!", emailText);
+        if (username != null && email != null) {
+            String emailText = "Hello " + username + "!" + System.lineSeparator() + "Thank you for registering on our site. We hope you enjoy your stay." + System.lineSeparator() + "Your LeafAlone team";
+            sendSimpleMessage(email, "Registration Complete!", emailText);
+        }
 
     }
 
