@@ -1,6 +1,7 @@
 package group11.leafalone.Plant;
 
 import group11.leafalone.Auth.LeafAloneUserDetailsService;
+import group11.leafalone.ViewModel.Details_Plant;
 import group11.leafalone.ViewModel.List_Plant;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -119,6 +120,13 @@ public class PlantController {
         return "redirect:/plants/list?message=" + name + " got deleted";
     }
 
+    @GetMapping("plants/details/{name}")
+    public String getPlantDetails(@PathVariable String name, Model model) {
+        Details_Plant plant = new Details_Plant(plantService.findByName(name));
+        model.addAttribute("plant", plant);
+        return "plants/details";
+    }
+
     //List Plant-Types
 
     @GetMapping("plant_types/list")
@@ -157,6 +165,6 @@ public class PlantController {
             return "plants/edit";
         }
         plantService.save(plant, name);
-        return "redirect:/plants/list";
+        return "redirect:/plants/details/" + name;
     }
 }
