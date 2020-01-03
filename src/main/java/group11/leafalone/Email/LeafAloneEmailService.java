@@ -21,11 +21,11 @@ public class LeafAloneEmailService {
 
     @Autowired
     JavaMailSender mailSender;
-    private PlantService plantService;
+    PlantService plantService;
 
     public LeafAloneEmailService(PlantService plantService) {
 //        mailSender = getJavaMailSender();
-//        this.plantService = plantService;
+        this.plantService = plantService;
     }
 
 //    @Bean

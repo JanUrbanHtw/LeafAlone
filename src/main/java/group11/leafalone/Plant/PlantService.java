@@ -115,7 +115,7 @@ public class PlantService {
     }
 
     Date calculateNextWatering(Plant plant, Date today) {
-        if(plant.getPlantCare() == null) {
+        if (plant.getPlantCare() == null || plant.getPlantCare().getWaterCycle() <= 0) {
             return null;
         }
 
@@ -161,10 +161,10 @@ public class PlantService {
 
     public List<Plant> getPlantsToWaterTodayOrderedByUser() {
         try {
-            return plantRepository.findByNextWateringOrderedByUser(LeafAloneUtil.stripHoursAndMinutes(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant())));
+            return plantRepository.findByNextWateringOrderedByUser(LeafAloneUtil.getTodayAtMidnight());
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return plantRepository.findByNextWatering(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
+        return plantRepository.findByNextWatering(LeafAloneUtil.getTodayRightNow());
     }
 }
