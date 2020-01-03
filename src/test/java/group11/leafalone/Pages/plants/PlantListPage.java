@@ -1,4 +1,4 @@
-package group11.leafalone.Pages;
+package group11.leafalone.Pages.plants;
 
 import org.fluentlenium.core.FluentPage;
 import org.fluentlenium.core.annotation.PageUrl;
@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @PageUrl("http://localhost:8080/plants/list")
-public class ListPage extends FluentPage {
+public class PlantListPage extends FluentPage {
     public static final String TITLE = "Your Plants";
 
     @FindBy(id = "plantList")
@@ -20,7 +20,7 @@ public class ListPage extends FluentPage {
     @FindBy(id = "addPlantLink")
     private FluentWebElement plantLink;
 
-    public ListPage isContainedInList(String name) {
+    public PlantListPage isContainedInList(String name) {
         boolean found = false;
         assertThat(list.present()).isTrue();
         FluentList<FluentWebElement> elements = list.find("tbody").first().find("tr");
@@ -34,7 +34,7 @@ public class ListPage extends FluentPage {
         return this;
     }
 
-    public ListPage clickPlantLink() {
+    public PlantListPage clickPlantLink() {
         plantLink.click();
         await().atMost(5, TimeUnit.SECONDS).untilPage().isLoaded();
         return this;

@@ -1,4 +1,4 @@
-package group11.leafalone.Pages;
+package group11.leafalone.Pages.plants;
 
 
 import org.fluentlenium.core.FluentPage;

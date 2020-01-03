@@ -10,16 +10,17 @@ import java.util.Date;
 import java.util.List;
 
 public class List_Plant {
+    public final static String dateFormat = "dd MMMM yyyy";
     private String name;
     private String type;
-    private String wateringDate;
+    private String nextWateringDate;
     private boolean needsWater;
 
     public List_Plant(Plant plant) {
         this.name = plant.getName();
         this.type = plant.getPlantCare().getColloquial();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy");
-        this.wateringDate = sdf.format(plant.getWatered());
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+        this.nextWateringDate = sdf.format(plant.getNextWatering());
         this.needsWater = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()).after(plant.getNextWatering());
     }
 
@@ -39,8 +40,8 @@ public class List_Plant {
         return type;
     }
 
-    public String getWateringDate() {
-        return wateringDate;
+    public String getNextWateringDate() {
+        return nextWateringDate;
     }
 
     public boolean isNeedsWater() {

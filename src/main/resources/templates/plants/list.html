@@ -19,8 +19,8 @@
         <tr>
             <th scope="col">Name</th>
             <th scope="col">Type</th>
-            <th scope="col">Last watering date</th>
-            <th class="borderColumn" scope="col"></th>
+            <th scope="col">Next watering date</th>
+            <th scope="col"></th>
             <th scope="col"></th>
             <th scope="col"></th>
         </tr>
@@ -31,13 +31,13 @@
             <!--/*@thymesVar id="plant" type="group11.leafalone.ViewModel.List_Plant"*/-->
             <th scope="row" class="list3col" th:text="${plant.name}"></th>
             <td class="list3col" th:text="${plant.type}"></td>
-            <td class="list3col" th:text="${plant.wateringDate}"></td>
+            <td class="list3col" th:text="${plant.nextWateringDate}"></td>
             <td class="borderColumn listBtn">
                 <a class="btn" th:classappend="${plant.needsWater}?'btn-info':'btn-outline-info'"
                    th:href="@{/plants/watered/{name}(name=${plant.getName()})}">Water</a>
             </td>
             <td class="listBtn">
-                <a class="btn btn-outline-success" th:href="@{/plants/edit/{name}(name=${plant.getName()})}">Edit</a>
+                <a class="btn btn-outline-success" th:href="@{/plants/details/{name}(name=${plant.name})}">Details</a>
             </td>
             <td class="listBtn">
                 <a onclick="return confirm('Do you really want to delete the plant?')" class="btn btn-outline-danger"
@@ -45,7 +45,7 @@
             </td>
         </tr>
         <tr th:if="${plants.size() == 0}">
-            <td colspan="8">
+            <td colspan="6">
                 <p style="margin-bottom: 0" class="text-center"><a id="addPlantLink" class="btn btn-outline-success"
                                                                    href="/plants/add">add a plant</a></p>
             </td>

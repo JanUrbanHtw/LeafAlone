@@ -1,9 +1,9 @@
 package group11.leafalone.Plant;
 
 import group11.leafalone.LeafaloneApplication;
-import group11.leafalone.Pages.AddPage;
-import group11.leafalone.Pages.ListPage;
 import group11.leafalone.Pages.LoginPage;
+import group11.leafalone.Pages.plants.AddPage;
+import group11.leafalone.Pages.plants.PlantListPage;
 import org.fluentlenium.adapter.junit.jupiter.FluentTest;
 import org.fluentlenium.core.annotation.Page;
 import org.junit.jupiter.api.Test;
@@ -33,7 +33,7 @@ class AddTest extends FluentTest {
     }
 
     @Test
-    void AccessibleByUserAndContributor() {
+    void accessibleByUserAndContributor() {
         goTo(addPage);
         assertThat(window().title()).isNotEqualTo(AddPage.TITLE);
 
@@ -53,7 +53,7 @@ class AddTest extends FluentTest {
     }
 
     @Test
-    void IsTitleCorrect() {
+    void isTitleCorrect() {
         loginAsUser();
         goTo(addPage);
         assertThat(window().title()).isEqualTo(AddPage.TITLE);
@@ -71,7 +71,7 @@ class AddTest extends FluentTest {
                 .setWateringDate("2019-01-01T00:00:00.000Z")
                 .inputNotes("Notes")
                 .submitAddPlantForm();
-        assertThat(window().title()).isEqualTo(ListPage.TITLE);
+        assertThat(window().title()).isEqualTo(PlantListPage.TITLE);
     }
 
     @Test
