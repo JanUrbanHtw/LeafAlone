@@ -10,7 +10,8 @@
 <div class="container">
     <br>
     <!--/*@thymesVar id="plant" type="group11.leafalone.Plant.Plant"*/-->
-    <form action="#" th:action="@{/plants/edit/{name}(name=${plant.getName()})}" th:object="${plant}" id="addPlantForm" method="post">
+    <form action="#" th:action="@{/plants/edit/{name}(name=${plant.getName()})}" th:object="${plant}" id="addPlantForm"
+          method="post">
         <div class="form-group">
             <label>Plant-Name:</label>
             <p th:text="${plant.name}" class="font-weight-bold text-success" id="nameText">
@@ -25,7 +26,7 @@
             </select>
             <p class="font-weight-bold errorMessage text-danger" th:if="${#fields.hasErrors('plantCare')}"
                th:errors="*{plantCare}">
-                Plant-Typ
+                Plant-Type
                 Error</p>
         </div>
 
@@ -55,8 +56,10 @@
 
         <div class="form-group">
             <label th:for="notes">Additional Notes:</label>
-            <textarea lang="en" spellcheck="true" th:type="text" th:field="*{notes}" path="notes" class="form-control" id="notes"/>
-            <p class="font-weight-bold text-danger" th:if="${#fields.hasErrors('notes')}" th:errors="*{notes}">Notes
+            <textarea lang="en" spellcheck="true" th:type="text" th:field="*{notes}" path="notes" class="form-control"
+                      id="notes"/>
+            <p class="font-weight-bold errorMessage text-danger" th:if="${#fields.hasErrors('notes')}"
+               th:errors="*{notes}">Notes
                 Error</p>
         </div>
         <button class="btn btn-success" id="submitButton" th:type="submit">Submit changes</button>

@@ -1,7 +1,11 @@
 package group11.leafalone.Auth;
 
 import group11.leafalone.LeafaloneApplication;
-import group11.leafalone.Pages.*;
+import group11.leafalone.Pages.IndexPage;
+import group11.leafalone.Pages.LoginPage;
+import group11.leafalone.Pages.NavbarHelper;
+import group11.leafalone.Pages.plant_types.ContributePage;
+import group11.leafalone.Pages.plants.AddPage;
 import org.fluentlenium.adapter.junit.jupiter.FluentTest;
 import org.fluentlenium.core.annotation.Page;
 import org.junit.jupiter.api.Test;
@@ -19,7 +23,7 @@ class LoginTest extends FluentTest {
     private LoginPage loginPage;
 
     @Test
-    void IsTitleCorrect() {
+    void isTitleCorrect() {
         goTo(loginPage);
         assertThat(window().title()).isEqualTo(LoginPage.TITLE);
     }

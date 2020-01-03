@@ -1,9 +1,9 @@
 package group11.leafalone.Plant;
 
 import group11.leafalone.LeafaloneApplication;
-import group11.leafalone.Pages.ConfirmPage;
-import group11.leafalone.Pages.ContributePage;
 import group11.leafalone.Pages.LoginPage;
+import group11.leafalone.Pages.plant_types.ConfirmPage;
+import group11.leafalone.Pages.plant_types.ContributePage;
 import org.fluentlenium.adapter.junit.jupiter.FluentTest;
 import org.fluentlenium.core.annotation.Page;
 import org.junit.jupiter.api.Test;

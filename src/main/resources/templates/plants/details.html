@@ -27,7 +27,7 @@
         <div class="card-body">
             <label class="font-weight-bold">Sun-Situation:</label>
             <p id="sunSituation" th:text="${plant.sun}"></p>
-            <p th:if="${plant.getSun()} != ${plant.getSupposedSun()}" class="text-warning"
+            <p id="sunWarning" th:if="${plant.getSun()} != ${plant.getSupposedSun()}" class="text-warning"
             > Recommended Sun-Situation would be <span th:text="${plant.getSupposedSun()}"> different </span></p>
         </div>
     </div>
@@ -64,8 +64,10 @@
         </div>
     </div>
     <div style="margin: 0.5em">
-        <a style="float: right" class="btn btn-outline-warning"
+        <a id="editButton" style="float: right" class="btn btn-outline-warning"
            th:href="@{/plants/edit/{name}(name=${plant.getName()})}">Edit</a>
+        <a id="listButton" style="float: left" class="btn btn-outline-success"
+           href="/plants/list">List</a>
     </div>
 </div>
 </body>

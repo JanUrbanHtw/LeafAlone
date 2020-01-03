@@ -1,9 +1,9 @@
 package group11.leafalone.Plant;
 
 import group11.leafalone.LeafaloneApplication;
-import group11.leafalone.Pages.AddPage;
-import group11.leafalone.Pages.ListPage;
 import group11.leafalone.Pages.LoginPage;
+import group11.leafalone.Pages.plants.AddPage;
+import group11.leafalone.Pages.plants.PlantListPage;
 import org.fluentlenium.adapter.junit.jupiter.FluentTest;
 import org.fluentlenium.core.annotation.Page;
 import org.junit.jupiter.api.Test;
@@ -16,10 +16,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = LeafaloneApplication.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-class ListTest extends FluentTest {
+class PlantListTest extends FluentTest {
 
     @Page
-    ListPage listPage;
+    PlantListPage plantListPage;
     @Page
     LoginPage loginPage;
     @Page
@@ -36,30 +36,30 @@ class ListTest extends FluentTest {
     }
 
     @Test
-    void AccessibleByUserAndContributor() {
-        goTo(listPage);
-        assertThat(window().title()).isNotEqualTo(ListPage.TITLE);
+    void accessibleByUserAndContributor() {
+        goTo(plantListPage);
+        assertThat(window().title()).isNotEqualTo(PlantListPage.TITLE);
 
         goTo(loginPage)
                 .inputName("user")
                 .inputPassword("password")
                 .submitLoginForm();
-        goTo(listPage);
-        assertThat(window().title()).isEqualTo(ListPage.TITLE);
+        goTo(plantListPage);
+        assertThat(window().title()).isEqualTo(PlantListPage.TITLE);
 
         goTo(loginPage)
                 .inputName("contributor")
                 .inputPassword("admin")
                 .submitLoginForm();
-        goTo(listPage);
-        assertThat(window().title()).isEqualTo(ListPage.TITLE);
+        goTo(plantListPage);
+        assertThat(window().title()).isEqualTo(PlantListPage.TITLE);
     }
 
     @Test
-    void IsTitleCorrect() {
+    void isTitleCorrect() {
         loginAsUser();
-        goTo(listPage);
-        assertThat(window().title()).isEqualTo(ListPage.TITLE);
+        goTo(plantListPage);
+        assertThat(window().title()).isEqualTo(PlantListPage.TITLE);
     }
 
     @Test
@@ -77,14 +77,14 @@ class ListTest extends FluentTest {
                 .inputNotes("notes")
                 .submitAddPlantForm();
 
-        goTo(listPage)
+        goTo(plantListPage)
                 .isContainedInList(name);
     }
 
     @Test
     void addPlantLinkShouldBePresentAndRedirect() {
         loginAsUser();
-        goTo(listPage)
+        goTo(plantListPage)
                 .clickPlantLink();
         assertThat(window().title()).isEqualTo(AddPage.TITLE);
     }
