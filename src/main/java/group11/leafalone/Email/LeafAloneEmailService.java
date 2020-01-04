@@ -1,6 +1,7 @@
 package group11.leafalone.Email;
 
 import group11.leafalone.Auth.LeafAloneUser;
+import group11.leafalone.LeafAloneUtil;
 import group11.leafalone.Plant.Plant;
 import group11.leafalone.Plant.PlantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 @Component
 public class LeafAloneEmailService {
@@ -66,7 +68,6 @@ public class LeafAloneEmailService {
             String emailText = "Hello " + username + "!" + System.lineSeparator() + "Thank you for registering on our site. We hope you enjoy your stay." + System.lineSeparator() + "Your LeafAlone team";
             sendSimpleMessage(email, "Registration Complete!", emailText);
         }
-
     }
 
     //TODO testen???

@@ -38,7 +38,6 @@ public class PlantService {
         Date watered = plant.getWatered();
         Date nextWatering = calculateNextWatering(plant, watered);
         plant.setNextWatering(nextWatering);
-//        plant.setNextWatering(calculateNextWatering(plant, plant.getWatered()));
 
         Plant repoPlant;
         try {

@@ -22,7 +22,6 @@
 
         <div class="form-group">
             <label th:for="plantCare">Type of plant:</label>
-            <!-- TODO: should probably be filled by data model-->
             <select class="custom-select" th:field="*{plantCare}" path="plantCare" id="plantCare">
                 <option th:each="plantCare : ${plantCares}" th:value="${plantCare.id}"
                         th:text="${plantCare.colloquial}"></option>

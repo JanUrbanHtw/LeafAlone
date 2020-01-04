@@ -167,4 +167,28 @@ public class PlantController {
         plantService.save(plant, name);
         return "redirect:/plants/details/" + name;
     }
+
+    //Edit Plant Types
+
+    @GetMapping("plant_types/edit/{name}")
+    public String editPlantType(@PathVariable String name, Model model) {
+        PlantCare plantCare = plantCareService.findByScientific(name);
+        model.addAttribute("plantCare", plantCare);
+        model.addAttribute("sunSituations", SunSituation.values());
+        return "plant_types/edit";
+    }
+
+    @PostMapping("plant_types/edit/{name}")
+    public String editPlantTypeSubmit(@PathVariable String name, @Valid PlantCare plantCare, BindingResult bindingResult, Model model) {
+        bindingResult = plantCareService.validatePlantCare(plantCare, bindingResult);
+
+        if (bindingResult.hasFieldErrors("water_cycle") || bindingResult.hasFieldErrors("water_amount")) {
+            model.addAttribute("plantCare", plantCare);
+            model.addAttribute("sunSituations", SunSituation.values());
+            return "plant_types/edit";
+        }
+
+        plantCareService.update(plantCare, name);
+        return "redirect:/plant_types/details/" + plantCare.getScientific();
+    }
 }

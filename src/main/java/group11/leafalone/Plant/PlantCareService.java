@@ -63,11 +63,36 @@ public class PlantCareService {
         plantCareRepository.save(plantCare);
     }
 
+    public void update(PlantCare plantCare, String name) {
+        PlantCare repoPlantCare;
+        try {
+            repoPlantCare = findByScientific(name);
+        } catch (ResponseStatusException e) {
+            return;
+        }
+        if (repoPlantCare != null) {
+
+            repoPlantCare.setScientific(plantCare.getScientific());
+            repoPlantCare.setColloquial(plantCare.getColloquial());
+            repoPlantCare.setSunSituation(plantCare.getSunSituation());
+            repoPlantCare.setWaterAmount(plantCare.getWaterAmount());
+            repoPlantCare.setWaterCycle(plantCare.getWaterCycle());
+            repoPlantCare.setSoilAdvice(plantCare.getSoilAdvice());
+            repoPlantCare.setDescription(plantCare.getDescription());
+            plantCareRepository.save(repoPlantCare);
+            return;
+        }
+    }
+
     public List<PlantCare> findByLeafAloneUserOrdered(LeafAloneUser user) {
         return plantCareRepository.findByLeafAloneUserOrdered(user.getId());
     }
 
     public PlantCare findByScientific(String name) {
         return plantCareRepository.findByScientific(name);
+    }
+
+    public PlantCare findByColloquial(String name) {
+        return plantCareRepository.findByColloquial(name);
     }
 }

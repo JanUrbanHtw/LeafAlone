@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <title>Edit Plant Type</title>
+</head>
+<body>
+
+<div th:replace="fragments/navbar :: navbar"></div>
+<div class="container">
+    <br>
+    <!--/*@thymesVar id="plantCare" type="group11.leafalone.Plant.PlantCare"*/-->
+    <form action="#" th:action="@{/plant_types/edit/{name}(name=${plantCare.getScientific()})}" th:object="${plantCare}"
+          method="post" id="editContributeForm">
+        <div class="form-group">
+            <label th:for="colloquial">Colloquial plant name:</label>
+            <input th:type="text" th:field="*{colloquial}" path="colloquial" class="form-control" id="colloquial">
+            <p class="font-weight-bold errorMessage text-danger" th:if="${#fields.hasErrors('colloquial')}"
+               th:errors="*{colloquial}">
+                Colloquial-Name Error</p>
+        </div>
+        <div class="form-group">
+            <label th:for="scientific">Scientific plant name:</label>
+            <input th:type="text" th:field="*{scientific}" path="scientific" class="form-control" id="scientific">
+            <p class="font-weight-bold errorMessage text-danger" th:if="${#fields.hasErrors('scientific')}"
+               th:errors="*{scientific}">
+                Scientific-Name Error</p>
+        </div>
+        <div class="form-group">
+            <label for="sunSituation">How much sun does the plant prefer?</label>
+            <select th:field="*{sunSituation}" path="sunSituation" id="sunSituation">
+                <option th:each="sunSituation : ${sunSituations}" th:value="${sunSituation}"
+                        th:text="${sunSituation.name}"></option>
+            </select>
+            <p class="font-weight-bold errorMessage text-danger" th:if="${#fields.hasErrors('sunSituation')}"
+               th:errors="*{sunSituation}">
+                Sun-Situation Error</p>
+        </div>
+        <div class="form-group">
+            <label th:for="waterCycle">How often does the plant need water? (days)</label>
+            <input th:type="number" th:field="*{waterCycle}" path="waterCycle" class="form-control inputField"
+                   id="waterCycle">
+            <p class="font-weight-bold errorMessage text-danger" th:if="${#fields.hasErrors('waterCycle')}"
+               th:errors="*{waterCycle}">
+                Water-Cycle Error</p>
+        </div>
+        <div class="form-group">
+            <label th:for="waterAmount">How much water does the plant need with each watering?</label>
+            <input th:type="number" th:field="*{waterAmount}" path="waterAmount" class="form-control" id="waterAmount">
+            <p class="font-weight-bold errorMessage text-danger" th:if="${#fields.hasErrors('waterAmount')}"
+               th:errors="*{waterAmount}">
+                Water-Amount Error</p>
+        </div>
+        <div class="form-group">
+            <label th:for="soilAdvice">What kind of soil is ideal for this plant?</label>
+            <br/>
+            <textarea lang="en" spellcheck="true" th:type="text" th:field="*{soilAdvice}" path="soilAdvice"
+                      class="form-control"
+                      id="soilAdvice"></textarea>
+            <p class="font-weight-bold errorMessage text-danger" th:if="${#fields.hasErrors('soilAdvice')}"
+               th:errors="*{soilAdvice}">
+                Soil-Advice Error</p>
+        </div>
+        <div class="form-group">
+            <label for="description">general description, additional information</label>
+            <br/>
+            <textarea lang="en" spellcheck="true" th:type="text" th:field="*{description}" path="description"
+                      class="form-control"
+                      id="description"></textarea>
+            <p class="font-weight-bold errorMessage text-danger" th:if="${#fields.hasErrors('description')}"
+               th:errors="*{description}">
+                Description Error</p>
+        </div>
+        <button class="btn btn-success" th:type="submit" id="submitButton">Update Plant Type</button>
+    </form>
+</div>
+</body>
+</html>

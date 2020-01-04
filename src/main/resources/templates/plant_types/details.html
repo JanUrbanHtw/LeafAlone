@@ -75,6 +75,13 @@
             <p id="description" th:text="${plantCare.getDescription()}"></p>
         </div>
     </div>
+
+    <div style="margin: 0.5em">
+        <a id="editButton" style="float: right" class="btn btn-outline-warning"
+           th:href="@{/plant_types/edit/{name}(name=${plantCare.getScientific()})}">Edit</a>
+        <a id="listButton" style="float: left" class="btn btn-outline-success"
+           href="/plant_types/list">List</a>
+    </div>
 </div>
 </body>
 </html>

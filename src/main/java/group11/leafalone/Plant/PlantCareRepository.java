@@ -9,6 +9,7 @@ import java.util.List;
 
 @Repository
 public interface PlantCareRepository extends CrudRepository<PlantCare, Long> {
+    PlantCare findByColloquial(String colloquial);
     PlantCare findByScientific(String scientific);
 
     @Query(value="SELECT * FROM plant_care WHERE contributor_id = :user_id ORDER BY id ASC", nativeQuery = true)
