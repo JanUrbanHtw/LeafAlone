@@ -43,6 +43,9 @@ public class PlantEditPage extends FluentPage {
     @FindBy(id = "submitButton")
     private FluentWebElement submitButton;
 
+    @FindBy(id = "deleteButton")
+    private FluentWebElement deleteButton;
+
     public PlantEditPage assertPlantName(String name) {
         assertThat(nameText.text()).isEqualTo(name);
         return this;
@@ -115,4 +118,23 @@ public class PlantEditPage extends FluentPage {
         return this;
     }
 
+    public PlantEditPage deletePlant() {
+        deleteButton.click();
+        return this;
+    }
+
+    public PlantEditPage alertPresent(boolean present) {
+        if (present) {
+            assertThat(alert().present()).isTrue();
+        } else {
+            assertThat(alert().present()).isFalse();
+        }
+        return this;
+    }
+
+    public PlantEditPage acceptAlert() {
+        alert().accept();
+        await().atMost(5, TimeUnit.SECONDS).untilPage().isLoaded();
+        return this;
+    }
 }

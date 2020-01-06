@@ -14,6 +14,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class PlantListPage extends FluentPage {
     public static final String TITLE = "Your Plants";
 
+    @FindBy(id = "deleteMessage")
+    private FluentWebElement deleteMessage;
+
     @FindBy(id = "plantList")
     private FluentWebElement list;
 
@@ -37,6 +40,15 @@ public class PlantListPage extends FluentPage {
     public PlantListPage clickPlantLink() {
         plantLink.click();
         await().atMost(5, TimeUnit.SECONDS).untilPage().isLoaded();
+        return this;
+    }
+
+    public PlantListPage isDeleteMessagePresent(boolean present) {
+        if (present) {
+            assertThat(deleteMessage.present()).isTrue();
+        } else {
+            assertThat(deleteMessage.present()).isFalse();
+        }
         return this;
     }
 }
