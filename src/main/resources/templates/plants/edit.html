@@ -57,12 +57,16 @@
         <div class="form-group">
             <label th:for="notes">Additional Notes:</label>
             <textarea lang="en" spellcheck="true" th:type="text" th:field="*{notes}" path="notes" class="form-control"
-                      id="notes"/>
+                      id="notes"></textarea>
             <p class="font-weight-bold errorMessage text-danger" th:if="${#fields.hasErrors('notes')}"
                th:errors="*{notes}">Notes
                 Error</p>
         </div>
         <button class="btn btn-success" id="submitButton" th:type="submit">Submit changes</button>
+        <a id="deleteButton" style="float: right" onclick="return confirm('Do you really want to delete the plant?')"
+           class="btn btn-outline-danger"
+           th:href="@{/plants/delete/{name}(name=${plant.getName()})}">Delete</a>
+
     </form>
 </div>
 

@@ -6,6 +6,7 @@ import group11.leafalone.Pages.LoginPage;
 import group11.leafalone.Pages.plants.AddPage;
 import group11.leafalone.Pages.plants.PlantDetailsPage;
 import group11.leafalone.Pages.plants.PlantEditPage;
+import group11.leafalone.Pages.plants.PlantListPage;
 import org.fluentlenium.adapter.junit.jupiter.FluentTest;
 import org.fluentlenium.core.annotation.Page;
 import org.junit.jupiter.api.Test;
@@ -125,5 +126,16 @@ class PlantEditTest extends FluentTest {
                 .inputPlantWatered("2019-01-01T00:00:00.000Z")
                 .submitPlantEditForm()
                 .assertErrorMessage(true);
+    }
+
+    @Test
+    void deletePlantShouldRenderConfirmAlertAndRedirectToList() {
+        loginAsUser();
+        createPlant();
+        editPage.go(PLANT_NAME);
+        editPage.deletePlant()
+                .alertPresent(true)
+                .acceptAlert();
+        assertThat(window().title()).isEqualTo(PlantListPage.TITLE);
     }
 }
