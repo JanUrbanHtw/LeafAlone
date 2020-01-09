@@ -96,7 +96,7 @@ public class PlantController {
     @GetMapping("plants/list")
     public String getPlantList(Model model) {
         List<List_Plant> plantList =
-                List_Plant.plantListToListPlant(plantService.findByLeafAloneUserOrdered(userService.getCurrentUser()));
+                List_Plant.plantListToListPlant(plantService.findByLeafAloneUserOrderedAfterAndOrderByNextWatering(userService.getCurrentUser()));
         model.addAttribute("plants", plantList);
         return "plants/list";
 
@@ -106,7 +106,7 @@ public class PlantController {
     public String waterPlant(@PathVariable String name, Model model) {
         plantService.waterPlant(name);
         List<List_Plant> plantList =
-                List_Plant.plantListToListPlant(plantService.findByLeafAloneUserOrdered(userService.getCurrentUser()));
+                List_Plant.plantListToListPlant(plantService.findByLeafAloneUserOrderedAfterAndOrderByNextWatering(userService.getCurrentUser()));
         model.addAttribute("plants", plantList);
         return "redirect:/plants/list?message=" + name + " got watered";
     }
@@ -115,7 +115,7 @@ public class PlantController {
     public String deletePlant(@PathVariable String name, Model model) {
         plantService.deletePlant(name);
         List<List_Plant> plantList =
-                List_Plant.plantListToListPlant(plantService.findByLeafAloneUserOrdered(userService.getCurrentUser()));
+                List_Plant.plantListToListPlant(plantService.findByLeafAloneUserOrderedAfterAndOrderByNextWatering(userService.getCurrentUser()));
         model.addAttribute("plants", plantList);
         return "redirect:/plants/list?message=" + name + " got deleted";
     }

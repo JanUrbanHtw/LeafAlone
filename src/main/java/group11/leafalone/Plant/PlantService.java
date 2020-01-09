@@ -140,8 +140,8 @@ public class PlantService {
         return plant.get();
     }
 
-    public List<Plant> findByLeafAloneUserOrdered(LeafAloneUser user) {
-        return plantRepository.findByLeafAloneUserOrdered(user.getId());
+    public List<Plant> findByLeafAloneUserOrderedAfterAndOrderByNextWatering(LeafAloneUser user) {
+        return plantRepository.findByLeafAloneUserOrderedAfterAndOrderByNextWatering(user.getId());
     }
 
     public void deletePlant(String name) {
