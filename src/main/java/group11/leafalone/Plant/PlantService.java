@@ -10,7 +10,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -140,8 +140,8 @@ public class PlantService {
         return plant.get();
     }
 
-    public List<Plant> findByLeafAloneUserOrderedAfterAndOrderByNextWatering(LeafAloneUser user) {
-        return plantRepository.findByLeafAloneUserOrderedAfterAndOrderByNextWatering(user.getId());
+    public List<Plant> findByLeafAloneUserOrderByNextWatering(LeafAloneUser user) {
+        return plantRepository.findByLeafAloneUserOrderByNextWatering(user.getId());
     }
 
     public void deletePlant(String name) {
@@ -165,5 +165,18 @@ public class PlantService {
             e.printStackTrace();
         }
         return plantRepository.findByNextWatering(LeafAloneUtil.getTodayRightNow());
+    }
+
+    public List<Plant> findPlantsWateredNextDaysByUser(LeafAloneUser user, int days) {
+        List<Plant> plantList = findByLeafAloneUser(user);
+        List<Plant> result = findByLeafAloneUser(user);
+        result.clear();
+        LocalDate day = LocalDate.now().plusDays(days);
+
+        for(Plant plant : plantList) {
+            LocalDate nextWatering = plant.getNextWatering().toInstant().atZone((ZoneId.systemDefault())).toLocalDate();
+            if(nextWatering.equals(day)) result.add(plant);
+        }
+        return result;
     }
 }

@@ -273,14 +273,14 @@ class PlantControllerTest {
         PlantCare care = new PlantCare.Builder().withColloquial("Dummy").build();
         list.add(new Plant.Builder().withName("Plant1").withPlantCare(care).withWatered(new Date()).withNextWatering(new Date()).build());
         list.add(new Plant.Builder().withName("Plant2").withPlantCare(care).withWatered(new Date()).withNextWatering(new Date()).build());
-        when(plantService.findByLeafAloneUserOrderedAfterAndOrderByNextWatering(user))
+        when(plantService.findByLeafAloneUserOrderByNextWatering(user))
                 .thenReturn(list);
 
         mockMVC.perform(get("/plants/list"))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(view().name("plants/list"))
                 .andExpect(model().attributeExists("plants"));
-        verify(plantRepository).findByLeafAloneUserOrderedAfterAndOrderByNextWatering(user.getId());
+        verify(plantRepository).findByLeafAloneUserOrderByNextWatering(user.getId());
     }
 
     //TODO PlantListToListPlant has some problems?
@@ -362,14 +362,14 @@ class PlantControllerTest {
 
         when(userRepository.findByUsername("name")).thenReturn(user);
         when(plantRepository.findByName(userService.getCurrentUser().getId(), "Dummy")).thenReturn(optionalPlant);
-        when(plantRepository.findByLeafAloneUserOrderedAfterAndOrderByNextWatering(userService.getCurrentUser().getId())).thenReturn(list);
+        when(plantRepository.findByLeafAloneUserOrderByNextWatering(userService.getCurrentUser().getId())).thenReturn(list);
 
         mockMVC.perform(get("/plants/delete/Dummy"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/plants/list?message=Dummy got deleted"))
                 .andExpect(model().attributeExists("plants"));
         verify(plantRepository, times(1)).deleteById(plant.getId());
-        verify(plantRepository).findByLeafAloneUserOrderedAfterAndOrderByNextWatering(userService.getCurrentUser().getId());
+        verify(plantRepository).findByLeafAloneUserOrderByNextWatering(userService.getCurrentUser().getId());
     }
 
     //edit

@@ -52,6 +52,10 @@ public class LeafAloneUserDetailsService implements UserDetailsService {
         return userRepository.findByUsername(userDetails.getUsername());
     }
 
+    public Iterable<LeafAloneUser> findAll() {
+        return userRepository.findAll();
+    }
+
     public LeafAloneUser findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
