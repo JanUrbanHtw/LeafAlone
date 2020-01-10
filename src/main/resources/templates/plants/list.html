@@ -34,7 +34,7 @@
             <td class="list3col" th:text="${plant.nextWateringDate}"></td>
             <td class="borderColumn listBtn">
                 <a class="btn" th:classappend="${plant.needsWater}?'btn-info':'btn-outline-info'"
-                   th:href="@{/plants/watered/{name}(name=${plant.getName()})}">Water</a>
+                   th:href="@{/plants/watered/{name}(name=${plant.getName()})}">Watered</a>
             </td>
             <td class="listBtn">
                 <a class="btn btn-outline-success" th:href="@{/plants/details/{name}(name=${plant.name})}">Details</a>
