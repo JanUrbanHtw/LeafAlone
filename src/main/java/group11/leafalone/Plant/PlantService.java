@@ -26,7 +26,7 @@ public class PlantService {
         this.userService = userService;
     }
 
-    public void save(Plant plant, String name) {
+    public void save(Plant plant) {
         Date today = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
         if(plant.getAcquisition() == null) {
             plant.setAcquisition(today);
@@ -40,7 +40,7 @@ public class PlantService {
 
         Plant repoPlant;
         try {
-            repoPlant = findByName(name);
+            repoPlant = findByName(plant.getName());
         } catch (ResponseStatusException e) {
             plant.setLeafAloneUser(userService.getCurrentUser());
             plantRepository.save(plant);

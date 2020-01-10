@@ -12,8 +12,14 @@
     <!--/*@thymesVar id="plant" type="group11.leafalone.Plant.Plant"*/-->
     <form action="#" th:action="@{/plants/edit/{name}(name=${plant.getName()})}" th:object="${plant}" id="addPlantForm"
           method="post">
-        <div class="form-group">
+        <!-- <div class="form-group">
             <label>Plant-Name:</label>
+            <p th:text="${plant.name}" class="font-weight-bold text-success" id="nameText">
+        </div> -->
+
+        <div class="form-group">
+            <label th:for="name">Plant-Name:</label>
+            <input type="hidden" th:field="*{name}" path="name" class="form-control" id="nameInput" th:value="${plant.name}">
             <p th:text="${plant.name}" class="font-weight-bold text-success" id="nameText">
         </div>
 

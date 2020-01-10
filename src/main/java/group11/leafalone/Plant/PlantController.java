@@ -48,7 +48,7 @@ public class PlantController {
             model.addAttribute("plantCares", plantCareService.findAll());
             return "plants/add";
         }
-        plantService.save(plant, plant.getName());
+        plantService.save(plant);
         return "redirect:/plants/list";
     }
 
@@ -151,6 +151,7 @@ public class PlantController {
         model.addAttribute("plant", plant);
         model.addAttribute("sunSituations", SunSituation.values());
         model.addAttribute("plantCares", plantCareService.findAll());
+        model.addAttribute("edit", true);
         return "plants/edit";
     }
 
@@ -162,9 +163,10 @@ public class PlantController {
             model.addAttribute("plant", plant);
             model.addAttribute("sunSituations", SunSituation.values());
             model.addAttribute("plantCares", plantCareService.findAll());
+            model.addAttribute("edit", true);
             return "plants/edit";
         }
-        plantService.save(plant, name);
+        plantService.save(plant);
         return "redirect:/plants/details/" + name;
     }
 
