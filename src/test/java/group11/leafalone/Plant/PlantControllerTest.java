@@ -270,9 +270,9 @@ class PlantControllerTest {
         when(userService.findByUsername("name")).thenReturn(user);
 
         ArrayList<Plant> list = new ArrayList<>();
-        PlantCare care = new PlantCare.Builder().withColloquial("Dummy").build();
-        list.add(new Plant.Builder().withName("Plant1").withPlantCare(care).withWatered(new Date()).withNextWatering(new Date()).build());
-        list.add(new Plant.Builder().withName("Plant2").withPlantCare(care).withWatered(new Date()).withNextWatering(new Date()).build());
+        PlantCare care = new PlantCare.Builder().withColloquial("Dummy").withSunSituation(SunSituation.SUNNY).build();
+        list.add(new Plant.Builder().withName("Plant1").withPlantCare(care).withWatered(new Date()).withNextWatering(new Date()).withSun(SunSituation.SUNNY).build());
+        list.add(new Plant.Builder().withName("Plant2").withPlantCare(care).withWatered(new Date()).withNextWatering(new Date()).withSun(SunSituation.SUNNY).build());
         when(plantService.findByLeafAloneUserOrderByNextWatering(user))
                 .thenReturn(list);
 
@@ -350,9 +350,9 @@ class PlantControllerTest {
     @Test
     @WithMockUser(username = "name")
     void DeletePlant_GET_ShouldRenderListAndDeletePlant() throws Exception {
-        PlantCare plantCare = new PlantCare.Builder().withColloquial("TestDummy").withWaterCycle(2).build();
-        Plant plant =
-                new Plant.Builder().withName("Dummy").withPlantCare(plantCare).withId(123456789).withWatered(new Date()).withNextWatering(new Date()).build();
+        PlantCare plantCare = new PlantCare.Builder().withColloquial("TestDummy").withWaterCycle(2).withSunSituation(SunSituation.SUNNY).build();
+        Plant plant = new Plant.Builder().withName("Dummy").withPlantCare(plantCare).withId(123456789).withWatered(new Date())
+                        .withNextWatering(new Date()).withSun(SunSituation.SUNNY).build();
         Optional<Plant> optionalPlant = Optional.of(plant);
 
         ArrayList<Plant> list = new ArrayList<>();

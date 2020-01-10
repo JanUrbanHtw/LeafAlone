@@ -15,6 +15,7 @@ public class List_Plant {
     private String type;
     private String nextWateringDate;
     private boolean needsWater;
+    private boolean wrongSun;
 
     public List_Plant(Plant plant) {
         this.name = plant.getName();
@@ -22,6 +23,7 @@ public class List_Plant {
         SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
         this.nextWateringDate = sdf.format(plant.getNextWatering());
         this.needsWater = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()).after(plant.getNextWatering());
+        this.wrongSun = !(plant.getSun().getName().equals(plant.getPlantCare().getSunSituation().getName()));
     }
 
     public static List<List_Plant> plantListToListPlant(List<Plant> plants) {
@@ -46,5 +48,9 @@ public class List_Plant {
 
     public boolean isNeedsWater() {
         return needsWater;
+    }
+
+    public boolean isWrongSun() {
+        return wrongSun;
     }
 }
