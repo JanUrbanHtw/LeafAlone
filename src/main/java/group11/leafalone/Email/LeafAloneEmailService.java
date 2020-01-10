@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -108,97 +109,37 @@ public class LeafAloneEmailService {
     }
 
     //TODO: how do you even test this kind of stuff??
-    @Scheduled(cron = "0 0 23 * * SUN")
+    @Scheduled(cron = "0 10 16 * * FRI")
     public void sendWaterPlanForWeek() {
         Iterable<LeafAloneUser> userList = userDetailsService.findAll();
         for(LeafAloneUser user : userList) {
 
-            List<Plant> monday = plantService.findPlantsWateredNextDaysByUser(user, 1);
-            List<Plant> tuesday = plantService.findPlantsWateredNextDaysByUser(user, 2);
-            List<Plant> wednesday = plantService.findPlantsWateredNextDaysByUser(user, 3);
-            List<Plant> thursday = plantService.findPlantsWateredNextDaysByUser(user, 4);
-            List<Plant> friday = plantService.findPlantsWateredNextDaysByUser(user, 5);
-            List<Plant> saturday = plantService.findPlantsWateredNextDaysByUser(user, 6);
-            List<Plant> sunday = plantService.findPlantsWateredNextDaysByUser(user, 7);
-
-            if(monday.isEmpty() && tuesday.isEmpty() && wednesday.isEmpty() && thursday.isEmpty()
-                    && friday.isEmpty() && saturday.isEmpty() && sunday.isEmpty()) continue;
+            Map<String, List> lists = plantService.findPlantsWateredNextWeekByUser(user);
+            if(lists.get("Monday").isEmpty() && lists.get("Tuesday").isEmpty() && lists.get("Wednesday").isEmpty() && lists.get("Thursday").isEmpty()
+                    && lists.get("Friday").isEmpty() && lists.get("Saturday").isEmpty() && lists.get("Sunday").isEmpty()) continue;
 
             String text = "Hello " + user.getUsername() + "!" + System.lineSeparator() +
                     "This week your watering-schedule looks as following:" + System.lineSeparator()+System.lineSeparator();
 
-            if(monday.isEmpty()) {
-                text += "Monday: None"+System.lineSeparator()+System.lineSeparator();
-            } else {
-                text += "Monday:"+System.lineSeparator();
-                for(Plant plant : monday) {
-                    text += plant.getName() + ", species " + plant.getPlantCare().getColloquial() + System.lineSeparator();
-                }
-                text += System.lineSeparator();
-            }
-
-            if(tuesday.isEmpty()) {
-                text += "Tuesday: None"+System.lineSeparator()+System.lineSeparator();
-            } else {
-                text += "Tuesday:"+System.lineSeparator();
-                for(Plant plant : monday) {
-                    text += plant.getName() + ", species " + plant.getPlantCare().getColloquial() + System.lineSeparator();
-                }
-                text += System.lineSeparator();
-            }
-
-            if(wednesday.isEmpty()) {
-                text += "Wednesday: None"+System.lineSeparator()+System.lineSeparator();
-            } else {
-                text += "Wednesday:"+System.lineSeparator();
-                for(Plant plant : monday) {
-                    text += plant.getName() + ", species " + plant.getPlantCare().getColloquial() + System.lineSeparator();
-                }
-                text += System.lineSeparator();
-            }
-
-            if(thursday.isEmpty()) {
-                text += "Thursday: None"+System.lineSeparator()+System.lineSeparator();
-            } else {
-                text += "Thursday:"+System.lineSeparator();
-                for(Plant plant : monday) {
-                    text += plant.getName() + ", species " + plant.getPlantCare().getColloquial() + System.lineSeparator();
-                }
-                text += System.lineSeparator();
-            }
-
-            if(friday.isEmpty()) {
-                text += "Friday: None"+System.lineSeparator()+System.lineSeparator();
-            } else {
-                text += "Friday:"+System.lineSeparator();
-                for(Plant plant : monday) {
-                    text += plant.getName() + ", species " + plant.getPlantCare().getColloquial() + System.lineSeparator();
-                }
-                text += System.lineSeparator();
-            }
-
-            if(saturday.isEmpty()) {
-                text += "Saturday: None"+System.lineSeparator()+System.lineSeparator();
-            } else {
-                text += "Saturday:"+System.lineSeparator();
-                for(Plant plant : monday) {
-                    text += plant.getName() + ", species " + plant.getPlantCare().getColloquial() + System.lineSeparator();
-                }
-                text += System.lineSeparator();
-            }
-
-            if(sunday.isEmpty()) {
-                text += "Sunday: None"+System.lineSeparator()+System.lineSeparator();
-            } else {
-                text += "Sunday:"+System.lineSeparator();
-                for(Plant plant : monday) {
-                    text += plant.getName() + ", species " + plant.getPlantCare().getColloquial() + System.lineSeparator();
-                }
-                text += System.lineSeparator();
+            for(Map.Entry<String, List> entry : lists.entrySet()) {
+                text = computeWeeklyEmailText(entry.getValue(), entry.getKey(), text);
             }
 
             text += "Sincerely," + System.lineSeparator() + "Your LeafAlone Team";
             sendSimpleMessage(user.getEmail(), "Your weekly watering-schedule arrived!", text);
         }
+    }
+
+    private String computeWeeklyEmailText(List<Plant> list, String day, String text) {
+        if(list.isEmpty()) {
+            text += day + ": None"+System.lineSeparator()+System.lineSeparator();
+        } else {
+            text += day + ":"+System.lineSeparator();
+            for(Plant plant : list) {
+                text += plant.getName() + ", species " + plant.getPlantCare().getColloquial() + System.lineSeparator();
+            }
+            text += System.lineSeparator();
+        }
+        return text;
     }
 }

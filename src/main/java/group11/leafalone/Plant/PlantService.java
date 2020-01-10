@@ -13,9 +13,8 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class PlantService {
@@ -169,8 +168,7 @@ public class PlantService {
 
     public List<Plant> findPlantsWateredNextDaysByUser(LeafAloneUser user, int days) {
         List<Plant> plantList = findByLeafAloneUser(user);
-        List<Plant> result = findByLeafAloneUser(user);
-        result.clear();
+        List<Plant> result = new ArrayList<>();
         LocalDate day = LocalDate.now().plusDays(days);
 
         for(Plant plant : plantList) {
@@ -178,5 +176,26 @@ public class PlantService {
             if(nextWatering.equals(day)) result.add(plant);
         }
         return result;
+    }
+
+    public Map<String, List> findPlantsWateredNextWeekByUser(LeafAloneUser user) {
+        Map<String, List> lists = new LinkedHashMap<>();
+        List<Plant> monday = findPlantsWateredNextDaysByUser(user, 1);
+        List<Plant> tuesday = findPlantsWateredNextDaysByUser(user, 2);
+        List<Plant> wednesday = findPlantsWateredNextDaysByUser(user, 3);
+        List<Plant> thursday = findPlantsWateredNextDaysByUser(user, 4);
+        List<Plant> friday = findPlantsWateredNextDaysByUser(user, 5);
+        List<Plant> saturday = findPlantsWateredNextDaysByUser(user, 6);
+        List<Plant> sunday = findPlantsWateredNextDaysByUser(user, 7);
+
+        lists.put("Monday", monday);
+        lists.put("Tuesday", tuesday);
+        lists.put("Wednesday", wednesday);
+        lists.put("Thursday", thursday);
+        lists.put("Friday", friday);
+        lists.put("Saturday", saturday);
+        lists.put("Sunday", sunday);
+
+        return lists;
     }
 }
