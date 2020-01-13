@@ -1,6 +1,7 @@
 package group11.leafalone.Auth;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
@@ -20,6 +21,7 @@ public class LeafAloneUser {
     @Column(name = "password")
     private String password;
 
+    @Email(message = "example: name@domain.com")
     @Column(name = "email", nullable = false, unique = true)
     @NotEmpty(message = "Email is required")
     private String email;
