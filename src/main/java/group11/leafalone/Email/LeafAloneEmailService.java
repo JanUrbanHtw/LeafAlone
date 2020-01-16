@@ -109,20 +109,29 @@ public class LeafAloneEmailService {
     }
 
     //TODO: how do you even test this kind of stuff??
-    @Scheduled(cron = "0 10 16 * * FRI")
+    @Scheduled(cron = "0 0 23 * * SUN")
     public void sendWaterPlanForWeek() {
         Iterable<LeafAloneUser> userList = userDetailsService.findAll();
         for(LeafAloneUser user : userList) {
 
             Map<String, List> lists = plantService.findPlantsWateredNextWeekByUser(user);
+            List<Plant> beforeWeek = plantService.findPlantsWateredBeforeToday(user);
             if(lists.get("Monday").isEmpty() && lists.get("Tuesday").isEmpty() && lists.get("Wednesday").isEmpty() && lists.get("Thursday").isEmpty()
-                    && lists.get("Friday").isEmpty() && lists.get("Saturday").isEmpty() && lists.get("Sunday").isEmpty()) continue;
+                    && lists.get("Friday").isEmpty() && lists.get("Saturday").isEmpty() && lists.get("Sunday").isEmpty() && beforeWeek.isEmpty()) continue;
 
             String text = "Hello " + user.getUsername() + "!" + System.lineSeparator() +
                     "This week your watering-schedule looks as following:" + System.lineSeparator()+System.lineSeparator();
 
             for(Map.Entry<String, List> entry : lists.entrySet()) {
                 text = computeWeeklyEmailText(entry.getValue(), entry.getKey(), text);
+            }
+
+            if(!beforeWeek.isEmpty()) {
+                text+= "The following plants' watering is overdue. If they are still alive, you should water them too next time: " + System.lineSeparator();
+                for (Plant plant : beforeWeek) {
+                    text += plant.getName() + ", species " + plant.getPlantCare().getColloquial() + System.lineSeparator();
+                }
+                text += System.lineSeparator();
             }
 
             text += "Sincerely," + System.lineSeparator() + "Your LeafAlone Team";

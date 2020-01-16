@@ -198,4 +198,16 @@ public class PlantService {
 
         return lists;
     }
+
+    public List<Plant> findPlantsWateredBeforeToday(LeafAloneUser user) {
+        List<Plant> plantList = findByLeafAloneUser(user);
+        List<Plant> result = new ArrayList<>();
+        LocalDate today = LocalDate.now();
+
+        for(Plant plant : plantList) {
+            LocalDate nextWatering = plant.getNextWatering().toInstant().atZone((ZoneId.systemDefault())).toLocalDate();
+            if(nextWatering.isBefore(today) || nextWatering.equals(today)) result.add(plant);
+        }
+        return result;
+    }
 }
