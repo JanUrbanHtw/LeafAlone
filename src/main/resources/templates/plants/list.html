@@ -23,14 +23,22 @@
             <th scope="col"></th>
             <th scope="col"></th>
             <th scope="col"></th>
-            <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
         <!--/*@thymesVar id="plants" type="java.util.List"*/-->
         <tr th:class="${plant.needsWater}?'table-warning'" th:each="plant : ${plants}">
             <!--/*@thymesVar id="plant" type="group11.leafalone.ViewModel.List_Plant"*/-->
-            <th scope="row" class="list3col" th:text="${plant.name}"></th>
+            <div th:if="${plant.isWrongSun()}">
+                <u>
+                    <th data-toggle="tooltip" title="Wrong Sun-Situation for plant!! See Details" scope="row"
+                        class="list3col text-warning"><p><u th:text="${plant.name}"></u></p></th>
+                </u>
+            </div>
+            <div th:unless="${plant.isWrongSun()}">
+                <th scope="row" class="list3col" th:text="${plant.name}"></th>
+            </div>
+
             <td class="list3col" th:text="${plant.type}"></td>
             <td class="list3col" th:text="${plant.nextWateringDate}"></td>
             <td class="borderColumn listBtn">
@@ -43,11 +51,6 @@
             <td class="listBtn">
                 <a id="editButton" style="float: right" class="btn btn-outline-warning"
                    th:href="@{/plants/edit/{name}(name=${plant.getName()})}">Edit</a>
-            </td>
-            <td colspan="6">
-                <p th:if="${plant.isWrongSun()}" class="font-weight-bold errorMessage text-danger">Wrong Sun-Situation for plant!!</p>
-                <!--<p style="margin-bottom: 0" class="text-center"><a id="addPlantLink" class="btn btn-outline-success"
-                                                                       href="/plants/add">add a plant</a></p> -->
             </td>
         </tr>
         <tr th:if="${plants.size() == 0}">
