@@ -14,7 +14,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class PlantService {
@@ -27,16 +26,14 @@ public class PlantService {
     }
 
     public void save(Plant plant) {
-        Date today = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
+        LocalDateTime today = LocalDateTime.now();
         if(plant.getAcquisition() == null) {
             plant.setAcquisition(today);
         }
         if(plant.getWatered() == null) {
             plant.setWatered(today);
         }
-        Date watered = plant.getWatered();
-        Date nextWatering = calculateNextWatering(plant, watered);
-        plant.setNextWatering(nextWatering);
+        plant.setNextWatering(calculateNextWatering(plant, plant.getWatered()));
 
         Plant repoPlant;
         try {
@@ -52,6 +49,7 @@ public class PlantService {
             repoPlant.setAcquisition(plant.getAcquisition());
             repoPlant.setWatered(plant.getWatered());
             repoPlant.setNotes(plant.getNotes());
+            repoPlant.setNextWatering(plant.getNextWatering());
             plantRepository.save(repoPlant);
             return;
         }
@@ -74,23 +72,29 @@ public class PlantService {
             bindingResult.addError(error);
         }
 
-        Date today = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
+        LocalDateTime today = LocalDateTime.now();
         try {
-            if (plant.getAcquisition().after(today)) {
+            plant.setAcquisition(plant.getAcquisitionDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+            if (plant.getAcquisition().isAfter(today)) {
                 FieldError error = new FieldError("plant", "acquisition", "Required to be before today or today");
                 bindingResult.addError(error);
             }
-        } catch (NullPointerException e) {}
+        } catch (NullPointerException e) {
+            plant.setAcquisition(null);
+        }
 
         try {
-            if (plant.getWatered().after(today)) {
+            plant.setWatered(plant.getWateredDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+            if (plant.getWatered().isAfter(today)) {
                 FieldError error = new FieldError("plant", "watered", "Required to be before today or today");
                 bindingResult.addError(error);
             }
-        } catch (NullPointerException e) {}
+        } catch (NullPointerException e) {
+            plant.setWatered(null);
+        }
 
         try {
-            if (plant.getWatered().before(plant.getAcquisition())) {
+            if (plant.getWatered().isBefore(plant.getAcquisition())) {
                 FieldError error = new FieldError("plant", "watered", "Required to be after acquisition-date or acquisition-date");
                 bindingResult.addError(error);
             }
@@ -106,26 +110,25 @@ public class PlantService {
 
     public void waterPlant(String name) throws ResponseStatusException {
         Plant plant = findByName(name);
-        Date today = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
+        LocalDateTime today = LocalDateTime.now();
         plant.setWatered(today);
         plant.setNextWatering(calculateNextWatering(plant, today));
         plantRepository.save(plant);
     }
 
-    Date calculateNextWatering(Plant plant, Date today) {
+    LocalDateTime calculateNextWatering(Plant plant, LocalDateTime watered) {
         if (plant.getPlantCare() == null || plant.getPlantCare().getWaterCycle() <= 0) {
             return null;
         }
 
-        LocalDateTime todayDateTime = today.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-
-        todayDateTime = todayDateTime.plusDays(plant.getPlantCare().getWaterCycle());
-        try {
-            return LeafAloneUtil.stripHoursAndMinutes(Date.from(todayDateTime.atZone(ZoneId.systemDefault()).toInstant()));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return Date.from(todayDateTime.atZone(ZoneId.systemDefault()).toInstant());
+        LocalDateTime nextWatering = watered.plusDays(plant.getPlantCare().getWaterCycle());
+        return nextWatering;
+//        try {
+//            return LeafAloneUtil.stripHoursAndMinutes(Date.from(todayDateTime.atZone(ZoneId.systemDefault()).toInstant()));
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        return Date.from(todayDateTime.atZone(ZoneId.systemDefault()).toInstant());
     }
 
     public Plant findByName(String name) throws ResponseStatusException {
@@ -137,6 +140,13 @@ public class PlantService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Plant not found");
         }
         return plant.get();
+    }
+
+    public Plant findByNameWithDates(String name) throws ResponseStatusException {
+        Plant plant = findByName(name);
+        plant.setAcquisitionDate(Date.from(plant.getAcquisition().atZone(ZoneId.systemDefault()).toInstant()));
+        plant.setWateredDate(Date.from(plant.getWatered().atZone(ZoneId.systemDefault()).toInstant()));
+        return plant;
     }
 
     public List<Plant> findByLeafAloneUserOrderByNextWatering(LeafAloneUser user) {
@@ -172,7 +182,7 @@ public class PlantService {
         LocalDate day = LocalDate.now().plusDays(days);
 
         for(Plant plant : plantList) {
-            LocalDate nextWatering = plant.getNextWatering().toInstant().atZone((ZoneId.systemDefault())).toLocalDate();
+            LocalDate nextWatering = plant.getNextWatering().toLocalDate();
             if(nextWatering.equals(day)) result.add(plant);
         }
         return result;
@@ -205,7 +215,7 @@ public class PlantService {
         LocalDate today = LocalDate.now();
 
         for(Plant plant : plantList) {
-            LocalDate nextWatering = plant.getNextWatering().toInstant().atZone((ZoneId.systemDefault())).toLocalDate();
+            LocalDate nextWatering = plant.getNextWatering().toLocalDate();
             if(nextWatering.isBefore(today) || nextWatering.equals(today)) result.add(plant);
         }
         return result;

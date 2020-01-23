@@ -42,15 +42,15 @@
         </div>
 
         <div class="form-group">
-            <label th:for="acquisition">Date of acquisition:</label>
-            <input th:type="date" path="acquisition" th:field="*{acquisition}" class="form-control" id="acquisition">
+            <label th:for="acquisitionDate">Date of acquisition:</label>
+            <input th:type="date" path="acquisitionDate" th:field="*{acquisitionDate}" class="form-control" id="acquisitionDate">
             <p class="font-weight-bold errorMessage text-danger" th:if="${#fields.hasErrors('acquisition')}"
                th:errors="*{acquisition}">Acquisition-Date Error</p>
         </div>
 
         <div class="form-group">
-            <label th:for="watered">Date of last watering:</label>
-            <input th:type="date" path="watered" th:field="*{watered}" class="form-control" id="watered">
+            <label th:for="wateredDate">Date of last watering:</label>
+            <input th:type="date" path="wateredDate" th:field="*{wateredDate}" class="form-control" id="wateredDate">
             <p class="font-weight-bold errorMessage text-danger" th:if="${#fields.hasErrors('watered')}"
                th:errors="*{watered}">
                 Last-Watered-Date Error</p>

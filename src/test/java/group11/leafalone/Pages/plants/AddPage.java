@@ -28,10 +28,10 @@ public class AddPage extends FluentPage {
     @FindBy(id = "sun")
     private FluentWebElement sunSituationInput;
 
-    @FindBy(id = "acquisition")
+    @FindBy(id = "acquisitionDate")
     private FluentWebElement acquisitionDateInput;
 
-    @FindBy(id = "watered")
+    @FindBy(id = "wateredDate")
     private FluentWebElement wateringDateInput;
 
     @FindBy(id = "notes")

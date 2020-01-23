@@ -31,10 +31,10 @@ public class PlantEditPage extends FluentPage {
     @FindBy(id = "sun")
     private FluentWebElement sun;
 
-    @FindBy(id = "acquisition")
+    @FindBy(id = "acquisitionDate")
     private WebElement acquisition;
 
-    @FindBy(id = "watered")
+    @FindBy(id = "wateredDate")
     private WebElement watered;
 
     @FindBy(id = "notes")

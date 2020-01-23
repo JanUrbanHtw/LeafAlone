@@ -147,7 +147,7 @@ public class PlantController {
 
     @GetMapping("plants/edit/{name}")
     public String editPlant(@PathVariable String name, Model model) {
-        Plant plant = plantService.findByName(name);
+        Plant plant = plantService.findByNameWithDates(name);
         model.addAttribute("plant", plant);
         model.addAttribute("sunSituations", SunSituation.values());
         model.addAttribute("plantCares", plantCareService.findAll());

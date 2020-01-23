@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
@@ -25,35 +26,29 @@ public class PlantServiceTest {
     @Test
     public void calculateWateringSetsCorrectNextWatering() {
         int daysBetweenWatering = 5;
-        Date date = new GregorianCalendar(2020, Calendar.JANUARY, 1).getTime();
-        LocalDate localDatePlusDays = Instant.ofEpochMilli(date.getTime())
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate().plusDays(daysBetweenWatering);
-        Date datePlusDays = Date.from(localDatePlusDays.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+        LocalDateTime localDateTime = LocalDateTime.of(2020, 1, 1, 1, 1);
+        LocalDateTime localDatePlusDays = localDateTime.plusDays(daysBetweenWatering);
 
         PlantCare plantCare = new PlantCare.Builder().withWaterCycle(daysBetweenWatering).build();
-        Plant plant = new Plant.Builder().withPlantCare(plantCare).withWatered(date).build();
+        Plant plant = new Plant.Builder().withPlantCare(plantCare).withWatered(localDateTime).build();
 
-        Date result = plantService.calculateNextWatering(plant, date);
+        LocalDateTime result = plantService.calculateNextWatering(plant, localDateTime);
 
-        assertEquals(datePlusDays, result);
+        assertEquals(localDatePlusDays, result);
     }
 
     @Test
     public void calculateWateringCantGoToThePast() {
         int daysBetweenWatering = -5;
-        Date date = new GregorianCalendar(2020, Calendar.JANUARY, 1).getTime();
-        LocalDate localDatePlusDays = Instant.ofEpochMilli(date.getTime())
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate().plusDays(daysBetweenWatering);
-        Date datePlusDays = Date.from(localDatePlusDays.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+        LocalDateTime localDateTime = LocalDateTime.of(2020, 1, 1, 1, 1);
+        LocalDateTime localDatePlusDays = localDateTime.plusDays(daysBetweenWatering);
 
         PlantCare plantCare = new PlantCare.Builder().withWaterCycle(daysBetweenWatering).build();
-        Plant plant = new Plant.Builder().withPlantCare(plantCare).withWatered(date).build();
+        Plant plant = new Plant.Builder().withPlantCare(plantCare).withWatered(localDateTime).build();
 
-        Date result = plantService.calculateNextWatering(plant, date);
+        LocalDateTime result = plantService.calculateNextWatering(plant, localDateTime);
 
-        assertNotEquals(datePlusDays, result);
+        assertNotEquals(localDatePlusDays, result);
     }
 
 }

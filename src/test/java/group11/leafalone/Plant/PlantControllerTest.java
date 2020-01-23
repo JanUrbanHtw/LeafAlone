@@ -15,6 +15,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -96,7 +97,7 @@ class PlantControllerTest {
         System.out.println(date);
         mockMVC.perform(post("/plants/add")
                 .param("name", "plantName")
-                .param("acquisition", date))
+                .param("acquisitionDate", date))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(view().name("plants/add"))
                 .andExpect(model().attributeHasFieldErrors("plant", "acquisition"));
@@ -110,7 +111,7 @@ class PlantControllerTest {
         System.out.println(date);
         mockMVC.perform(post("/plants/add")
                 .param("name", "plantName")
-                .param("watered", date))
+                .param("wateredDate", date))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(view().name("plants/add"))
                 .andExpect(model().attributeHasFieldErrors("plant", "watered"));
@@ -271,8 +272,8 @@ class PlantControllerTest {
 
         ArrayList<Plant> list = new ArrayList<>();
         PlantCare care = new PlantCare.Builder().withColloquial("Dummy").withSunSituation(SunSituation.SUNNY).build();
-        list.add(new Plant.Builder().withName("Plant1").withPlantCare(care).withWatered(new Date()).withNextWatering(new Date()).withSun(SunSituation.SUNNY).build());
-        list.add(new Plant.Builder().withName("Plant2").withPlantCare(care).withWatered(new Date()).withNextWatering(new Date()).withSun(SunSituation.SUNNY).build());
+        list.add(new Plant.Builder().withName("Plant1").withPlantCare(care).withWatered(LocalDateTime.now()).withNextWatering(LocalDateTime.now()).withSun(SunSituation.SUNNY).build());
+        list.add(new Plant.Builder().withName("Plant2").withPlantCare(care).withWatered(LocalDateTime.now()).withNextWatering(LocalDateTime.now()).withSun(SunSituation.SUNNY).build());
         when(plantService.findByLeafAloneUserOrderByNextWatering(user))
                 .thenReturn(list);
 
@@ -351,8 +352,8 @@ class PlantControllerTest {
     @WithMockUser(username = "name")
     void DeletePlant_GET_ShouldRenderListAndDeletePlant() throws Exception {
         PlantCare plantCare = new PlantCare.Builder().withColloquial("TestDummy").withWaterCycle(2).withSunSituation(SunSituation.SUNNY).build();
-        Plant plant = new Plant.Builder().withName("Dummy").withPlantCare(plantCare).withId(123456789).withWatered(new Date())
-                        .withNextWatering(new Date()).withSun(SunSituation.SUNNY).build();
+        Plant plant = new Plant.Builder().withName("Dummy").withPlantCare(plantCare).withId(123456789).withWatered(LocalDateTime.now())
+                        .withNextWatering(LocalDateTime.now()).withSun(SunSituation.SUNNY).build();
         Optional<Plant> optionalPlant = Optional.of(plant);
 
         ArrayList<Plant> list = new ArrayList<>();
@@ -379,7 +380,7 @@ class PlantControllerTest {
     void EditPlant_GET_shouldRenderEdit() throws Exception {
         PlantCare[] plantCares = {new PlantCare(), new PlantCare()};
         ArrayList<PlantCare> plantCareList = new ArrayList<>(Arrays.asList(plantCares));
-        Plant plant = new Plant.Builder().withName("dummy").build();
+        Plant plant = new Plant.Builder().withName("dummy").withAcquisition(LocalDateTime.now()).withWatered(LocalDateTime.now()).build();
         Optional<Plant> optional = Optional.of(plant);
         LeafAloneUser user = new LeafAloneUser("name", "password", "ROLE_USER", "leafalone@mail.de", "password");
 
@@ -397,7 +398,6 @@ class PlantControllerTest {
         verify(plantRepository).findByName(userService.getCurrentUser().getId(), "dummy");
     }
 
-    //TODO make it pass; see AddPlant_POST_correctShouldSaveToDB()
     @Test
     @WithMockUser("name")
     void EditPlant_POST_correctShouldSaveToDB() throws Exception {
@@ -422,7 +422,7 @@ class PlantControllerTest {
         String date = (Calendar.getInstance().get(Calendar.YEAR) + 1) + "-01-01T00:00:00.000Z";
         mockMVC.perform(post("/plants/edit/dummy")
                 .param("name", "dummy")
-                .param("acquisition", date))
+                .param("acquisitionDate", date))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(view().name("plants/edit"))
                 .andExpect(model().attributeHasFieldErrors("plant", "acquisition"));
@@ -442,7 +442,7 @@ class PlantControllerTest {
 
         mockMVC.perform(post("/plants/edit/dummy")
                 .param("name", "dummy")
-                .param("watered", date))
+                .param("wateredDate", date))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(view().name("plants/edit"))
                 .andExpect(model().attributeHasFieldErrors("plant", "watered"));

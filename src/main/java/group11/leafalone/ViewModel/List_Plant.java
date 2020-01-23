@@ -21,8 +21,8 @@ public class List_Plant {
         this.name = plant.getName();
         this.type = plant.getPlantCare().getColloquial();
         SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
-        this.nextWateringDate = sdf.format(plant.getNextWatering());
-        this.needsWater = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()).after(plant.getNextWatering());
+        this.nextWateringDate = sdf.format(Date.from(plant.getNextWatering().atZone(ZoneId.systemDefault()).toInstant()));
+        this.needsWater = LocalDateTime.now().isAfter(plant.getNextWatering());
         this.wrongSun = !(plant.getSun().getName().equals(plant.getPlantCare().getSunSituation().getName()));
     }
 

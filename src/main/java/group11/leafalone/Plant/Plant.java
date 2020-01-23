@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -32,15 +33,23 @@ public class Plant {
 
     @Column(name = "acquisition")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date acquisition;
+    private LocalDateTime acquisition;
+
+    @Transient
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date acquisitionDate;
 
     @Column(name = "watered")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date watered;
+    private LocalDateTime watered;
+
+    @Transient
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date wateredDate;
 
     @Column(name = "next_watering")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date nextWatering;
+    private LocalDateTime nextWatering;
 
     @Column(name = "notes")
     private String notes;
@@ -53,12 +62,15 @@ public class Plant {
     protected Plant() {
     }
 
-    public Plant(@NotEmpty(message = "Name is required") String name, PlantCare plantCare, SunSituation sun, Date acquisition, Date watered, String notes, LeafAloneUser leafAloneUser) {
+    public Plant(@NotEmpty(message = "Name is required") String name, PlantCare plantCare, SunSituation sun, LocalDateTime acquisition,
+                 Date acquisitionDate, LocalDateTime watered, Date wateredDate, String notes, LeafAloneUser leafAloneUser) {
         this.name = name;
         this.plantCare = plantCare;
         this.sun = sun;
         this.acquisition = acquisition;
+        this.acquisitionDate = acquisitionDate;
         this.watered = watered;
+        this.wateredDate = wateredDate;
         this.notes = notes;
         this.leafAloneUser = leafAloneUser;
     }
@@ -68,9 +80,9 @@ public class Plant {
         private String name;
         private PlantCare plantCare;
         private SunSituation sun;
-        private Date acquisition;
-        private Date watered;
-        private Date nextWatering;
+        private LocalDateTime acquisition;
+        private LocalDateTime watered;
+        private LocalDateTime nextWatering;
         private String notes;
         private LeafAloneUser leafAloneUser;
 
@@ -94,17 +106,17 @@ public class Plant {
             return this;
         }
 
-        public Builder withAcquisition(Date acquisition) {
+        public Builder withAcquisition(LocalDateTime acquisition) {
             this.acquisition = acquisition;
             return this;
         }
 
-        public Builder withWatered(Date watered) {
+        public Builder withWatered(LocalDateTime watered) {
             this.watered = watered;
             return this;
         }
 
-        public Builder withNextWatering(Date nextWatering) {
+        public Builder withNextWatering(LocalDateTime nextWatering) {
             this.nextWatering = nextWatering;
             return this;
         }
@@ -150,15 +162,15 @@ public class Plant {
         return sun;
     }
 
-    public Date getAcquisition() {
+    public LocalDateTime getAcquisition() {
         return acquisition;
     }
 
-    public Date getWatered() {
+    public LocalDateTime getWatered() {
         return watered;
     }
 
-    public Date getNextWatering() {
+    public LocalDateTime getNextWatering() {
         return nextWatering;
     }
 
@@ -186,15 +198,15 @@ public class Plant {
         this.sun = sun;
     }
 
-    public void setAcquisition(Date acquisition) {
+    public void setAcquisition(LocalDateTime acquisition) {
         this.acquisition = acquisition;
     }
 
-    public void setWatered(Date watered) {
+    public void setWatered(LocalDateTime watered) {
         this.watered = watered;
     }
 
-    public void setNextWatering(Date nextWatering) {
+    public void setNextWatering(LocalDateTime nextWatering) {
         this.nextWatering = nextWatering;
     }
 
@@ -204,5 +216,21 @@ public class Plant {
 
     public void setLeafAloneUser(LeafAloneUser leafAloneUser) {
         this.leafAloneUser = leafAloneUser;
+    }
+
+    public Date getAcquisitionDate() {
+        return acquisitionDate;
+    }
+
+    public void setAcquisitionDate(Date acquisitionDate) {
+        this.acquisitionDate = acquisitionDate;
+    }
+
+    public Date getWateredDate() {
+        return wateredDate;
+    }
+
+    public void setWateredDate(Date wateredDate) {
+        this.wateredDate = wateredDate;
     }
 }
