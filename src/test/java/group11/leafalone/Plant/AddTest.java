@@ -58,7 +58,6 @@ class AddTest extends FluentTest {
         goTo(addPage);
         assertThat(window().title()).isEqualTo(AddPage.TITLE);
     }
-    //TODO implementation
 
     @Test
     void completelyFilledForm() {
@@ -86,5 +85,6 @@ class AddTest extends FluentTest {
                 .inputNotes("Notes")
                 .submitAddPlantForm()
                 .assertErrorMessagePresent();
+        assertThat(window().title()).isEqualTo(AddPage.TITLE);
     }
 }
