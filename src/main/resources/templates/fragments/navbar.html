@@ -9,14 +9,13 @@
                 <li class="nav-item"><a class="nav-link" href="/plants/add" id="addPlantLink">Add a new plant</a></li>
             </div>
             <div sec:authorize="hasAnyRole('USER', 'CONTRIBUTOR')">
-                <li class="nav-item"><a class="nav-link" href="/plants/list" id="listPlantsLink">Your Plants</a></li>
+                <li class="nav-item"><a class="nav-link" href="/plants/list" id="listPlantsLink">Your plants</a></li>
             </div>
             <div sec:authorize="hasRole('CONTRIBUTOR')">
-                <li class="nav-item"><a class="nav-link" href="/plant_types/add" id="addPlantTypeLink">Add care
-                    regimen</a></li>
+                <li class="nav-item"><a class="nav-link" href="/plant_types/add" id="addPlantTypeLink">Add a plant-type</a></li>
             </div>
             <div sec:authorize="hasRole('CONTRIBUTOR')">
-                <li class="nav-item"><a class="nav-link" href="/plant_types/list" id="listPlantTypesLink">Your Plant-Types</a></li>
+                <li class="nav-item"><a class="nav-link" href="/plant_types/list" id="listPlantTypesLink">Your plant-types</a></li>
             </div>
         </ul>
         <ul class="navbar-nav">
