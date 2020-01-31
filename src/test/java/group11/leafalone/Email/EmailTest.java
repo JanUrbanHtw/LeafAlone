@@ -37,13 +37,6 @@ public class EmailTest {
     @Autowired
     LeafAloneEmailService emailService;
 
-//    @Rule
-//    public SmtpServerRule smtpServerRule = new SmtpServerRule(3025);
-
-//    @Rule
-//    public final GreenMailRule greenMail = new GreenMailRule(ServerSetupTest.SMTP);
-//
-
     private GreenMail greenMail;
 
     @BeforeEach
